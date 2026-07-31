@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "generator-activity",
+      "title": "Generator and activity",
+      "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
+      "teaches": ["generators", "activities", "connectors"],
+      "order": 1,
+      "url": "https://raw.githubusercontent.com/GreenShoesLLC/quodsi-examples/main/models/01-generator-activity/model.drawio"
+    }
+  ]
+}

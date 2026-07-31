@@ -1,0 +1,27 @@
+<mxfile host="localhost">
+  <diagram name="Page-1" id="Lc8cNfXpZwSiCAHhkwTs">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.07.27" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;drSWpIGlPteE3Z01slo4-4&quot;,&quot;name&quot;:&quot;Generator 1 → Activity 1&quot;,&quot;sourceId&quot;:&quot;drSWpIGlPteE3Z01slo4-1&quot;,&quot;targetId&quot;:&quot;drSWpIGlPteE3Z01slo4-3&quot;,&quot;weight&quot;:1}" id="drSWpIGlPteE3Z01slo4-4">
+          <mxCell edge="1" parent="1" source="drSWpIGlPteE3Z01slo4-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="drSWpIGlPteE3Z01slo4-3">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Generator 1" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;drSWpIGlPteE3Z01slo4-1&quot;,&quot;name&quot;:&quot;Generator 1&quot;,&quot;generationConfig&quot;:{&quot;entityId&quot;:&quot;00000000-0000-0000-0000-000000000000&quot;,&quot;generatorType&quot;:&quot;FREQUENCY&quot;,&quot;periodIntervalDuration&quot;:{&quot;durationPeriodUnit&quot;:&quot;MINUTES&quot;,&quot;distribution&quot;:{&quot;distributionType&quot;:&quot;exponential&quot;,&quot;parameters&quot;:{&quot;scale&quot;:5},&quot;description&quot;:&quot;&quot;}},&quot;entitiesPerCreation&quot;:1}}" id="drSWpIGlPteE3Z01slo4-1">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="200" y="210" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Activity 1" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;drSWpIGlPteE3Z01slo4-3&quot;,&quot;name&quot;:&quot;Activity 1&quot;,&quot;capacity&quot;:1,&quot;inboundQueueCapacity&quot;:999999,&quot;outboundQueueCapacity&quot;:999999,&quot;actions&quot;:[{&quot;id&quot;:&quot;687c1f1b-7ac3-44b8-b164-221b618da769&quot;,&quot;actionType&quot;:&quot;DELAY_WITH_RESOURCE&quot;,&quot;duration&quot;:{&quot;durationPeriodUnit&quot;:&quot;MINUTES&quot;,&quot;distribution&quot;:{&quot;distributionType&quot;:&quot;constant&quot;,&quot;parameters&quot;:{&quot;value&quot;:1},&quot;description&quot;:&quot;&quot;}},&quot;resourceRequirementId&quot;:null,&quot;keepResource&quot;:false,&quot;stateModifications&quot;:[],&quot;stateCondition&quot;:null}],&quot;connectType&quot;:&quot;Probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;WALL_CLOCK&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="drSWpIGlPteE3Z01slo4-3">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="380" y="210" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
