@@ -7,7 +7,6 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 const MANIFEST = 'manifest.json'
-const RAW_PREFIX = 'https://raw.githubusercontent.com/GreenShoesLLC/quodsi-examples/main/'
 
 const errors = []
 
@@ -78,14 +77,14 @@ for (const e of manifest.examples) {
   if (seenIds.has(e?.id)) errors.push(`${label}: duplicate id`)
   seenIds.add(e?.id)
 
-  // The app pins entry urls to this host prefix, so a url that doesn't match
-  // is silently dropped by the picker rather than erroring — catch it here.
-  if (typeof e?.url === 'string' && !e.url.startsWith(RAW_PREFIX)) {
-    errors.push(`${label}: url must start with ${RAW_PREFIX}`)
-  }
-  const rel = typeof e?.url === 'string' ? e.url.slice(RAW_PREFIX.length) : ''
+  // Urls are RELATIVE — the app resolves them against wherever it fetched the
+  // manifest from. That is what keeps this file identical across branches
+  // (main, dev, ...): the branch lives only in the manifest URL each build is
+  // configured with, never inside this file. An absolute url here would bake a
+  // branch in and break that.
+  const rel = typeof e?.url === 'string' ? e.url : ''
   if (!/^models\/[^/]+\/model\.drawio$/.test(rel)) {
-    errors.push(`${label}: url must end models/<folder>/model.drawio`)
+    errors.push(`${label}: url must be relative — models/<folder>/model.drawio`)
   } else {
     referenced.add(rel)
     if (!existsSync(rel)) errors.push(`${label}: url points at ${rel}, which does not exist`)

@@ -47,10 +47,30 @@ models/
 | `summary` | one line, shown under the title |
 | `teaches` | short concept tags |
 | `order` | position in the ladder, ascending |
-| `url` | absolute `raw.githubusercontent.com` URL of the model file |
+| `url` | path of the model file relative to the repo root: `models/NN-<slug>/model.drawio` |
 
 The top-level `version` is the schema version the app checks. Bumping it makes
 older Quodsi builds decline the catalog rather than half-render it.
+
+Urls are relative on purpose: the app resolves them against the branch it
+fetched the manifest from, so this file stays identical across branches and
+promoting a branch is a plain merge. Never put an absolute URL in an entry —
+it would bake a branch in, and validation rejects it.
+
+## Branches
+
+Each Quodsi environment reads its own branch of this repo, so examples can be
+staged against the engine version that environment actually runs:
+
+| Branch | Read by |
+|---|---|
+| `dev` | the dev environment (dev-drawio.quodsi.com) |
+| `test` | the test environment (test-drawio.quodsi.com) |
+| `main` | local builds, and production when it exists |
+
+New examples land on `dev` first and promote `dev` → `test` → `main`,
+mirroring how the Quodsi engine itself is promoted: each merge happens once
+the engine capability the example relies on has reached that environment.
 
 ## Rules for a published model
 
@@ -69,13 +89,18 @@ older Quodsi builds decline the catalog rather than half-render it.
 
 ## Contributing a model
 
-1. Build it in Quodsi drawio and run **Convert Diagram to Model**.
+The full walkthrough is in [CONTRIBUTING.md](CONTRIBUTING.md). The short
+version:
+
+1. Build it in Quodsi drawio, run **Convert Diagram to Model**, run it, and
+   save it to your device.
 2. Set parameters that make the model worth reading — an example with default
    values everywhere teaches nothing.
-3. Add it under `models/NN-<slug>/` with a README covering what it shows and at
-   least two things worth trying.
-4. Add the manifest entry.
-5. `node scripts/validate.mjs` must pass.
+3. `node scripts/publish.mjs <saved-file> NN-<slug>` — decompresses the file,
+   strips `quodsiDocumentId`, and places it at `models/NN-<slug>/model.drawio`.
+4. Write the folder README (what it shows, at least two things worth trying)
+   and add the manifest entry.
+5. `node scripts/validate.mjs` must pass; open a PR into the `dev` branch.
 
 ## Licence
 
