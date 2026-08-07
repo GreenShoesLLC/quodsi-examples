@@ -42,20 +42,19 @@ has slack built in, so every item finishes deterministically.
 | 10 | `Station-Pack` | DELAY | A plain finish with no outbound connector — reaching here with nowhere else to go **is** the model exit. |
 
 **RELEASE idiom not used here:** every RELEASE in this model targets a
-specific `resourceRequirementId` (`req-operator`). There is also an
-empty-array release-everything idiom (`RELEASE` with no target, releasing
-every resource the entity currently holds) that this tour doesn't exercise
-— worth knowing about, not needed when there's only one requirement in
-play.
+specific `resourceRequirementId` (`req-operator`). There is also an idiom
+where an empty or omitted `resourceRequirementId` releases everything the
+entity currently holds — worth knowing about, not needed when there's only
+one requirement in play.
 
 **Routing — two mechanisms, not one:** stations 1 through 8 are chained by
 ordinary connectors (`edge-gen-trio`, `edge-trio-fused`, … `edge-create-split`).
-But `Station-Create` (to `Label-Desk`) and `Station-Split` (to `Station-Join`)
-route via an action-level `destinationId` field instead — no connector
-exists for either hop. Both mechanisms are wire-legal and can coexist in
-the same model; connectors express "what happens after this station's
-actions finish," while an action's own `destinationId` expresses "this
-specific action sends the entity/branch somewhere else, right now."
+But `Station-Create` (to `Label-Desk`), `Station-Split` (to `Station-Join`),
+and `Station-Join` (to `Station-Pack`) route via an action-level `destinationId`
+field instead — no connector exists for these hops. Both mechanisms are
+wire-legal and can coexist in the same model; connectors express "what happens
+after this station's actions finish," while an action's own `destinationId`
+expresses "this specific action sends the entity/branch somewhere else, right now."
 
 ## What's deliberately missing
 
@@ -64,6 +63,22 @@ It is not wire-legal — the codec refuses to emit it — so it has no station.
 If you're checking this tour against the full action vocabulary and count
 only 12 stations' worth of actions, that's expected: `PYTHON` was never
 going to have a thirteenth.
+
+## Authoring notes
+
+**REQUIRED queue capacity fields:** Every activity in a Quodsi model must set
+`inboundQueueCapacity` and `outboundQueueCapacity` explicitly — they are
+schema-required fields. A common authoring trap is to omit them, which causes
+the pre-check (schema validation) to reject the document. In this model,
+both fields are set to `99999` on every station.
+
+**Ids vs. names — the Python identifier rule:** In the model JSON, object
+`id` fields (like `Station-Trio`, `req-operator`) may contain hyphens for
+readability. However, state `name` fields (like `polish_count`, `branch_lane`)
+must be valid Python identifiers — the engine enforces `name.isidentifier()`.
+The station table above shows both forms: hyphenated ids for referencing in
+connectors and `destinationId` routing, and snake_case names for engine
+state validation and script access.
 
 ## Run it
 
