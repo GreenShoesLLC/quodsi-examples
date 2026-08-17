@@ -1,144 +1,27 @@
 {
-  "schemaVersion": "2026.08.20",
-  "model": {
-    "id": "coffee-shop",
-    "name": "Coffee Shop",
-    "reps": 5,
-    "seed": 20260807,
-    "oneClockUnit": "MINUTES",
-    "simulationTimeType": "Clock",
-    "warmupClockPeriod": 0,
-    "warmupClockPeriodUnit": "MINUTES",
-    "runClockPeriod": 480,
-    "runClockPeriodUnit": "MINUTES",
-    "warmupDateTime": null,
-    "startDateTime": null,
-    "finishDateTime": null
+  "schemaVersion": "2026.11.01",
+  "name": "Coffee Shop",
+  "replications": 5,
+  "seed": 20260807,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 480
   },
   "entities": [
     {
       "id": "customer",
-      "name": "Customer",
-      "type": "Entity"
-    }
-  ],
-  "activities": [
-    {
-      "id": "Order",
-      "name": "Order",
-      "type": "Activity",
-      "capacity": 1,
-      "inboundQueueCapacity": 9223372036854775807,
-      "outboundQueueCapacity": 9223372036854775807,
-      "connectType": "PROBABILITY",
-      "actions": [
-        {
-          "actionType": "DELAY_WITH_RESOURCE",
-          "resourceRequirementId": "req-cashier",
-          "duration": {
-            "durationPeriodUnit": "MINUTES",
-            "distribution": {
-              "distributionType": "exponential",
-              "parameters": {
-                "scale": 1.0
-              },
-              "description": ""
-            }
-          },
-          "keepResource": false
-        }
-      ]
-    },
-    {
-      "id": "EspressoBar",
-      "name": "Espresso Bar",
-      "type": "Activity",
-      "capacity": 2,
-      "inboundQueueCapacity": 9223372036854775807,
-      "outboundQueueCapacity": 9223372036854775807,
-      "connectType": "PROBABILITY",
-      "actions": [
-        {
-          "actionType": "DELAY_WITH_RESOURCE",
-          "resourceRequirementId": "req-barista",
-          "duration": {
-            "durationPeriodUnit": "MINUTES",
-            "distribution": {
-              "distributionType": "exponential",
-              "parameters": {
-                "scale": 3.0
-              },
-              "description": ""
-            }
-          },
-          "keepResource": false
-        }
-      ]
-    },
-    {
-      "id": "PastryCounter",
-      "name": "Pastry Counter",
-      "type": "Activity",
-      "capacity": 2,
-      "inboundQueueCapacity": 9223372036854775807,
-      "outboundQueueCapacity": 9223372036854775807,
-      "connectType": "PROBABILITY",
-      "actions": [
-        {
-          "actionType": "DELAY_WITH_RESOURCE",
-          "resourceRequirementId": "req-barista",
-          "duration": {
-            "durationPeriodUnit": "MINUTES",
-            "distribution": {
-              "distributionType": "exponential",
-              "parameters": {
-                "scale": 1.5
-              },
-              "description": ""
-            }
-          },
-          "keepResource": false
-        }
-      ]
-    }
-  ],
-  "connectors": [
-    {
-      "id": "arrivals-to-order",
-      "name": "ArrivalsToOrder",
-      "sourceId": "arrivals",
-      "targetId": "Order",
-      "type": "Connector",
-      "weight": 1
-    },
-    {
-      "id": "order-to-espresso",
-      "name": "OrderToEspressoBar",
-      "sourceId": "Order",
-      "targetId": "EspressoBar",
-      "type": "Connector",
-      "weight": 80
-    },
-    {
-      "id": "order-to-pastry",
-      "name": "OrderToPastryCounter",
-      "sourceId": "Order",
-      "targetId": "PastryCounter",
-      "type": "Connector",
-      "weight": 20
+      "name": "Customer"
     }
   ],
   "resources": [
     {
       "id": "cashier",
-      "name": "Cashier",
-      "type": "Resource",
-      "capacity": 1
+      "name": "Cashier"
     },
     {
       "id": "barista",
       "name": "Barista",
-      "type": "Resource",
       "capacity": 2
     }
   ],
@@ -146,40 +29,73 @@
     {
       "id": "req-cashier",
       "name": "Cashier Requirement",
-      "type": "ResourceRequirement",
-      "rootClauses": [
-        {
-          "clauseId": "clause-1",
-          "mode": "REQUIRE_ALL",
-          "requests": [
-            {
-              "resourceId": "cashier",
-              "quantity": 1,
-              "priority": 1,
-              "keepResource": false
-            }
-          ],
-          "subClauses": []
-        }
-      ]
+      "rootClause": {
+        "id": "clause-1",
+        "requests": [
+          {
+            "resourceId": "cashier"
+          }
+        ]
+      }
     },
     {
       "id": "req-barista",
       "name": "Barista Requirement",
-      "type": "ResourceRequirement",
-      "rootClauses": [
+      "rootClause": {
+        "id": "clause-1",
+        "requests": [
+          {
+            "resourceId": "barista"
+          }
+        ]
+      }
+    }
+  ],
+  "activities": [
+    {
+      "id": "Order",
+      "name": "Order",
+      "actions": [
         {
-          "clauseId": "clause-1",
-          "mode": "REQUIRE_ALL",
-          "requests": [
-            {
-              "resourceId": "barista",
-              "quantity": 1,
-              "priority": 1,
-              "keepResource": false
-            }
-          ],
-          "subClauses": []
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-cashier",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "EspressoBar",
+      "name": "Espresso Bar",
+      "capacity": 2,
+      "actions": [
+        {
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-barista",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 3.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PastryCounter",
+      "name": "Pastry Counter",
+      "capacity": 2,
+      "actions": [
+        {
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-barista",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 1.5
+          }
         }
       ]
     }
@@ -188,34 +104,35 @@
     {
       "id": "arrivals",
       "name": "Arrivals",
-      "type": "Generator",
-      "generationConfig": {
-        "entityId": "customer",
-        "generatorType": "FREQUENCY",
-        "periodicOccurrences": 100000,
-        "periodIntervalDuration": {
-          "durationPeriodUnit": "MINUTES",
-          "distribution": {
-            "distributionType": "exponential",
-            "parameters": {
-              "scale": 2.0
-            },
-            "description": ""
-          }
-        },
-        "entitiesPerCreation": 1,
-        "periodicStartDuration": {
-          "durationPeriodUnit": "MINUTES",
-          "distribution": {
-            "distributionType": "constant",
-            "parameters": {
-              "value": 0
-            },
-            "description": ""
-          }
-        },
-        "maxEntities": null
+      "entityId": "customer",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "distribution": "exponential",
+        "scale": 2.0
       }
+    }
+  ],
+  "connectors": [
+    {
+      "id": "arrivals-to-order",
+      "name": "ArrivalsToOrder",
+      "sourceId": "arrivals",
+      "targetId": "Order",
+      "weight": 1
+    },
+    {
+      "id": "order-to-espresso",
+      "name": "OrderToEspressoBar",
+      "sourceId": "Order",
+      "targetId": "EspressoBar",
+      "weight": 80
+    },
+    {
+      "id": "order-to-pastry",
+      "name": "OrderToPastryCounter",
+      "sourceId": "Order",
+      "targetId": "PastryCounter",
+      "weight": 20
     }
   ]
 }

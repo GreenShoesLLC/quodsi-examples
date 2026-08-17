@@ -1,6 +1,6 @@
 # Coffee Shop — shared resource pool + probability routing
 
-A raw Quodsi **model document** (`model.json`, `schemaVersion 2026.08.20`) —
+A raw Quodsi **model document** (`model.json`, `schemaVersion 2026.11.01`) —
 not a `.drawio` diagram. It is run directly through the Quodsi agent
 interface (CLI/MCP), no drawing tool involved.
 
@@ -26,7 +26,7 @@ utilization alone understates contention; read the queue stats with it.
 
 ## Run it
 
-From a quodsim checkout (engine must support `schemaVersion >= 2026.08.20`):
+From a quodsim checkout (engine must support `schemaVersion >= 2026.11.01`, the clean wire era):
 
 ```
 venv/Scripts/quodsi.exe model validate path/to/model.json --json

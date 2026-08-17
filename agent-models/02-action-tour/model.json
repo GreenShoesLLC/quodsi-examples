@@ -1,172 +1,161 @@
 {
-  "schemaVersion": "2026.08.20",
-  "model": {
-    "id": "action-tour",
-    "name": "Action Tour",
-    "reps": 2,
-    "seed": 42,
-    "oneClockUnit": "MINUTES",
-    "simulationTimeType": "Clock",
-    "warmupClockPeriod": 0,
-    "warmupClockPeriodUnit": "MINUTES",
-    "runClockPeriod": 120,
-    "runClockPeriodUnit": "MINUTES"
+  "schemaVersion": "2026.11.01",
+  "name": "Action Tour",
+  "replications": 2,
+  "seed": 42,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 120
   },
   "entities": [
-    { "id": "item", "name": "Item", "x": 0, "y": 0 },
-    { "id": "label", "name": "Label", "x": 0, "y": 0 }
+    { "id": "item", "name": "Item" },
+    { "id": "label", "name": "Label" }
   ],
   "resources": [
-    { "id": "operator", "name": "Operator", "capacity": 1, "x": 0, "y": 0 }
+    { "id": "operator", "name": "Operator" }
   ],
   "resourceRequirements": [
     {
       "id": "req-operator",
       "name": "One operator",
-      "rootClauses": [
-        {
-          "clauseId": "clause-operator",
-          "mode": "REQUIRE_ALL",
-          "requests": [
-            { "resourceId": "operator", "quantity": 1, "priority": 1, "keepResource": false }
-          ]
-        }
-      ]
+      "rootClause": {
+        "id": "clause-operator",
+        "requests": [
+          { "resourceId": "operator" }
+        ]
+      }
     }
-  ],
-  "states": [
-    { "id": "state-grade", "name": "grade", "componentType": "ENTITY", "dataType": "NUMBER", "initialValue": 0 },
-    { "id": "state-polish-count", "name": "polish_count", "componentType": "ENTITY", "dataType": "NUMBER", "initialValue": 0 },
-    { "id": "state-batch-id", "name": "batch_id", "componentType": "ENTITY", "dataType": "NUMBER", "initialValue": 1 },
-    { "id": "state-piece-index", "name": "piece_index", "componentType": "ENTITY", "dataType": "NUMBER", "initialValue": 0 },
-    { "id": "state-branch-lane", "name": "branch_lane", "componentType": "ENTITY", "dataType": "NUMBER", "initialValue": 0 }
   ],
   "activities": [
     {
-      "id": "station-trio", "name": "Station-Trio", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-trio", "name": "Station-Trio",
       "actions": [
-        { "id": "trio-seize", "actionType": "SEIZE", "resourceRequirementId": "req-operator" },
-        { "id": "trio-delay", "actionType": "DELAY",
-          "duration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 2.0 }, "description": "" } } },
-        { "id": "trio-release", "actionType": "RELEASE", "resourceRequirementId": "req-operator" }
+        { "id": "trio-seize", "type": "seize", "resourceRequirementId": "req-operator" },
+        { "id": "trio-delay", "type": "delay",
+          "duration": { "unit": "minutes", "value": 2.0 } },
+        { "id": "trio-release", "type": "release", "resourceRequirementId": "req-operator" }
       ]
     },
     {
-      "id": "station-fused", "name": "Station-Fused", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-fused", "name": "Station-Fused",
       "actions": [
-        { "id": "fused-dwr", "actionType": "DELAY_WITH_RESOURCE", "resourceRequirementId": "req-operator", "keepResource": false,
-          "duration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 1.5 }, "description": "" } } }
+        { "id": "fused-dwr", "type": "delay_with_resource", "resourceRequirementId": "req-operator",
+          "duration": { "unit": "minutes", "value": 1.5 } }
       ]
     },
     {
-      "id": "station-assign", "name": "Station-Assign", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-assign", "name": "Station-Assign",
       "actions": [
-        { "id": "assign-grade", "actionType": "ASSIGN",
+        { "id": "assign-grade", "type": "assign",
           "modifications": [
-            { "stateUniqueId": "state-grade", "stateName": "grade", "operation": "=", "value": 1, "targetComponentType": "ENTITY" }
+            { "stateId": "state-grade", "operation": "assign", "value": 1 }
           ] }
       ]
     },
     {
-      "id": "station-loop", "name": "Station-Loop", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-loop", "name": "Station-Loop",
       "actions": [
-        { "id": "loop-polish", "actionType": "LOOP", "count": 3,
+        { "id": "loop-polish", "type": "loop", "count": 3,
           "actions": [
-            { "id": "loop-polish-add", "actionType": "ASSIGN",
+            { "id": "loop-polish-add", "type": "assign",
               "modifications": [
-                { "stateUniqueId": "state-polish-count", "stateName": "polish_count", "operation": "+=", "value": 1, "targetComponentType": "ENTITY" }
+                { "stateId": "state-polish-count", "operation": "add", "value": 1 }
               ] }
           ] }
       ]
     },
     {
-      "id": "station-branch", "name": "Station-Branch", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-branch", "name": "Station-Branch",
       "actions": [
-        { "id": "branch-grade", "actionType": "BRANCH",
-          "condition": { "stateName": "grade", "comparison": ">=", "value": 1 },
+        { "id": "branch-grade", "type": "branch",
+          "condition": { "stateId": "state-grade", "comparison": "greater_equal", "value": 1 },
           "ifTrue": [
-            { "id": "branch-mark-fast", "actionType": "ASSIGN",
+            { "id": "branch-mark-fast", "type": "assign",
               "modifications": [
-                { "stateUniqueId": "state-branch-lane", "stateName": "branch_lane", "operation": "=", "value": 1, "targetComponentType": "ENTITY" }
+                { "stateId": "state-branch-lane", "operation": "assign", "value": 1 }
               ] },
-            { "id": "branch-fast-delay", "actionType": "DELAY",
-              "duration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 0.5 }, "description": "" } } }
+            { "id": "branch-fast-delay", "type": "delay",
+              "duration": { "unit": "minutes", "value": 0.5 } }
           ],
           "ifFalse": [
-            { "id": "branch-mark-slow", "actionType": "ASSIGN",
+            { "id": "branch-mark-slow", "type": "assign",
               "modifications": [
-                { "stateUniqueId": "state-branch-lane", "stateName": "branch_lane", "operation": "=", "value": 2, "targetComponentType": "ENTITY" }
+                { "stateId": "state-branch-lane", "operation": "assign", "value": 2 }
               ] },
-            { "id": "branch-slow-delay", "actionType": "DELAY",
-              "duration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 5.0 }, "description": "" } } }
+            { "id": "branch-slow-delay", "type": "delay",
+              "duration": { "unit": "minutes", "value": 5.0 } }
           ] }
       ]
     },
     {
-      "id": "station-script", "name": "Station-Script", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-script", "name": "Station-Script",
       "actions": [
-        { "id": "script-double", "actionType": "SCRIPT", "languageVersion": 1,
+        { "id": "script-double", "type": "script",
           "source": "value = get_state(\"polish_count\")\nset_state(\"polish_count\", value * 2)" }
       ]
     },
     {
-      "id": "station-create", "name": "Station-Create", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-create", "name": "Station-Create",
       "actions": [
-        { "id": "create-label", "actionType": "CREATE", "entityTemplateId": "label", "destinationId": "label-desk" }
+        { "id": "create-label", "type": "create", "entityTemplateId": "label", "destinationId": "label-desk" }
       ]
     },
     {
-      "id": "station-split", "name": "Station-Split", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-split", "name": "Station-Split",
       "actions": [
-        { "id": "split-two", "actionType": "SPLIT", "count": 2, "destinationId": "station-join",
+        { "id": "split-two", "type": "split", "count": 2, "destinationId": "station-join",
           "inheritStates": ["batch_id", "polish_count", "branch_lane"],
           "splitIndexState": "piece_index" }
       ]
     },
     {
-      "id": "station-join", "name": "Station-Join", "capacity": 2, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-join", "name": "Station-Join", "capacity": 2,
       "actions": [
-        { "id": "join-pieces", "actionType": "JOIN", "matchState": "batch_id", "joinCount": 2,
+        { "id": "join-pieces", "type": "join", "matchState": "batch_id", "joinCount": 2,
           "destinationId": "station-pack",
           "inheritStates": ["batch_id", "polish_count", "branch_lane"] }
       ]
     },
     {
-      "id": "station-pack", "name": "Station-Pack", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "station-pack", "name": "Station-Pack",
       "actions": [
-        { "id": "pack-delay", "actionType": "DELAY",
-          "duration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 1.0 }, "description": "" } } }
+        { "id": "pack-delay", "type": "delay",
+          "duration": { "unit": "minutes", "value": 1.0 } }
       ]
     },
     {
-      "id": "label-desk", "name": "Label-Desk", "capacity": 1, "inboundQueueCapacity": 99999, "outboundQueueCapacity": 99999, "x": 0, "y": 0,
+      "id": "label-desk", "name": "Label-Desk",
       "actions": [
-        { "id": "label-dispose", "actionType": "DISPOSE" }
+        { "id": "label-dispose", "type": "dispose" }
       ]
     }
   ],
   "generators": [
     {
-      "id": "arrivals", "name": "Arrivals", "x": 0, "y": 0,
-      "generationConfig": {
-        "entityId": "item",
-        "generatorType": "FREQUENCY",
-        "periodicOccurrences": 4,
-        "periodIntervalDuration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 6.0 }, "description": "" } },
-        "entitiesPerCreation": 1,
-        "periodicStartDuration": { "durationPeriodUnit": "MINUTES", "distribution": { "distributionType": "constant", "parameters": { "value": 1.0 }, "description": "" } },
-        "maxEntities": 4
-      }
+      "id": "arrivals", "name": "Arrivals",
+      "entityId": "item",
+      "interarrivalTime": { "unit": "minutes", "value": 6.0 },
+      "startDelay": { "unit": "minutes", "value": 1.0 },
+      "maxCycles": 4,
+      "maxEntities": 4
     }
   ],
   "connectors": [
-    { "id": "edge-gen-trio", "name": "L", "sourceId": "arrivals", "targetId": "station-trio", "weight": 1.0 },
-    { "id": "edge-trio-fused", "name": "L", "sourceId": "station-trio", "targetId": "station-fused", "weight": 1.0 },
-    { "id": "edge-fused-assign", "name": "L", "sourceId": "station-fused", "targetId": "station-assign", "weight": 1.0 },
-    { "id": "edge-assign-loop", "name": "L", "sourceId": "station-assign", "targetId": "station-loop", "weight": 1.0 },
-    { "id": "edge-loop-branch", "name": "L", "sourceId": "station-loop", "targetId": "station-branch", "weight": 1.0 },
-    { "id": "edge-branch-script", "name": "L", "sourceId": "station-branch", "targetId": "station-script", "weight": 1.0 },
-    { "id": "edge-script-create", "name": "L", "sourceId": "station-script", "targetId": "station-create", "weight": 1.0 },
-    { "id": "edge-create-split", "name": "L", "sourceId": "station-create", "targetId": "station-split", "weight": 1.0 }
+    { "id": "edge-gen-trio", "sourceId": "arrivals", "targetId": "station-trio", "weight": 1.0 },
+    { "id": "edge-trio-fused", "sourceId": "station-trio", "targetId": "station-fused", "weight": 1.0 },
+    { "id": "edge-fused-assign", "sourceId": "station-fused", "targetId": "station-assign", "weight": 1.0 },
+    { "id": "edge-assign-loop", "sourceId": "station-assign", "targetId": "station-loop", "weight": 1.0 },
+    { "id": "edge-loop-branch", "sourceId": "station-loop", "targetId": "station-branch", "weight": 1.0 },
+    { "id": "edge-branch-script", "sourceId": "station-branch", "targetId": "station-script", "weight": 1.0 },
+    { "id": "edge-script-create", "sourceId": "station-script", "targetId": "station-create", "weight": 1.0 },
+    { "id": "edge-create-split", "sourceId": "station-create", "targetId": "station-split", "weight": 1.0 }
+  ],
+  "states": [
+    { "id": "state-grade", "name": "grade", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-polish-count", "name": "polish_count", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-batch-id", "name": "batch_id", "componentType": "entity", "dataType": "number", "initialValue": 1 },
+    { "id": "state-piece-index", "name": "piece_index", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-branch-lane", "name": "branch_lane", "componentType": "entity", "dataType": "number", "initialValue": 0 }
   ]
 }

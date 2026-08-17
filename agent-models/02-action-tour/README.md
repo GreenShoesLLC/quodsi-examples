@@ -1,6 +1,6 @@
 # The Action Tour — every wire-legal action, one station each
 
-A raw Quodsi **model document** (`model.json`, `schemaVersion 2026.08.20`) —
+A raw Quodsi **model document** (`model.json`, `schemaVersion 2026.11.01`) —
 not a `.drawio` diagram. It is run directly through the Quodsi agent
 interface (CLI/MCP), no drawing tool involved.
 
@@ -13,9 +13,15 @@ Unlike 01-coffee-shop (a realistic scenario), this model is deliberately
 didactic: it is not trying to look like a real system — it exists to put
 every wire-legal action side by side, one station each, so an engine change
 to any action's wire handling has somewhere to show up. The document also
-lives as a corpus fixture in `quodsim` (`tests/fixtures/lucid_json/model_def_action_tour.json`,
-byte-identical to this copy), covered by a parse/validate sweep and a
-behavioral engine test that runs it and asserts the observables below.
+lives as a corpus fixture in `quodsim` (`tests/fixtures/lucid_json/model_def_action_tour.json`),
+covered by a parse/validate sweep and a behavioral engine test that runs it
+and asserts the observables below. **Note (2026-08-16, wire-cleanup Phase
+B2 Task 14):** this copy was regenerated to the clean wire era
+(`schemaVersion 2026.11.01`); the quodsim fixture is intentionally left on
+the old flat era (`2026.08.20`) — it exists specifically to pin flat-era
+parsing (the engine reads every era forever) and is out of this task's
+scope. The two are no longer byte-identical, but simulate identically
+(verified: same entity counts and event sequence, seed 42, 2 reps).
 
 ## The model
 
@@ -66,11 +72,13 @@ going to have a thirteenth.
 
 ## Authoring notes
 
-**REQUIRED queue capacity fields:** Every activity in a Quodsi model must set
-`inboundQueueCapacity` and `outboundQueueCapacity` explicitly — they are
-schema-required fields. A common authoring trap is to omit them, which causes
-the pre-check (schema validation) to reject the document. In this model,
-both fields are set to `99999` on every station.
+**Queue capacity fields are optional, and absent means unlimited:** on the
+clean wire, `inboundCapacity`/`outboundCapacity` (renamed from
+`inboundQueueCapacity`/`outboundQueueCapacity`) are optional per activity —
+omitting them means no buffer limit, an explicit `0` means no buffer at all.
+This model omits both on every station rather than authoring the old flat
+wire's `99999` sentinel, since "absent" now says the same thing more
+directly.
 
 **Ids vs. names — the Python identifier rule:** In the model JSON, object
 `id` fields (like `Station-Trio`, `req-operator`) may contain hyphens for
@@ -82,7 +90,7 @@ state validation and script access.
 
 ## Run it
 
-From a quodsim checkout (engine must support `schemaVersion >= 2026.08.20`):
+From a quodsim checkout (engine must support `schemaVersion >= 2026.11.01`, the clean wire era):
 
 ```
 venv/Scripts/quodsi.exe model validate path/to/model.json --json
