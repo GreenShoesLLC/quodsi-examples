@@ -1,0 +1,202 @@
+<mxfile host="test-drawio.quodsi.com">
+  <diagram name="Flow" id="flow">
+    <mxGraphModel dx="1680" dy="921" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1730" pageHeight="830" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;replications&quot;:10,&quot;seed&quot;:12345,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;timeMode&quot;:&quot;clock&quot;,&quot;warmupTime&quot;:{&quot;unit&quot;:&quot;hours&quot;,&quot;value&quot;:0},&quot;runTime&quot;:{&quot;unit&quot;:&quot;hours&quot;,&quot;value&quot;:12},&quot;entities&quot;:[{&quot;id&quot;:&quot;00000000-0000-0000-0000-000000000000&quot;,&quot;name&quot;:&quot;Patient&quot;}],&quot;resources&quot;:[{&quot;id&quot;:&quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;,&quot;name&quot;:&quot;Front Desk Staff&quot;,&quot;capacity&quot;:2,&quot;financialProperties&quot;:{&quot;enabled&quot;:true,&quot;costPerSeize&quot;:0,&quot;costPerHourUtilized&quot;:20,&quot;costPerHourIdle&quot;:20}},{&quot;id&quot;:&quot;9f306708-169f-4481-8bf1-c7c681e118e4&quot;,&quot;name&quot;:&quot;Triage Nurse&quot;,&quot;capacity&quot;:2,&quot;financialProperties&quot;:{&quot;enabled&quot;:true,&quot;costPerSeize&quot;:0,&quot;costPerHourUtilized&quot;:38,&quot;costPerHourIdle&quot;:38}},{&quot;id&quot;:&quot;222f5ce9-6846-4785-81ed-a5798af7e42f&quot;,&quot;name&quot;:&quot;Provider&quot;,&quot;capacity&quot;:2,&quot;financialProperties&quot;:{&quot;enabled&quot;:true,&quot;costPerSeize&quot;:0,&quot;costPerHourUtilized&quot;:110,&quot;costPerHourIdle&quot;:110},&quot;levers&quot;:[{&quot;leverId&quot;:&quot;7093bf53-5b72-4886-a4e7-4ba82778f308&quot;,&quot;propertyName&quot;:&quot;CAPACITY&quot;,&quot;enabled&quot;:true,&quot;label&quot;:&quot;Provider — Capacity&quot;,&quot;range&quot;:{&quot;min&quot;:2,&quot;max&quot;:5,&quot;step&quot;:1}}]},{&quot;id&quot;:&quot;ebba11d3-cbb9-45e0-9258-7c9b61043a3e&quot;,&quot;name&quot;:&quot;Lab Tech&quot;,&quot;capacity&quot;:1,&quot;financialProperties&quot;:{&quot;enabled&quot;:true,&quot;costPerSeize&quot;:0,&quot;costPerHourUtilized&quot;:25,&quot;costPerHourIdle&quot;:25}},{&quot;id&quot;:&quot;df795681-54ec-4009-88c1-dcc83e72cf02&quot;,&quot;name&quot;:&quot;Imaging Tech&quot;,&quot;capacity&quot;:1,&quot;financialProperties&quot;:{&quot;enabled&quot;:true,&quot;costPerSeize&quot;:0,&quot;costPerHourUtilized&quot;:30,&quot;costPerHourIdle&quot;:30}}],&quot;levers&quot;:[],&quot;model&quot;:{&quot;id&quot;:&quot;drawio-model&quot;,&quot;name&quot;:&quot;Urgent Care Clinic — Patient Flow, Simple (Discrete Event Simulation)&quot;,&quot;replications&quot;:10,&quot;seed&quot;:12345,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;timeMode&quot;:&quot;clock&quot;,&quot;warmupTime&quot;:{&quot;unit&quot;:&quot;hours&quot;,&quot;value&quot;:0},&quot;runTime&quot;:{&quot;unit&quot;:&quot;hours&quot;,&quot;value&quot;:12},&quot;warmupDateTime&quot;:null,&quot;startDateTime&quot;:null,&quot;finishDateTime&quot;:null,&quot;levers&quot;:[]},&quot;resourceRequirements&quot;:[{&quot;id&quot;:&quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;,&quot;name&quot;:&quot;Front Desk Staff&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-1&quot;,&quot;mode&quot;:&quot;require_all&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;}]}},{&quot;id&quot;:&quot;9f306708-169f-4481-8bf1-c7c681e118e4&quot;,&quot;name&quot;:&quot;Triage Nurse&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-1&quot;,&quot;mode&quot;:&quot;require_all&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;9f306708-169f-4481-8bf1-c7c681e118e4&quot;}]}},{&quot;id&quot;:&quot;222f5ce9-6846-4785-81ed-a5798af7e42f&quot;,&quot;name&quot;:&quot;Provider&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-1&quot;,&quot;mode&quot;:&quot;require_all&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;222f5ce9-6846-4785-81ed-a5798af7e42f&quot;}]}},{&quot;id&quot;:&quot;ebba11d3-cbb9-45e0-9258-7c9b61043a3e&quot;,&quot;name&quot;:&quot;Lab Tech&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-1&quot;,&quot;mode&quot;:&quot;require_all&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;ebba11d3-cbb9-45e0-9258-7c9b61043a3e&quot;}]}},{&quot;id&quot;:&quot;df795681-54ec-4009-88c1-dcc83e72cf02&quot;,&quot;name&quot;:&quot;Imaging Tech&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-1&quot;,&quot;mode&quot;:&quot;require_all&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;df795681-54ec-4009-88c1-dcc83e72cf02&quot;}]}}],&quot;name&quot;:&quot;Urgent Care Clinic — Patient Flow, Simple (Discrete Event Simulation)&quot;,&quot;startDateTime&quot;:null,&quot;warmupDateTime&quot;:null,&quot;finishDateTime&quot;:null,&quot;workSchedules&quot;:[],&quot;arrivalPatterns&quot;:[],&quot;schemaVersion&quot;:&quot;2026.12.01&quot;}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="Urgent Care Clinic — Patient Flow, Simple (Discrete Event Simulation)" quodsiTracked="true" id="title">
+          <mxCell parent="1" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;" vertex="1">
+            <mxGeometry height="30" width="1000" x="170" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Swimlanes = resources that own each activity  |  No shared held-space resource in this version" quodsiTracked="true" id="subtitle">
+          <mxCell parent="1" style="text;html=1;fontSize=11;fontStyle=2;fontColor=#666666;align=left;verticalAlign=middle;" vertex="1">
+            <mxGeometry height="24" width="1500" x="170" y="28" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Front Desk Staff" quodsiTracked="true" quodsiType="Resource" quodsiData="{&quot;type&quot;: &quot;Resource&quot;, &quot;resourceId&quot;: &quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;}" id="laneFDlbl">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3864;fontColor=#FFFFFF;fontStyle=1;fontSize=12;verticalAlign=middle;align=center;" vertex="1">
+            <mxGeometry height="140" width="170" y="70" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" id="laneFDband">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EAF1FB;strokeColor=#CCCCCC;" vertex="1">
+            <mxGeometry height="140" width="1530" x="170" y="70" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Triage Nurse" quodsiTracked="true" quodsiType="Resource" quodsiData="{&quot;type&quot;: &quot;Resource&quot;, &quot;resourceId&quot;: &quot;9f306708-169f-4481-8bf1-c7c681e118e4&quot;}" id="laneTNlbl">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3864;fontColor=#FFFFFF;fontStyle=1;fontSize=12;verticalAlign=middle;align=center;" vertex="1">
+            <mxGeometry height="140" width="170" y="210" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" id="laneTNband">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#CCCCCC;" vertex="1">
+            <mxGeometry height="140" width="1530" x="170" y="210" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Provider" quodsiTracked="true" quodsiType="Resource" quodsiData="{&quot;type&quot;: &quot;Resource&quot;, &quot;resourceId&quot;: &quot;222f5ce9-6846-4785-81ed-a5798af7e42f&quot;}" id="lanePRlbl">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3864;fontColor=#FFFFFF;fontStyle=1;fontSize=12;verticalAlign=middle;align=center;" vertex="1">
+            <mxGeometry height="140" width="170" y="350" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" id="lanePRband">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EAF1FB;strokeColor=#CCCCCC;" vertex="1">
+            <mxGeometry height="140" width="1530" x="170" y="350" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Lab Tech" quodsiTracked="true" quodsiType="Resource" quodsiData="{&quot;type&quot;: &quot;Resource&quot;, &quot;resourceId&quot;: &quot;ebba11d3-cbb9-45e0-9258-7c9b61043a3e&quot;}" id="laneLTlbl">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3864;fontColor=#FFFFFF;fontStyle=1;fontSize=12;verticalAlign=middle;align=center;" vertex="1">
+            <mxGeometry height="140" width="170" y="490" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" id="laneLTband">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#CCCCCC;" vertex="1">
+            <mxGeometry height="140" width="1530" x="170" y="490" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Imaging Tech" quodsiTracked="true" quodsiType="Resource" quodsiData="{&quot;type&quot;: &quot;Resource&quot;, &quot;resourceId&quot;: &quot;df795681-54ec-4009-88c1-dcc83e72cf02&quot;}" id="laneITlbl">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3864;fontColor=#FFFFFF;fontStyle=1;fontSize=12;verticalAlign=middle;align=center;" vertex="1">
+            <mxGeometry height="140" width="170" y="630" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" id="laneITband">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EAF1FB;strokeColor=#CCCCCC;" vertex="1">
+            <mxGeometry height="140" width="1530" x="170" y="630" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Patient Arrival (Generator)" quodsiTracked="true" quodsiType="Generator" quodsiData="{&quot;id&quot;:&quot;start&quot;,&quot;name&quot;:&quot;Patient Arrival (Generator)&quot;,&quot;routing&quot;:&quot;probability&quot;,&quot;entityId&quot;:&quot;00000000-0000-0000-0000-000000000000&quot;,&quot;mode&quot;:&quot;frequency&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;exponential&quot;,&quot;scale&quot;:8},&quot;batchSize&quot;:1}" id="start">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="130" x="210" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Check-In / Registration" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;checkin&quot;,&quot;name&quot;:&quot;Check-In / Registration&quot;,&quot;capacity&quot;:2,&quot;actions&quot;:[{&quot;id&quot;:&quot;349c681b-e1f8-428b-9d22-b020d1d16725&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;triangular&quot;,&quot;min&quot;:2,&quot;mode&quot;:4,&quot;max&quot;:7},&quot;resourceRequirementId&quot;:&quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;}],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="checkin">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="400" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Triage &amp; Vitals" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;triage&quot;,&quot;name&quot;:&quot;Triage &amp; Vitals&quot;,&quot;capacity&quot;:3,&quot;actions&quot;:[{&quot;id&quot;:&quot;f412a242-cd77-4a5c-abad-e6fe0730ffee&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;triangular&quot;,&quot;min&quot;:5,&quot;mode&quot;:8,&quot;max&quot;:12},&quot;resourceRequirementId&quot;:&quot;9f306708-169f-4481-8bf1-c7c681e118e4&quot;,&quot;keepResource&quot;:false,&quot;modifications&quot;:[],&quot;condition&quot;:null}],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="triage">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="590" y="250" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Provider Exam" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;provexam&quot;,&quot;name&quot;:&quot;Provider Exam&quot;,&quot;capacity&quot;:5,&quot;actions&quot;:[{&quot;id&quot;:&quot;741b14f2-9b5b-41e4-a2fa-4460577a35a8&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;triangular&quot;,&quot;min&quot;:10,&quot;mode&quot;:15,&quot;max&quot;:25},&quot;resourceRequirementId&quot;:&quot;222f5ce9-6846-4785-81ed-a5798af7e42f&quot;,&quot;keepResource&quot;:false,&quot;modifications&quot;:[],&quot;condition&quot;:null}],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="provexam">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="780" y="390" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Lab / Imaging / Direct?" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;decision&quot;,&quot;name&quot;:&quot;Lab / Imaging / Direct?&quot;,&quot;capacity&quot;:100,&quot;actions&quot;:[],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="decision">
+          <mxCell parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;fontStyle=1;" vertex="1">
+            <mxGeometry height="90" width="130" x="970" y="375" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Lab Draw" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;labdraw&quot;,&quot;name&quot;:&quot;Lab Draw&quot;,&quot;capacity&quot;:5,&quot;actions&quot;:[{&quot;id&quot;:&quot;edeccd77-a0df-4da7-b9e6-34d25ab6b522&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;triangular&quot;,&quot;min&quot;:5,&quot;mode&quot;:10,&quot;max&quot;:15},&quot;resourceRequirementId&quot;:&quot;ebba11d3-cbb9-45e0-9258-7c9b61043a3e&quot;,&quot;keepResource&quot;:false,&quot;modifications&quot;:[],&quot;condition&quot;:null}],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="labdraw">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="1160" y="530" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Imaging / X-ray" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;:&quot;imaging&quot;,&quot;name&quot;:&quot;Imaging / X-ray&quot;,&quot;capacity&quot;:2,&quot;actions&quot;:[{&quot;id&quot;:&quot;5e293503-897d-4530-b1ce-8af75a88cc61&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;distribution&quot;:&quot;triangular&quot;,&quot;min&quot;:10,&quot;mode&quot;:15,&quot;max&quot;:20},&quot;resourceRequirementId&quot;:&quot;df795681-54ec-4009-88c1-dcc83e72cf02&quot;,&quot;keepResource&quot;:false,&quot;modifications&quot;:[],&quot;condition&quot;:null}],&quot;routing&quot;:&quot;probability&quot;,&quot;financialProperties&quot;:{&quot;enabled&quot;:false,&quot;fixedCost&quot;:0,&quot;costPerEntityProcessed&quot;:0,&quot;costPerHourActive&quot;:0,&quot;costPerHourIdle&quot;:0,&quot;resourceCostMultiplier&quot;:1},&quot;failureProperties&quot;:{&quot;enabled&quot;:false,&quot;mtbfDuration&quot;:null,&quot;mttrDuration&quot;:null,&quot;failureClockMode&quot;:&quot;wall_clock&quot;,&quot;repairResourceRequirementId&quot;:&quot;&quot;}}" id="imaging">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="1160" y="670" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Checkout" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;: &quot;checkout&quot;, &quot;name&quot;: &quot;Checkout&quot;, &quot;capacity&quot;: 100, &quot;actions&quot;: [{&quot;id&quot;: &quot;d24018e9-35aa-4a8a-968a-de59f8a641d8&quot;, &quot;type&quot;: &quot;delay_with_resource&quot;, &quot;duration&quot;: {&quot;unit&quot;: &quot;minutes&quot;, &quot;distribution&quot;: &quot;triangular&quot;, &quot;min&quot;: 3, &quot;mode&quot;: 5, &quot;max&quot;: 8}, &quot;resourceRequirementId&quot;: &quot;00cbf522-1cc8-445c-85ab-4b6c5d7b9610&quot;, &quot;keepResource&quot;: false, &quot;modifications&quot;: [], &quot;condition&quot;: null}], &quot;routing&quot;: &quot;probability&quot;, &quot;financialProperties&quot;: {&quot;enabled&quot;: false, &quot;fixedCost&quot;: 0, &quot;costPerEntityProcessed&quot;: 0, &quot;costPerHourActive&quot;: 0, &quot;costPerHourIdle&quot;: 0, &quot;resourceCostMultiplier&quot;: 1}, &quot;failureProperties&quot;: {&quot;enabled&quot;: false, &quot;mtbfDuration&quot;: null, &quot;mttrDuration&quot;: null, &quot;failureClockMode&quot;: &quot;wall_clock&quot;, &quot;repairResourceRequirementId&quot;: &quot;&quot;}}" id="checkout">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="150" x="1350" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Patient Departs (Sink)" quodsiTracked="true" quodsiType="Activity" quodsiData="{&quot;id&quot;: &quot;end&quot;, &quot;name&quot;: &quot;Patient Departs (Sink)&quot;, &quot;capacity&quot;: 1, &quot;actions&quot;: [], &quot;routing&quot;: &quot;probability&quot;, &quot;financialProperties&quot;: {&quot;enabled&quot;: false, &quot;fixedCost&quot;: 0, &quot;costPerEntityProcessed&quot;: 0, &quot;costPerHourActive&quot;: 0, &quot;costPerHourIdle&quot;: 0, &quot;resourceCostMultiplier&quot;: 1}, &quot;failureProperties&quot;: {&quot;enabled&quot;: false, &quot;mtbfDuration&quot;: null, &quot;mttrDuration&quot;: null, &quot;failureClockMode&quot;: &quot;wall_clock&quot;, &quot;repairResourceRequirementId&quot;: &quot;&quot;}}" id="end">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;fontStyle=1;" vertex="1">
+            <mxGeometry height="60" width="130" x="1540" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e1&quot;, &quot;name&quot;: &quot;Connector e1&quot;, &quot;sourceId&quot;: &quot;start&quot;, &quot;targetId&quot;: &quot;checkin&quot;, &quot;weight&quot;: 1}" id="e1">
+          <mxCell edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="checkin">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e2&quot;, &quot;name&quot;: &quot;Connector e2&quot;, &quot;sourceId&quot;: &quot;checkin&quot;, &quot;targetId&quot;: &quot;triage&quot;, &quot;weight&quot;: 1}" id="e2">
+          <mxCell edge="1" parent="1" source="checkin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="triage">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="570" y="140" />
+                <mxPoint x="570" y="280" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e3&quot;, &quot;name&quot;: &quot;Connector e3&quot;, &quot;sourceId&quot;: &quot;triage&quot;, &quot;targetId&quot;: &quot;provexam&quot;, &quot;weight&quot;: 1}" id="e3">
+          <mxCell edge="1" parent="1" source="triage" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="provexam">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="760" y="280" />
+                <mxPoint x="760" y="420" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e4&quot;, &quot;name&quot;: &quot;Connector e4&quot;, &quot;sourceId&quot;: &quot;provexam&quot;, &quot;targetId&quot;: &quot;decision&quot;, &quot;weight&quot;: 1}" id="e4">
+          <mxCell edge="1" parent="1" source="provexam" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="decision">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="30%" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e5&quot;, &quot;name&quot;: &quot;30%&quot;, &quot;sourceId&quot;: &quot;decision&quot;, &quot;targetId&quot;: &quot;labdraw&quot;, &quot;weight&quot;: 0.3}" id="e5">
+          <mxCell edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="labdraw">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1130" y="398" />
+                <mxPoint x="1130" y="560" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="15%" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e6&quot;, &quot;name&quot;: &quot;15%&quot;, &quot;sourceId&quot;: &quot;decision&quot;, &quot;targetId&quot;: &quot;imaging&quot;, &quot;weight&quot;: 0.15}" id="e6">
+          <mxCell edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="imaging">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1130" y="420" />
+                <mxPoint x="1130" y="700" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="55% (direct)" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e7&quot;, &quot;name&quot;: &quot;55% (direct)&quot;, &quot;sourceId&quot;: &quot;decision&quot;, &quot;targetId&quot;: &quot;checkout&quot;, &quot;weight&quot;: 0.55}" id="e7">
+          <mxCell edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="checkout">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1225" y="442" />
+                <mxPoint x="1225" y="118" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e8&quot;, &quot;name&quot;: &quot;Connector e8&quot;, &quot;sourceId&quot;: &quot;labdraw&quot;, &quot;targetId&quot;: &quot;checkout&quot;, &quot;weight&quot;: 1}" id="e8">
+          <mxCell edge="1" parent="1" source="labdraw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="checkout">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1330" y="560" />
+                <mxPoint x="1330" y="140" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e9&quot;, &quot;name&quot;: &quot;Connector e9&quot;, &quot;sourceId&quot;: &quot;imaging&quot;, &quot;targetId&quot;: &quot;checkout&quot;, &quot;weight&quot;: 1}" id="e9">
+          <mxCell edge="1" parent="1" source="imaging" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="checkout">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1330" y="700" />
+                <mxPoint x="1330" y="162" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" quodsiTracked="true" quodsiType="Connector" quodsiData="{&quot;id&quot;: &quot;e10&quot;, &quot;name&quot;: &quot;Connector e10&quot;, &quot;sourceId&quot;: &quot;checkout&quot;, &quot;targetId&quot;: &quot;end&quot;, &quot;weight&quot;: 1}" id="e10">
+          <mxCell edge="1" parent="1" source="checkout" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#444444;labelBackgroundColor=#FFFFFF;" target="end">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

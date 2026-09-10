@@ -8,6 +8,14 @@
       "teaches": ["generators", "activities", "connectors"],
       "order": 1,
       "url": "models/01-generator-activity/model.drawio"
+    },
+    {
+      "id": "urgentcare-example",
+      "title": "Example: Urgent Care System",
+      "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
+      "teaches": ["probabilistic routing", "resource requirements"],
+      "order": 2,
+      "url": "models/02-urgentcare-example/model.drawio"
     }
   ]
 }
