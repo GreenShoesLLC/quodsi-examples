@@ -379,7 +379,14 @@ one you saved in Step 1. The Quodsi panel should show your model, not the
 
 ## Step 7 — Push it
 
-Copy all three lines below into a blank VS Code tab or Notepad, replace
+**If you added a new group in Step 2**, first run this on its own, so the new
+group goes up with your example (the lines further down do not include it):
+
+```
+git add groups.json
+```
+
+Then copy all three lines below into a blank VS Code tab or Notepad, replace
 `industries/healthcare/clinic-triage` with your folder and the commit message
 with something describing your example, then paste the finished lines into
 PowerShell and press Enter:
@@ -388,13 +395,6 @@ PowerShell and press Enter:
 git add industries/healthcare/clinic-triage manifest.json README.md
 git commit -m "Add clinic-triage example"
 git push
-```
-
-If you added a new group in Step 2, also add `groups.json` — it will not be
-picked up by the `git add` line above:
-
-```
-git add groups.json
 ```
 
 ## Step 8 — Confirm it is live
