@@ -1,103 +1,21 @@
-// Repo-side guards for published example models.
-//
-// These are the cheap structural checks. The "does this model still pass the
-// Quodsi validation gate" check lives in the quodsi monorepo, because that is
-// where the gate lives — see quodsi_drawio's examples fixture test.
-import { readFileSync, readdirSync, existsSync } from 'node:fs'
-import { join } from 'node:path'
+// Repo-side guards for published examples. Run from the repo root:
+//   node scripts/validate.mjs
+// Structural only: whether a model still passes the Quodsi validation gate is
+// checked in the Quodsi repos, not here.
+import { loadGroups, scanExamples, checkModelFiles } from './lib/catalog.mjs'
 
-const MANIFEST = 'manifest.json'
-
-const errors = []
-
-let manifest
-try {
-  manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'))
-} catch (err) {
-  console.error(`Validation failed: could not read ${MANIFEST} — ${err.message}`)
+const root = process.cwd()
+const { groups, errors: groupErrors } = loadGroups(root)
+if (!groups) {
+  console.error('Validation failed:\n' + groupErrors.map((e) => `  - ${e}`).join('\n'))
   process.exit(1)
 }
-
-if (manifest.version !== 1) {
-  errors.push(`manifest.version must be 1, got ${JSON.stringify(manifest.version)}`)
-}
-if (!Array.isArray(manifest.examples)) {
-  console.error('Validation failed: manifest.examples must be an array')
-  process.exit(1)
-}
-
-const folders = readdirSync('models', { withFileTypes: true })
-  .filter((d) => d.isDirectory())
-  .map((d) => d.name)
-  .sort()
-
-for (const folder of folders) {
-  const file = join('models', folder, 'model.drawio')
-  if (!existsSync(file)) {
-    errors.push(`${folder}: missing model.drawio`)
-    continue
-  }
-  const xml = readFileSync(file, 'utf8')
-
-  if (!xml.includes('<mxfile') && !xml.includes('<mxGraphModel')) {
-    errors.push(`${folder}: model.drawio is not drawio XML`)
-  }
-  // Must be stored UNCOMPRESSED. drawio compresses diagram content by default,
-  // which leaves a base64+deflate blob that neither review nor the monorepo
-  // fixture test can read.
-  if (!xml.includes('<mxGraphModel')) {
-    errors.push(`${folder}: model.drawio looks compressed — store it uncompressed`)
-  }
-  // A published example must carry NO documentId: it binds a diagram to one
-  // Quodsi model record, so every user opening this file would collide onto the
-  // same record and overwrite each other.
-  if (xml.includes('quodsiDocumentId')) {
-    errors.push(`${folder}: model.drawio contains quodsiDocumentId — strip it`)
-  }
-  // An unconverted diagram is just a picture; it carries no Quodsi model.
-  if (!xml.includes('quodsiType')) {
-    errors.push(`${folder}: model.drawio has no quodsiType — was it Converted?`)
-  }
-}
-
-const seenIds = new Set()
-const referenced = new Set()
-
-for (const e of manifest.examples) {
-  const label = e?.id ?? '(entry with no id)'
-  for (const field of ['id', 'title', 'summary', 'url']) {
-    if (typeof e?.[field] !== 'string' || !e[field]) {
-      errors.push(`${label}: ${field} must be a non-empty string`)
-    }
-  }
-  if (typeof e?.order !== 'number') errors.push(`${label}: order must be a number`)
-  if (!Array.isArray(e?.teaches) || e.teaches.some((t) => typeof t !== 'string')) {
-    errors.push(`${label}: teaches must be an array of strings`)
-  }
-  if (seenIds.has(e?.id)) errors.push(`${label}: duplicate id`)
-  seenIds.add(e?.id)
-
-  // Urls are RELATIVE — the app resolves them against wherever it fetched the
-  // manifest from. That is what keeps this file identical across branches
-  // (main, dev, ...): the branch lives only in the manifest URL each build is
-  // configured with, never inside this file. An absolute url here would bake a
-  // branch in and break that.
-  const rel = typeof e?.url === 'string' ? e.url : ''
-  if (!/^models\/[^/]+\/model\.drawio$/.test(rel)) {
-    errors.push(`${label}: url must be relative — models/<folder>/model.drawio`)
-  } else {
-    referenced.add(rel)
-    if (!existsSync(rel)) errors.push(`${label}: url points at ${rel}, which does not exist`)
-  }
-}
-
-for (const folder of folders) {
-  const rel = `models/${folder}/model.drawio`
-  if (!referenced.has(rel)) errors.push(`${folder}: no manifest entry points at it`)
-}
+const { examples, errors } = scanExamples(root, groups)
+for (const ex of examples) errors.push(...checkModelFiles(root, ex))
 
 if (errors.length) {
   console.error('Validation failed:\n' + errors.map((e) => `  - ${e}`).join('\n'))
   process.exit(1)
 }
-console.log(`OK: ${manifest.examples.length} example(s), ${folders.length} folder(s)`)
+const inPicker = examples.filter((e) => e.hasDrawio).length
+console.log(`OK: ${examples.length} example(s), ${inPicker} in the drawio picker`)

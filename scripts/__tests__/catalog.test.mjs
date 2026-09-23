@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
-import { loadGroups, scanExamples } from '../lib/catalog.mjs'
+import { loadGroups, scanExamples, checkModelFiles } from '../lib/catalog.mjs'
 
 // Builds a throwaway repo from { 'relative/path': 'contents' }.
 export function makeRepo(files) {
@@ -151,4 +151,25 @@ test('scanExamples validates example.json, README and model presence', () => {
   assert.ok(has(/bad-meta: unknown field "summery"/))
   assert.ok(has(/no-readme: missing README\.md/))
   assert.ok(has(/no-model: needs model\.drawio or model\.json/))
+})
+
+test('checkModelFiles applies the drawio publication rules', () => {
+  const root = makeRepo({
+    'a/model.drawio': '<mxfile><diagram>eJzLSM3JyQcABiwCFQ==</diagram></mxfile>',
+    'b/model.drawio': DRAWIO.replace('<object', '<object quodsiDocumentId="abc"'),
+    'c/model.drawio': '<mxfile><diagram><mxGraphModel><root/></mxGraphModel></diagram></mxfile>',
+    'd/model.drawio': DRAWIO,
+  })
+  const run = (dir) => checkModelFiles(root, { dir, hasDrawio: true, hasJson: false })
+  assert.ok(run('a').some((e) => /compressed/.test(e)))
+  assert.ok(run('b').some((e) => /quodsiDocumentId/.test(e)))
+  assert.ok(run('c').some((e) => /quodsiType/.test(e)))
+  assert.deepEqual(run('d'), [])
+})
+
+test('checkModelFiles requires model.json to parse', () => {
+  const root = makeRepo({ 'a/model.json': '{ nope', 'b/model.json': '{"name":"x"}' })
+  const run = (dir) => checkModelFiles(root, { dir, hasDrawio: false, hasJson: true })
+  assert.ok(run('a').some((e) => /model\.json is not valid JSON/.test(e)))
+  assert.deepEqual(run('b'), [])
 })

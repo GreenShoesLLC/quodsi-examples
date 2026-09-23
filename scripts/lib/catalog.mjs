@@ -144,3 +144,31 @@ export function scanExamples(root, groups) {
   }
   return { examples, errors }
 }
+
+// The per-file publication rules. Carried over verbatim from the pre-2026-09
+// validate.mjs: a published drawio must be uncompressed (reviewable, and
+// readable by this check), must not carry a quodsiDocumentId (it binds the
+// diagram to ONE model record, so every user would collide onto it), and must
+// have been Converted (an unconverted diagram is just a picture).
+export function checkModelFiles(root, example) {
+  const errors = []
+  const label = example.dir
+  if (example.hasDrawio) {
+    const xml = readFileSync(join(root, example.dir, 'model.drawio'), 'utf8')
+    if (!xml.includes('<mxfile') && !xml.includes('<mxGraphModel')) {
+      errors.push(`${label}: model.drawio is not drawio XML`)
+    } else if (!xml.includes('<mxGraphModel')) {
+      errors.push(`${label}: model.drawio looks compressed — store it uncompressed (node scripts/publish.mjs does this)`)
+    }
+    if (xml.includes('quodsiDocumentId')) errors.push(`${label}: model.drawio contains quodsiDocumentId — strip it`)
+    if (!xml.includes('quodsiType')) errors.push(`${label}: model.drawio has no quodsiType — was it Converted?`)
+  }
+  if (example.hasJson) {
+    try {
+      JSON.parse(readFileSync(join(root, example.dir, 'model.json'), 'utf8'))
+    } catch (err) {
+      errors.push(`${label}: model.json is not valid JSON — ${err.message}`)
+    }
+  }
+  return errors
+}
