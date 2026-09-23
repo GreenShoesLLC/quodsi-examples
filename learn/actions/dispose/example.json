@@ -1,0 +1,6 @@
+{
+  "title": "Dispose: scrap a bad part at inspection",
+  "summary": "Four parts are inspected; the one marked defective is disposed right there and never reaches packing, while the good parts carry on.",
+  "teaches": ["dispose", "action conditions", "generator initial states"],
+  "order": 40
+}

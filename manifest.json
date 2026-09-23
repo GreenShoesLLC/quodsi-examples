@@ -122,6 +122,20 @@
       "url": "learn/actions/join/model.drawio"
     },
     {
+      "id": "dispose",
+      "title": "Dispose: scrap a bad part at inspection",
+      "summary": "Four parts are inspected; the one marked defective is disposed right there and never reaches packing, while the good parts carry on.",
+      "teaches": [
+        "dispose",
+        "action conditions",
+        "generator initial states"
+      ],
+      "order": 60,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/dispose/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -129,7 +143,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 60,
+      "order": 70,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"
