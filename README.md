@@ -102,6 +102,17 @@ version:
    and add the manifest entry.
 5. `node scripts/validate.mjs` must pass; open a PR into the `dev` branch.
 
+## Agent-authored model documents (`agent-models/`)
+
+Alongside the `.drawio` diagrams above, `agent-models/` holds raw Quodsi
+**model documents** (`model.json`) authored through the agent interface
+(CLI/MCP) rather than a drawing tool. They are not listed in
+`manifest.json` and the drawio picker never sees them — run them directly
+with the `quodsi` CLI (see each folder's README). Entries so far:
+`agent-models/01-coffee-shop/` (the inaugural dogfood of the
+`quodsi-modeling` skill) and `agent-models/02-action-tour/` (every
+wire-legal action, one station each).
+
 ## Licence
 
 These models are published for anyone to learn from, copy, and adapt.

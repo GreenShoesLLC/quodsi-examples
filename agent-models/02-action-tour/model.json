@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "2026.11.01",
+  "name": "Action Tour",
+  "replications": 2,
+  "seed": 42,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 120
+  },
+  "entities": [
+    { "id": "item", "name": "Item" },
+    { "id": "label", "name": "Label" }
+  ],
+  "resources": [
+    { "id": "operator", "name": "Operator" }
+  ],
+  "resourceRequirements": [
+    {
+      "id": "req-operator",
+      "name": "One operator",
+      "rootClause": {
+        "id": "clause-operator",
+        "requests": [
+          { "resourceId": "operator" }
+        ]
+      }
+    }
+  ],
+  "activities": [
+    {
+      "id": "station-trio", "name": "Station-Trio",
+      "actions": [
+        { "id": "trio-seize", "type": "seize", "resourceRequirementId": "req-operator" },
+        { "id": "trio-delay", "type": "delay",
+          "duration": { "unit": "minutes", "value": 2.0 } },
+        { "id": "trio-release", "type": "release", "resourceRequirementId": "req-operator" }
+      ]
+    },
+    {
+      "id": "station-fused", "name": "Station-Fused",
+      "actions": [
+        { "id": "fused-dwr", "type": "delay_with_resource", "resourceRequirementId": "req-operator",
+          "duration": { "unit": "minutes", "value": 1.5 } }
+      ]
+    },
+    {
+      "id": "station-assign", "name": "Station-Assign",
+      "actions": [
+        { "id": "assign-grade", "type": "assign",
+          "modifications": [
+            { "stateId": "state-grade", "operation": "assign", "value": 1 }
+          ] }
+      ]
+    },
+    {
+      "id": "station-loop", "name": "Station-Loop",
+      "actions": [
+        { "id": "loop-polish", "type": "loop", "count": 3,
+          "actions": [
+            { "id": "loop-polish-add", "type": "assign",
+              "modifications": [
+                { "stateId": "state-polish-count", "operation": "add", "value": 1 }
+              ] }
+          ] }
+      ]
+    },
+    {
+      "id": "station-branch", "name": "Station-Branch",
+      "actions": [
+        { "id": "branch-grade", "type": "branch",
+          "condition": { "stateId": "state-grade", "comparison": "greater_equal", "value": 1 },
+          "ifTrue": [
+            { "id": "branch-mark-fast", "type": "assign",
+              "modifications": [
+                { "stateId": "state-branch-lane", "operation": "assign", "value": 1 }
+              ] },
+            { "id": "branch-fast-delay", "type": "delay",
+              "duration": { "unit": "minutes", "value": 0.5 } }
+          ],
+          "ifFalse": [
+            { "id": "branch-mark-slow", "type": "assign",
+              "modifications": [
+                { "stateId": "state-branch-lane", "operation": "assign", "value": 2 }
+              ] },
+            { "id": "branch-slow-delay", "type": "delay",
+              "duration": { "unit": "minutes", "value": 5.0 } }
+          ] }
+      ]
+    },
+    {
+      "id": "station-script", "name": "Station-Script",
+      "actions": [
+        { "id": "script-double", "type": "script",
+          "source": "value = get_state(\"polish_count\")\nset_state(\"polish_count\", value * 2)" }
+      ]
+    },
+    {
+      "id": "station-create", "name": "Station-Create",
+      "actions": [
+        { "id": "create-label", "type": "create", "entityTemplateId": "label", "destinationId": "label-desk" }
+      ]
+    },
+    {
+      "id": "station-split", "name": "Station-Split",
+      "actions": [
+        { "id": "split-two", "type": "split", "count": 2, "destinationId": "station-join",
+          "inheritStates": ["batch_id", "polish_count", "branch_lane"],
+          "splitIndexState": "piece_index" }
+      ]
+    },
+    {
+      "id": "station-join", "name": "Station-Join", "capacity": 2,
+      "actions": [
+        { "id": "join-pieces", "type": "join", "matchState": "batch_id", "joinCount": 2,
+          "destinationId": "station-pack",
+          "inheritStates": ["batch_id", "polish_count", "branch_lane"] }
+      ]
+    },
+    {
+      "id": "station-pack", "name": "Station-Pack",
+      "actions": [
+        { "id": "pack-delay", "type": "delay",
+          "duration": { "unit": "minutes", "value": 1.0 } }
+      ]
+    },
+    {
+      "id": "label-desk", "name": "Label-Desk",
+      "actions": [
+        { "id": "label-dispose", "type": "dispose" }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "arrivals", "name": "Arrivals",
+      "entityId": "item",
+      "interarrivalTime": { "unit": "minutes", "value": 6.0 },
+      "startDelay": { "unit": "minutes", "value": 1.0 },
+      "maxCycles": 4,
+      "maxEntities": 4
+    }
+  ],
+  "connectors": [
+    { "id": "edge-gen-trio", "sourceId": "arrivals", "targetId": "station-trio", "weight": 1.0 },
+    { "id": "edge-trio-fused", "sourceId": "station-trio", "targetId": "station-fused", "weight": 1.0 },
+    { "id": "edge-fused-assign", "sourceId": "station-fused", "targetId": "station-assign", "weight": 1.0 },
+    { "id": "edge-assign-loop", "sourceId": "station-assign", "targetId": "station-loop", "weight": 1.0 },
+    { "id": "edge-loop-branch", "sourceId": "station-loop", "targetId": "station-branch", "weight": 1.0 },
+    { "id": "edge-branch-script", "sourceId": "station-branch", "targetId": "station-script", "weight": 1.0 },
+    { "id": "edge-script-create", "sourceId": "station-script", "targetId": "station-create", "weight": 1.0 },
+    { "id": "edge-create-split", "sourceId": "station-create", "targetId": "station-split", "weight": 1.0 }
+  ],
+  "states": [
+    { "id": "state-grade", "name": "grade", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-polish-count", "name": "polish_count", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-batch-id", "name": "batch_id", "componentType": "entity", "dataType": "number", "initialValue": 1 },
+    { "id": "state-piece-index", "name": "piece_index", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-branch-lane", "name": "branch_lane", "componentType": "entity", "dataType": "number", "initialValue": 0 }
+  ]
+}

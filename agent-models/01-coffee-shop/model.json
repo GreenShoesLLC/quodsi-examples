@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "2026.11.01",
+  "name": "Coffee Shop",
+  "replications": 5,
+  "seed": 20260807,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 480
+  },
+  "entities": [
+    {
+      "id": "customer",
+      "name": "Customer"
+    }
+  ],
+  "resources": [
+    {
+      "id": "cashier",
+      "name": "Cashier"
+    },
+    {
+      "id": "barista",
+      "name": "Barista",
+      "capacity": 2
+    }
+  ],
+  "resourceRequirements": [
+    {
+      "id": "req-cashier",
+      "name": "Cashier Requirement",
+      "rootClause": {
+        "id": "clause-1",
+        "requests": [
+          {
+            "resourceId": "cashier"
+          }
+        ]
+      }
+    },
+    {
+      "id": "req-barista",
+      "name": "Barista Requirement",
+      "rootClause": {
+        "id": "clause-1",
+        "requests": [
+          {
+            "resourceId": "barista"
+          }
+        ]
+      }
+    }
+  ],
+  "activities": [
+    {
+      "id": "Order",
+      "name": "Order",
+      "actions": [
+        {
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-cashier",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "EspressoBar",
+      "name": "Espresso Bar",
+      "capacity": 2,
+      "actions": [
+        {
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-barista",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 3.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PastryCounter",
+      "name": "Pastry Counter",
+      "capacity": 2,
+      "actions": [
+        {
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-barista",
+          "duration": {
+            "unit": "minutes",
+            "distribution": "exponential",
+            "scale": 1.5
+          }
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "arrivals",
+      "name": "Arrivals",
+      "entityId": "customer",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "distribution": "exponential",
+        "scale": 2.0
+      }
+    }
+  ],
+  "connectors": [
+    {
+      "id": "arrivals-to-order",
+      "name": "ArrivalsToOrder",
+      "sourceId": "arrivals",
+      "targetId": "Order",
+      "weight": 1
+    },
+    {
+      "id": "order-to-espresso",
+      "name": "OrderToEspressoBar",
+      "sourceId": "Order",
+      "targetId": "EspressoBar",
+      "weight": 80
+    },
+    {
+      "id": "order-to-pastry",
+      "name": "OrderToPastryCounter",
+      "sourceId": "Order",
+      "targetId": "PastryCounter",
+      "weight": 20
+    }
+  ]
+}
