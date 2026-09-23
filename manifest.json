@@ -136,6 +136,20 @@
       "url": "learn/actions/dispose/model.drawio"
     },
     {
+      "id": "branch",
+      "title": "Branch: urgent patients get a quick check-in",
+      "summary": "Check In runs a one-minute triage for urgent patients and a five-minute registration for everyone else, then all patients go on to see the doctor.",
+      "teaches": [
+        "branch",
+        "action conditions",
+        "generator initial states"
+      ],
+      "order": 70,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/branch/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -143,7 +157,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 70,
+      "order": 80,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"

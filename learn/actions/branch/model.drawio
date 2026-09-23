@@ -1,0 +1,47 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Branch: urgent patients get a quick check-in&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:120},&quot;entities&quot;:[{&quot;id&quot;:&quot;patient&quot;,&quot;name&quot;:&quot;Patient&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[{&quot;id&quot;:&quot;state-urgent&quot;,&quot;name&quot;:&quot;urgent&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0}],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-walkins-checkin&quot;,&quot;sourceId&quot;:&quot;walk-ins&quot;,&quot;targetId&quot;:&quot;check-in&quot;,&quot;name&quot;:&quot;Walk-in Patients → Check In&quot;}" id="edge-walkins-checkin">
+          <mxCell edge="1" parent="1" source="walk-ins" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-in">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-urgent-checkin&quot;,&quot;sourceId&quot;:&quot;urgent&quot;,&quot;targetId&quot;:&quot;check-in&quot;,&quot;name&quot;:&quot;Urgent Patients → Check In&quot;}" id="edge-urgent-checkin">
+          <mxCell edge="1" parent="1" source="urgent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-in">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-checkin-doctor&quot;,&quot;sourceId&quot;:&quot;check-in&quot;,&quot;targetId&quot;:&quot;see-doctor&quot;,&quot;name&quot;:&quot;Check In → See Doctor&quot;}" id="edge-checkin-doctor">
+          <mxCell edge="1" parent="1" source="check-in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="see-doctor">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Walk-in Patients" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;walk-ins&quot;,&quot;name&quot;:&quot;Walk-in Patients&quot;,&quot;entityId&quot;:&quot;patient&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:4},&quot;maxEntities&quot;:3,&quot;x&quot;:12,&quot;y&quot;:132}" id="walk-ins">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="132" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Urgent Patients" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;urgent&quot;,&quot;name&quot;:&quot;Urgent Patients&quot;,&quot;entityId&quot;:&quot;patient&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:10},&quot;startDelay&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:14},&quot;maxEntities&quot;:1,&quot;initialStates&quot;:[{&quot;stateId&quot;:&quot;state-urgent&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;value&quot;:1}],&quot;x&quot;:12,&quot;y&quot;:12}" id="urgent">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Check In" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;check-in&quot;,&quot;name&quot;:&quot;Check In&quot;,&quot;capacity&quot;:5,&quot;actions&quot;:[{&quot;id&quot;:&quot;check-in-branch&quot;,&quot;type&quot;:&quot;branch&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-urgent&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:1},&quot;ifTrue&quot;:[{&quot;id&quot;:&quot;quick-triage&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}}],&quot;ifFalse&quot;:[{&quot;id&quot;:&quot;full-registration&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5}}]}],&quot;x&quot;:152,&quot;y&quot;:25}" id="check-in">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="25" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="See Doctor" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;see-doctor&quot;,&quot;name&quot;:&quot;See Doctor&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;see-doctor-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:10}}],&quot;x&quot;:292,&quot;y&quot;:25}" id="see-doctor">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="25" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

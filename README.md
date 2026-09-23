@@ -34,6 +34,7 @@ by hand.
 | Actions | [Create: one order spawns three documents](learn/actions/create/) | create, entity types | yes |
 | Actions | [Join: three pieces become one order again](learn/actions/join/) | join, split, model states, expressions | yes |
 | Actions | [Dispose: scrap a bad part at inspection](learn/actions/dispose/) | dispose, action conditions, generator initial states | yes |
+| Actions | [Branch: urgent patients get a quick check-in](learn/actions/branch/) | branch, action conditions, generator initial states | yes |
 | Actions | [Action tour: one station per action](learn/actions/action-tour/) | actions, split, join, branch, loop, script | no — model.json |
 
 ### Industries
