@@ -3,7 +3,10 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
-import { loadGroups, scanExamples, checkModelFiles } from '../lib/catalog.mjs'
+import {
+  loadGroups, scanExamples, checkModelFiles,
+  buildManifest, serializeManifest, renderExamplesTable, replaceBetweenMarkers, normalizeEol, MARK_START, MARK_END,
+} from '../lib/catalog.mjs'
 
 // Builds a throwaway repo from { 'relative/path': 'contents' }.
 export function makeRepo(files) {
@@ -172,4 +175,60 @@ test('checkModelFiles requires model.json to parse', () => {
   const run = (dir) => checkModelFiles(root, { dir, hasDrawio: false, hasJson: true })
   assert.ok(run('a').some((e) => /model\.json is not valid JSON/.test(e)))
   assert.deepEqual(run('b'), [])
+})
+
+const entry = (slug, section, group, order, over = {}) => ({
+  slug, section, group, dir: `${section}/${group}/${slug}`,
+  meta: { title: slug.toUpperCase(), summary: `about ${slug}`, teaches: ['t'], order },
+  hasDrawio: true, hasJson: false, ...over,
+})
+
+test('buildManifest ranks in display order and lists only drawio examples', () => {
+  const examples = [
+    entry('care', 'industries', 'healthcare', 10),
+    entry('tour', 'learn', 'actions', 20, { hasDrawio: false, hasJson: true }),
+    entry('split', 'learn', 'actions', 10),
+    entry('hello', 'learn', 'getting-started', 10),
+    entry('zeta', 'learn', 'getting-started', 10),
+  ]
+  const m = buildManifest(GROUPS, examples)
+  assert.equal(m.version, 1)
+  assert.deepEqual(m.sections, GROUPS.sections)
+  assert.deepEqual(m.examples.map((e) => e.id), ['hello', 'zeta', 'split', 'care'])
+  assert.deepEqual(m.examples.map((e) => e.order), [10, 20, 30, 40])
+  assert.deepEqual(m.examples[2], {
+    id: 'split', title: 'SPLIT', summary: 'about split', teaches: ['t'], order: 30,
+    section: 'learn', group: 'actions', url: 'learn/actions/split/model.drawio',
+  })
+})
+
+test('serializeManifest is deterministic with a trailing newline', () => {
+  const m = buildManifest(GROUPS, [entry('split', 'learn', 'actions', 10)])
+  const text = serializeManifest(m)
+  assert.ok(text.endsWith('}\n'))
+  assert.equal(text, serializeManifest(JSON.parse(text)))
+  assert.ok(text.indexOf('"version"') < text.indexOf('"generated"'))
+})
+
+test('renderExamplesTable lists every example per section, including model.json-only', () => {
+  const md = renderExamplesTable(GROUPS, [
+    entry('split', 'learn', 'actions', 10),
+    entry('tour', 'learn', 'actions', 20, { hasDrawio: false, hasJson: true }),
+  ])
+  assert.match(md, /### Learn/)
+  assert.doesNotMatch(md, /### Industries/)
+  assert.match(md, /\| Actions \| \[SPLIT\]\(learn\/actions\/split\/\) \| t \| yes \|/)
+  assert.match(md, /\| Actions \| \[TOUR\]\(learn\/actions\/tour\/\) \| t \| no — model\.json \|/)
+  assert.ok(md.endsWith('\n'))
+})
+
+test('replaceBetweenMarkers swaps only the marked block and requires markers', () => {
+  const text = `intro\n${MARK_START}\nold\n${MARK_END}\noutro\n`
+  assert.equal(replaceBetweenMarkers(text, 'new\n'), `intro\n${MARK_START}\nnew\n${MARK_END}\noutro\n`)
+  assert.throws(() => replaceBetweenMarkers('no markers', 'x'), /examples:start/)
+})
+
+test('normalizeEol makes a CRLF checkout compare equal to the LF generator output', () => {
+  const lf = serializeManifest(buildManifest(GROUPS, [entry('split', 'learn', 'actions', 10)]))
+  assert.equal(normalizeEol(lf.replace(/\n/g, '\r\n')), lf)
 })

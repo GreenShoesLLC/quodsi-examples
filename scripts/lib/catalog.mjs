@@ -172,3 +172,75 @@ export function checkModelFiles(root, example) {
   }
   return errors
 }
+
+export const GENERATED_NOTE = 'Do not edit. Run: node scripts/build-manifest.mjs'
+export const MARK_START = '<!-- examples:start -->'
+export const MARK_END = '<!-- examples:end -->'
+
+export const normalizeEol = (text) => text.replace(/\r\n/g, '\n')
+
+// Full display order: section, then group (both in groups.json order), then
+// the example's own order, then slug as a stable tiebreak.
+function displaySort(groups, examples) {
+  const sIdx = new Map(groups.sections.map((s, i) => [s.id, i]))
+  const gIdx = new Map(groups.sections.flatMap((s) => s.groups.map((g, i) => [`${s.id}/${g.id}`, i])))
+  return [...examples].sort(
+    (a, b) =>
+      sIdx.get(a.section) - sIdx.get(b.section) ||
+      gIdx.get(`${a.section}/${a.group}`) - gIdx.get(`${b.section}/${b.group}`) ||
+      a.meta.order - b.meta.order ||
+      a.slug.localeCompare(b.slug),
+  )
+}
+
+// Only examples with a model.drawio go in: deployed builds open whatever url
+// they are given. `order` is a GLOBAL rank so an old build's flat sort by
+// order reproduces the grouped display order.
+export function buildManifest(groups, examples) {
+  const picker = displaySort(groups, examples.filter((e) => e.hasDrawio))
+  return {
+    version: 1,
+    generated: GENERATED_NOTE,
+    sections: groups.sections,
+    examples: picker.map((e, i) => ({
+      id: e.slug,
+      title: e.meta.title,
+      summary: e.meta.summary,
+      teaches: e.meta.teaches,
+      order: (i + 1) * 10,
+      section: e.section,
+      group: e.group,
+      url: `${e.dir}/model.drawio`,
+    })),
+  }
+}
+
+export const serializeManifest = (manifest) => JSON.stringify(manifest, null, 2) + '\n'
+
+const cell = (s) => String(s).replace(/\|/g, '\\|')
+
+export function renderExamplesTable(groups, examples) {
+  const sorted = displaySort(groups, examples)
+  const out = []
+  for (const s of groups.sections) {
+    const rows = sorted.filter((e) => e.section === s.id)
+    if (rows.length === 0) continue
+    const groupTitle = new Map(s.groups.map((g) => [g.id, g.title]))
+    out.push(`### ${s.title}`, '', '| Group | Example | Teaches | Opens in drawio |', '|---|---|---|---|')
+    for (const e of rows) {
+      const opens = e.hasDrawio ? 'yes' : 'no — model.json'
+      out.push(`| ${cell(groupTitle.get(e.group))} | [${cell(e.meta.title)}](${e.dir}/) | ${cell(e.meta.teaches.join(', '))} | ${opens} |`)
+    }
+    out.push('')
+  }
+  return out.join('\n')
+}
+
+export function replaceBetweenMarkers(text, body) {
+  const start = text.indexOf(MARK_START)
+  const end = text.indexOf(MARK_END)
+  if (start < 0 || end < start) {
+    throw new Error(`README.md must contain ${MARK_START} followed by ${MARK_END}`)
+  }
+  return text.slice(0, start + MARK_START.length) + '\n' + body + text.slice(end)
+}
