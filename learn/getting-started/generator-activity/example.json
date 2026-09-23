@@ -1,0 +1,6 @@
+{
+  "title": "Generator and activity",
+  "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
+  "teaches": ["generators", "activities", "connectors"],
+  "order": 10
+}

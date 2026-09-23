@@ -1,0 +1,6 @@
+{
+  "title": "Coffee shop: shared barista pool",
+  "summary": "Customers order, then split 80/20 between the espresso bar and the pastry counter, both drawing on one pool of two baristas. A model document for the quodsi CLI.",
+  "teaches": ["shared resources", "probability routing"],
+  "order": 10
+}
