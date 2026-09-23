@@ -107,6 +107,21 @@
       "url": "learn/actions/create/model.drawio"
     },
     {
+      "id": "join",
+      "title": "Join: three pieces become one order again",
+      "summary": "An order splits into three pieces that are packed at different speeds; Join waits until all three pieces of the same order arrive, then sends one combined order on to shipping.",
+      "teaches": [
+        "join",
+        "split",
+        "model states",
+        "expressions"
+      ],
+      "order": 50,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/join/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -114,7 +129,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 50,
+      "order": 60,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"

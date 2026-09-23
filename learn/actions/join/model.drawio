@@ -1,0 +1,87 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Join: three pieces become one order again&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:120},&quot;entities&quot;:[{&quot;id&quot;:&quot;order&quot;,&quot;name&quot;:&quot;Order&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[{&quot;id&quot;:&quot;state-orders-started&quot;,&quot;name&quot;:&quot;orders_started&quot;,&quot;componentType&quot;:&quot;model&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-order-no&quot;,&quot;name&quot;:&quot;order_no&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-piece-index&quot;,&quot;name&quot;:&quot;piece_index&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0}],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-split&quot;,&quot;sourceId&quot;:&quot;order-arrives&quot;,&quot;targetId&quot;:&quot;split-order&quot;,&quot;name&quot;:&quot;Order Arrives → Split Order&quot;}" id="edge-arrive-split">
+          <mxCell edge="1" parent="1" source="order-arrives" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="split-order">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-dispatch-a&quot;,&quot;sourceId&quot;:&quot;dispatch&quot;,&quot;targetId&quot;:&quot;pack-a&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-piece-index&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:0},&quot;name&quot;:&quot;Dispatch → Pack Item A&quot;}" id="edge-dispatch-a">
+          <mxCell edge="1" parent="1" source="dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pack-a">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-dispatch-b&quot;,&quot;sourceId&quot;:&quot;dispatch&quot;,&quot;targetId&quot;:&quot;pack-b&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-piece-index&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:1},&quot;name&quot;:&quot;Dispatch → Pack Item B&quot;}" id="edge-dispatch-b">
+          <mxCell edge="1" parent="1" source="dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pack-b">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-dispatch-c&quot;,&quot;sourceId&quot;:&quot;dispatch&quot;,&quot;targetId&quot;:&quot;pack-c&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-piece-index&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:2},&quot;name&quot;:&quot;Dispatch → Pack Item C&quot;}" id="edge-dispatch-c">
+          <mxCell edge="1" parent="1" source="dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pack-c">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-a-assemble&quot;,&quot;sourceId&quot;:&quot;pack-a&quot;,&quot;targetId&quot;:&quot;assemble&quot;,&quot;name&quot;:&quot;Pack Item A → Assemble Order&quot;}" id="edge-a-assemble">
+          <mxCell edge="1" parent="1" source="pack-a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="assemble">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-b-assemble&quot;,&quot;sourceId&quot;:&quot;pack-b&quot;,&quot;targetId&quot;:&quot;assemble&quot;,&quot;name&quot;:&quot;Pack Item B → Assemble Order&quot;}" id="edge-b-assemble">
+          <mxCell edge="1" parent="1" source="pack-b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="assemble">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-c-assemble&quot;,&quot;sourceId&quot;:&quot;pack-c&quot;,&quot;targetId&quot;:&quot;assemble&quot;,&quot;name&quot;:&quot;Pack Item C → Assemble Order&quot;}" id="edge-c-assemble">
+          <mxCell edge="1" parent="1" source="pack-c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="assemble">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Order Arrives" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;order-arrives&quot;,&quot;name&quot;:&quot;Order Arrives&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1},&quot;maxEntities&quot;:1,&quot;x&quot;:12,&quot;y&quot;:32}" id="order-arrives">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="32" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Split Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;split-order&quot;,&quot;name&quot;:&quot;Split Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;number-order&quot;,&quot;type&quot;:&quot;assign&quot;,&quot;modifications&quot;:[{&quot;stateId&quot;:&quot;state-orders-started&quot;,&quot;operation&quot;:&quot;add&quot;,&quot;value&quot;:1},{&quot;stateId&quot;:&quot;state-order-no&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;expression&quot;:&quot;orders_started&quot;}]},{&quot;id&quot;:&quot;split-order-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;split-order-split&quot;,&quot;type&quot;:&quot;split&quot;,&quot;count&quot;:3,&quot;destinationId&quot;:&quot;dispatch&quot;,&quot;inheritStates&quot;:[&quot;order_no&quot;],&quot;splitIndexState&quot;:&quot;piece_index&quot;}],&quot;x&quot;:152,&quot;y&quot;:32}" id="split-order">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="32" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Dispatch" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;dispatch&quot;,&quot;name&quot;:&quot;Dispatch&quot;,&quot;routing&quot;:&quot;state_condition&quot;,&quot;actions&quot;:[],&quot;x&quot;:292,&quot;y&quot;:32}" id="dispatch">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="32" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Pack Item A" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-a&quot;,&quot;name&quot;:&quot;Pack Item A&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-a-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}}],&quot;x&quot;:432,&quot;y&quot;:252}" id="pack-a">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="432" y="252" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Pack Item B" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-b&quot;,&quot;name&quot;:&quot;Pack Item B&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-b-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:4}}],&quot;x&quot;:432,&quot;y&quot;:132}" id="pack-b">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="432" y="132" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Pack Item C" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-c&quot;,&quot;name&quot;:&quot;Pack Item C&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-c-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:6}}],&quot;x&quot;:432,&quot;y&quot;:12}" id="pack-c">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="432" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Assemble Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;assemble&quot;,&quot;name&quot;:&quot;Assemble Order&quot;,&quot;capacity&quot;:100,&quot;actions&quot;:[{&quot;id&quot;:&quot;assemble-join&quot;,&quot;type&quot;:&quot;join&quot;,&quot;matchState&quot;:&quot;order_no&quot;,&quot;joinCount&quot;:3,&quot;destinationId&quot;:&quot;ship&quot;,&quot;inheritStates&quot;:[&quot;order_no&quot;]}],&quot;x&quot;:572,&quot;y&quot;:132}" id="assemble">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="572" y="132" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Ship Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;ship&quot;,&quot;name&quot;:&quot;Ship Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;ship-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}}],&quot;x&quot;:712,&quot;y&quot;:132}" id="ship">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="712" y="132" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

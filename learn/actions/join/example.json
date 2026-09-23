@@ -1,0 +1,6 @@
+{
+  "title": "Join: three pieces become one order again",
+  "summary": "An order splits into three pieces that are packed at different speeds; Join waits until all three pieces of the same order arrive, then sends one combined order on to shipping.",
+  "teaches": ["join", "split", "model states", "expressions"],
+  "order": 30
+}
