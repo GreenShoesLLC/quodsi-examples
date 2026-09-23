@@ -35,6 +35,7 @@ by hand.
 | Actions | [Join: three pieces become one order again](learn/actions/join/) | join, split, model states, expressions | yes |
 | Actions | [Dispose: scrap a bad part at inspection](learn/actions/dispose/) | dispose, action conditions, generator initial states | yes |
 | Actions | [Branch: urgent patients get a quick check-in](learn/actions/branch/) | branch, action conditions, generator initial states | yes |
+| Actions | [Seize and release: one nurse stays with each patient](learn/actions/seize-release/) | seize, release, delay with resource, resources, move time | yes |
 | Actions | [Action tour: one station per action](learn/actions/action-tour/) | actions, split, join, branch, loop, script | no — model.json |
 
 ### Industries

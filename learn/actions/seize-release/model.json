@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Seize and release: one nurse stays with each patient",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 120
+  },
+  "entities": [
+    {
+      "id": "patient",
+      "name": "Patient"
+    }
+  ],
+  "resources": [
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "capacity": 1
+    },
+    {
+      "id": "nurse",
+      "name": "Nurse",
+      "capacity": 1
+    }
+  ],
+  "resourceRequirements": [
+    {
+      "id": "req-clerk",
+      "name": "A clerk",
+      "rootClause": {
+        "id": "clause-clerk",
+        "requests": [
+          {
+            "resourceId": "clerk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "req-nurse",
+      "name": "A nurse",
+      "rootClause": {
+        "id": "clause-nurse",
+        "requests": [
+          {
+            "resourceId": "nurse"
+          }
+        ]
+      }
+    }
+  ],
+  "activities": [
+    {
+      "id": "register",
+      "name": "Register",
+      "actions": [
+        {
+          "id": "register-dwr",
+          "type": "delay_with_resource",
+          "resourceRequirementId": "req-clerk",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "admit",
+      "name": "Admit",
+      "actions": [
+        {
+          "id": "admit-seize",
+          "type": "seize",
+          "resourceRequirementId": "req-nurse"
+        },
+        {
+          "id": "admit-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 2.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "treat",
+      "name": "Treatment",
+      "actions": [
+        {
+          "id": "treat-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 6.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "discharge",
+      "name": "Discharge",
+      "actions": [
+        {
+          "id": "discharge-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 2.0
+          }
+        },
+        {
+          "id": "discharge-release",
+          "type": "release",
+          "resourceRequirementId": "req-nurse"
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "patients",
+      "name": "Patients Arrive",
+      "entityId": "patient",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 5.0
+      },
+      "maxEntities": 3
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-arrive-register",
+      "sourceId": "patients",
+      "targetId": "register",
+      "actions": [
+        {
+          "id": "edge-arrive-register-move",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 0.5
+          }
+        }
+      ],
+      "name": "Walk to Register"
+    },
+    {
+      "id": "edge-register-admit",
+      "sourceId": "register",
+      "targetId": "admit",
+      "actions": [
+        {
+          "id": "edge-register-admit-move",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 0.5
+          }
+        }
+      ],
+      "name": "Walk to Admit"
+    },
+    {
+      "id": "edge-admit-treat",
+      "sourceId": "admit",
+      "targetId": "treat",
+      "actions": [
+        {
+          "id": "edge-admit-treat-move",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 0.5
+          }
+        }
+      ],
+      "name": "Walk to Treatment"
+    },
+    {
+      "id": "edge-treat-discharge",
+      "sourceId": "treat",
+      "targetId": "discharge",
+      "actions": [
+        {
+          "id": "edge-treat-discharge-move",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 0.5
+          }
+        }
+      ],
+      "name": "Walk to Discharge"
+    }
+  ],
+  "states": []
+}

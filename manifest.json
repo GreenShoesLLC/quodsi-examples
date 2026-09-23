@@ -150,6 +150,22 @@
       "url": "learn/actions/branch/model.drawio"
     },
     {
+      "id": "seize-release",
+      "title": "Seize and release: one nurse stays with each patient",
+      "summary": "A patient seizes a nurse at Admit and keeps the same nurse through Treatment and every walk in between, releasing them only at Discharge; the next patient waits until the nurse is free.",
+      "teaches": [
+        "seize",
+        "release",
+        "delay with resource",
+        "resources",
+        "move time"
+      ],
+      "order": 80,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/seize-release/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -157,7 +173,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 80,
+      "order": 90,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"

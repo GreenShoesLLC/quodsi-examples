@@ -2,5 +2,5 @@
   "title": "Action tour: one station per action",
   "summary": "Every wire-legal activity action, one station each, chained into a single line. A model document for the quodsi CLI.",
   "teaches": ["actions", "split", "join", "branch", "loop", "script"],
-  "order": 60
+  "order": 70
 }

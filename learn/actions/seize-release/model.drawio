@@ -1,0 +1,67 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Seize and release: one nurse stays with each patient&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:120},&quot;entities&quot;:[{&quot;id&quot;:&quot;patient&quot;,&quot;name&quot;:&quot;Patient&quot;}],&quot;resources&quot;:[{&quot;id&quot;:&quot;clerk&quot;,&quot;name&quot;:&quot;Clerk&quot;,&quot;capacity&quot;:1,&quot;x&quot;:0,&quot;y&quot;:212},{&quot;id&quot;:&quot;nurse&quot;,&quot;name&quot;:&quot;Nurse&quot;,&quot;capacity&quot;:1,&quot;x&quot;:120,&quot;y&quot;:212}],&quot;resourceRequirements&quot;:[{&quot;id&quot;:&quot;req-clerk&quot;,&quot;name&quot;:&quot;A clerk&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-clerk&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;clerk&quot;}]}},{&quot;id&quot;:&quot;req-nurse&quot;,&quot;name&quot;:&quot;A nurse&quot;,&quot;rootClause&quot;:{&quot;id&quot;:&quot;clause-nurse&quot;,&quot;requests&quot;:[{&quot;resourceId&quot;:&quot;nurse&quot;}]}}],&quot;states&quot;:[],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-register&quot;,&quot;sourceId&quot;:&quot;patients&quot;,&quot;targetId&quot;:&quot;register&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-arrive-register-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Register&quot;}" id="edge-arrive-register">
+          <mxCell edge="1" parent="1" source="patients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="register">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-register-admit&quot;,&quot;sourceId&quot;:&quot;register&quot;,&quot;targetId&quot;:&quot;admit&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-register-admit-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Admit&quot;}" id="edge-register-admit">
+          <mxCell edge="1" parent="1" source="register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="admit">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-admit-treat&quot;,&quot;sourceId&quot;:&quot;admit&quot;,&quot;targetId&quot;:&quot;treat&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-admit-treat-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Treatment&quot;}" id="edge-admit-treat">
+          <mxCell edge="1" parent="1" source="admit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="treat">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-treat-discharge&quot;,&quot;sourceId&quot;:&quot;treat&quot;,&quot;targetId&quot;:&quot;discharge&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-treat-discharge-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Discharge&quot;}" id="edge-treat-discharge">
+          <mxCell edge="1" parent="1" source="treat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="discharge">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Patients Arrive" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;patients&quot;,&quot;name&quot;:&quot;Patients Arrive&quot;,&quot;entityId&quot;:&quot;patient&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;maxEntities&quot;:3,&quot;x&quot;:12,&quot;y&quot;:12}" id="patients">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Register" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;register&quot;,&quot;name&quot;:&quot;Register&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;register-dwr&quot;,&quot;type&quot;:&quot;delay_with_resource&quot;,&quot;resourceRequirementId&quot;:&quot;req-clerk&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}}],&quot;x&quot;:152,&quot;y&quot;:12}" id="register">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Admit" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;admit&quot;,&quot;name&quot;:&quot;Admit&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;admit-seize&quot;,&quot;type&quot;:&quot;seize&quot;,&quot;resourceRequirementId&quot;:&quot;req-nurse&quot;},{&quot;id&quot;:&quot;admit-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}}],&quot;x&quot;:292,&quot;y&quot;:12}" id="admit">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Treatment" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;treat&quot;,&quot;name&quot;:&quot;Treatment&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;treat-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:6}}],&quot;x&quot;:432,&quot;y&quot;:12}" id="treat">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="432" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Discharge" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;discharge&quot;,&quot;name&quot;:&quot;Discharge&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;discharge-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}},{&quot;id&quot;:&quot;discharge-release&quot;,&quot;type&quot;:&quot;release&quot;,&quot;resourceRequirementId&quot;:&quot;req-nurse&quot;}],&quot;x&quot;:572,&quot;y&quot;:12}" id="discharge">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="572" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Clerk" quodsiType="Resource" quodsiTracked="true" quodsiData="{&quot;type&quot;:&quot;Resource&quot;,&quot;resourceId&quot;:&quot;clerk&quot;}" id="clerk">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="80" width="80" x="0" y="212" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Nurse" quodsiType="Resource" quodsiTracked="true" quodsiData="{&quot;type&quot;:&quot;Resource&quot;,&quot;resourceId&quot;:&quot;nurse&quot;}" id="nurse">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="80" width="80" x="120" y="212" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
