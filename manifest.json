@@ -166,6 +166,21 @@
       "url": "learn/actions/seize-release/model.drawio"
     },
     {
+      "id": "assign",
+      "title": "Assign: price each order, then route the big ones for approval",
+      "summary": "Take Order counts each order and works out its size and total with assign steps; big orders are routed to a manager for approval, and every shipped order adds its total to the run's revenue.",
+      "teaches": [
+        "assign",
+        "entity states",
+        "model states",
+        "expressions"
+      ],
+      "order": 90,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/assign/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -173,7 +188,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 90,
+      "order": 100,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"

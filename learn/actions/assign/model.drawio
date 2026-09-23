@@ -1,0 +1,62 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Assign: price each order, then route the big ones for approval&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:60},&quot;entities&quot;:[{&quot;id&quot;:&quot;order&quot;,&quot;name&quot;:&quot;Order&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[{&quot;id&quot;:&quot;state-orders-taken&quot;,&quot;name&quot;:&quot;orders_taken&quot;,&quot;componentType&quot;:&quot;model&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-revenue&quot;,&quot;name&quot;:&quot;revenue&quot;,&quot;componentType&quot;:&quot;model&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-order-no&quot;,&quot;name&quot;:&quot;order_no&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-items&quot;,&quot;name&quot;:&quot;items&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-total&quot;,&quot;name&quot;:&quot;total&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0}],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-take&quot;,&quot;sourceId&quot;:&quot;orders&quot;,&quot;targetId&quot;:&quot;take-order&quot;,&quot;name&quot;:&quot;Orders Arrive → Take Order&quot;}" id="edge-arrive-take">
+          <mxCell edge="1" parent="1" source="orders" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="take-order">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-take-check&quot;,&quot;sourceId&quot;:&quot;take-order&quot;,&quot;targetId&quot;:&quot;check-total&quot;,&quot;name&quot;:&quot;Take Order → Check Total&quot;}" id="edge-take-check">
+          <mxCell edge="1" parent="1" source="take-order" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-total">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-check-approval&quot;,&quot;name&quot;:&quot;Big orders&quot;,&quot;sourceId&quot;:&quot;check-total&quot;,&quot;targetId&quot;:&quot;approval&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-total&quot;,&quot;comparison&quot;:&quot;greater_equal&quot;,&quot;value&quot;:60}}" id="edge-check-approval">
+          <mxCell edge="1" parent="1" source="check-total" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="approval">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-check-ship&quot;,&quot;name&quot;:&quot;Small orders&quot;,&quot;sourceId&quot;:&quot;check-total&quot;,&quot;targetId&quot;:&quot;ship&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-total&quot;,&quot;comparison&quot;:&quot;less_than&quot;,&quot;value&quot;:60}}" id="edge-check-ship">
+          <mxCell edge="1" parent="1" source="check-total" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ship">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-approval-ship&quot;,&quot;sourceId&quot;:&quot;approval&quot;,&quot;targetId&quot;:&quot;ship&quot;,&quot;name&quot;:&quot;Manager Approval → Ship Order&quot;}" id="edge-approval-ship">
+          <mxCell edge="1" parent="1" source="approval" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ship">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Orders Arrive" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;orders&quot;,&quot;name&quot;:&quot;Orders Arrive&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;maxEntities&quot;:4,&quot;x&quot;:12,&quot;y&quot;:25}" id="orders">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="25" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Take Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;take-order&quot;,&quot;name&quot;:&quot;Take Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;take-order-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;price-order&quot;,&quot;type&quot;:&quot;assign&quot;,&quot;modifications&quot;:[{&quot;stateId&quot;:&quot;state-orders-taken&quot;,&quot;operation&quot;:&quot;add&quot;,&quot;value&quot;:1},{&quot;stateId&quot;:&quot;state-order-no&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;expression&quot;:&quot;orders_taken&quot;},{&quot;stateId&quot;:&quot;state-items&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;expression&quot;:&quot;order_no * 2&quot;},{&quot;stateId&quot;:&quot;state-total&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;expression&quot;:&quot;items * 12&quot;}]}],&quot;x&quot;:152,&quot;y&quot;:25}" id="take-order">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="25" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Check Total" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;check-total&quot;,&quot;name&quot;:&quot;Check Total&quot;,&quot;routing&quot;:&quot;state_condition&quot;,&quot;actions&quot;:[],&quot;x&quot;:292,&quot;y&quot;:25}" id="check-total">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="25" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Manager Approval" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;approval&quot;,&quot;name&quot;:&quot;Manager Approval&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;approval-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:3}}],&quot;x&quot;:432,&quot;y&quot;:12}" id="approval">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="432" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Ship Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;ship&quot;,&quot;name&quot;:&quot;Ship Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;ship-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;book-revenue&quot;,&quot;type&quot;:&quot;assign&quot;,&quot;modifications&quot;:[{&quot;stateId&quot;:&quot;state-revenue&quot;,&quot;operation&quot;:&quot;add&quot;,&quot;expression&quot;:&quot;total&quot;}]}],&quot;x&quot;:572,&quot;y&quot;:25}" id="ship">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="572" y="25" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
