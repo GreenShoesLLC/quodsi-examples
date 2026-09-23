@@ -1,0 +1,6 @@
+{
+  "title": "Create: one order spawns three documents",
+  "summary": "One order creates an invoice, a shipping label and a packing slip, each sent straight to its own printer, while the order itself carries on to packing.",
+  "teaches": ["create", "entity types"],
+  "order": 20
+}

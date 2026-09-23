@@ -94,6 +94,19 @@
       "url": "learn/actions/split/model.drawio"
     },
     {
+      "id": "create",
+      "title": "Create: one order spawns three documents",
+      "summary": "One order creates an invoice, a shipping label and a packing slip, each sent straight to its own printer, while the order itself carries on to packing.",
+      "teaches": [
+        "create",
+        "entity types"
+      ],
+      "order": 40,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/create/model.drawio"
+    },
+    {
       "id": "urgent-care",
       "title": "Example: Urgent Care System",
       "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
@@ -101,7 +114,7 @@
         "probabilistic routing",
         "resource requirements"
       ],
-      "order": 40,
+      "order": 50,
       "section": "industries",
       "group": "healthcare",
       "url": "industries/healthcare/urgent-care/model.drawio"

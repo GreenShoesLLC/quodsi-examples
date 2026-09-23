@@ -31,6 +31,7 @@ by hand.
 | Getting Started | [Generator and activity](learn/getting-started/generator-activity/) | generators, activities, connectors | yes |
 | Routing | [Connector routing: probability, entity type, state condition](learn/routing/connector-routing/) | routing, entity types, states, assign actions | yes |
 | Actions | [Split: one entity becomes three](learn/actions/split/) | split, state-condition routing | yes |
+| Actions | [Create: one order spawns three documents](learn/actions/create/) | create, entity types | yes |
 | Actions | [Action tour: one station per action](learn/actions/action-tour/) | actions, split, join, branch, loop, script | no — model.json |
 
 ### Industries
