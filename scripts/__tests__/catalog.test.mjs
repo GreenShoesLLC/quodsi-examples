@@ -6,6 +6,7 @@ import { join, dirname } from 'node:path'
 import {
   loadGroups, scanExamples, checkModelFiles,
   buildManifest, serializeManifest, renderExamplesTable, replaceBetweenMarkers, normalizeEol, MARK_START, MARK_END,
+  parsePublishTarget,
 } from '../lib/catalog.mjs'
 
 // Builds a throwaway repo from { 'relative/path': 'contents' }.
@@ -231,4 +232,15 @@ test('replaceBetweenMarkers swaps only the marked block and requires markers', (
 test('normalizeEol makes a CRLF checkout compare equal to the LF generator output', () => {
   const lf = serializeManifest(buildManifest(GROUPS, [entry('split', 'learn', 'actions', 10)]))
   assert.equal(normalizeEol(lf.replace(/\n/g, '\r\n')), lf)
+})
+
+test('parsePublishTarget accepts declared section/group and a valid slug', () => {
+  assert.deepEqual(parsePublishTarget('learn/actions/split', GROUPS), {
+    section: 'learn', group: 'actions', slug: 'split', dir: 'learn/actions/split',
+  })
+  assert.match(parsePublishTarget('learn/actions', GROUPS).error, /section\/group\/slug/)
+  assert.match(parsePublishTarget('learn/resources/x', GROUPS).error, /group "resources"/)
+  assert.match(parsePublishTarget('nope/actions/x', GROUPS).error, /section "nope"/)
+  assert.match(parsePublishTarget('learn/actions/Bad_Slug', GROUPS).error, /slug/)
+  assert.deepEqual(parsePublishTarget('learn\\actions\\split', GROUPS).dir, 'learn/actions/split')
 })

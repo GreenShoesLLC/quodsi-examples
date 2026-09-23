@@ -244,3 +244,18 @@ export function replaceBetweenMarkers(text, body) {
   }
   return text.slice(0, start + MARK_START.length) + '\n' + body + text.slice(end)
 }
+
+// publish.mjs's target argument. Backslashes are accepted so a Windows user
+// can tab-complete a path.
+export function parsePublishTarget(target, groups) {
+  const parts = String(target).replace(/\\/g, '/').replace(/\/+$/, '').split('/')
+  if (parts.length !== 3) return { error: `target must be section/group/slug, got "${target}"` }
+  const [section, group, slug] = parts
+  const s = groups.sections.find((x) => x.id === section)
+  if (!s) return { error: `section "${section}" is not declared in groups.json` }
+  if (!s.groups.some((g) => g.id === group)) {
+    return { error: `group "${group}" is not declared in section "${section}" (add it to groups.json first)` }
+  }
+  if (!SLUG.test(slug)) return { error: `"${slug}" is not a valid slug (lowercase letters, digits, single dashes)` }
+  return { section, group, slug, dir: `${section}/${group}/${slug}` }
+}
