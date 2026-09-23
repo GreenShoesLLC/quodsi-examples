@@ -133,6 +133,18 @@ test('scanExamples enforces slug shape and repo-wide uniqueness', () => {
   assert.ok(errors.some((e) => /duplicate example slug "dup"/.test(e)))
 })
 
+test('scanExamples tolerates a UTF-8 BOM in example.json (PowerShell 5 Set-Content writes one)', () => {
+  const root = makeRepo({
+    'groups.json': JSON.stringify(GROUPS),
+    'learn/actions/split/example.json': '﻿' + meta(),
+    'learn/actions/split/README.md': '# x\n',
+    'learn/actions/split/model.drawio': DRAWIO,
+  })
+  const { errors, examples } = scanExamples(root, loadGroups(root).groups)
+  assert.deepEqual(errors, [])
+  assert.equal(examples.find((e) => e.slug === 'split').meta.title, 'T')
+})
+
 test('scanExamples validates example.json, README and model presence', () => {
   const root = makeRepo({
     'groups.json': JSON.stringify(GROUPS),

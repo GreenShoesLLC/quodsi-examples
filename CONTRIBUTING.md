@@ -29,7 +29,7 @@ default options in each installer.
 | Program | Where to get it | What it is for |
 |---|---|---|
 | **Git** | https://git-scm.com/downloads | Copies this repo to your computer and sends your changes back |
-| **Node.js** (LTS version) | https://nodejs.org | Runs the two helper scripts in Part 2 |
+| **Node.js** (LTS version) | https://nodejs.org | Runs the helper scripts used in Part 1 and Part 2 (build-manifest, publish, validate) |
 | **VS Code** | https://code.visualstudio.com | The editor you will change files in |
 
 ## Check they are working
@@ -271,7 +271,7 @@ example:
 Pick the section and group your model belongs in — **Learn** for a model that
 teaches one Quodsi feature at a time, **Industries** for a complete model from
 a field. If neither existing group fits, propose a new one by adding it to
-`groups.json` in the same pull request as your example; ask Daniel first if
+`groups.json` in the same commit as your example; ask Daniel first if
 you are not sure it belongs.
 
 Then pick a slug: short, lowercase, with dashes instead of spaces. Put
@@ -365,7 +365,8 @@ Copy the line below, paste it into PowerShell, and press Enter:
 node scripts/validate.mjs
 ```
 
-You want a line like `OK: 3 example(s), 3 in the drawio picker`. It checks
+You want a line starting `OK:` that counts the examples, something like
+`OK: 3 example(s), 3 in the drawio picker`. It checks
 everything above: the model file is uncompressed and Converted, carries no
 `quodsiDocumentId`, every folder sits under a declared section and group, and
 every `example.json` has the fields it needs.
@@ -387,6 +388,13 @@ PowerShell and press Enter:
 git add industries/healthcare/clinic-triage manifest.json README.md
 git commit -m "Add clinic-triage example"
 git push
+```
+
+If you added a new group in Step 2, also add `groups.json` — it will not be
+picked up by the `git add` line above:
+
+```
+git add groups.json
 ```
 
 ## Step 8 — Confirm it is live
@@ -416,7 +424,7 @@ model — not just that the title appears in the list.
 
 `groups.json` lists the sections and groups in the order they display —
 **Learn** and **Industries** today, each with its own list of groups. To
-propose a new group, add it to `groups.json` in the same pull request as the
+propose a new group, add it to `groups.json` in the same commit as the
 example that needs it.
 
 ## Which app reads which branch
@@ -478,9 +486,10 @@ branches exist.
 |---|---|
 | `git` / `node` / `code` "is not recognized" | Either that program is not installed, or you are in a PowerShell window that was open before you installed it. Close the window, open a new one, and try again. |
 | Red X on the Actions page | Usually a typo in `example.json`, or `manifest.json` not regenerated. Run `node scripts/build-manifest.mjs` and `node scripts/validate.mjs` locally. |
-| Push rejected / asks for a password repeatedly | You do not have push access yet. Ask Daniel. |
+| Push asks for a password repeatedly, or is rejected outright | You do not have push access yet. Ask Daniel. |
+| Push rejected, or a conflict in `manifest.json` / `README.md` after `git pull` | Someone else published an example first. Run `git pull`, then `node scripts/build-manifest.mjs` (this regenerates both files from the folders — never hand-merge them), then `git add manifest.json README.md`, `git commit`, `git push`. |
 | Picker says "Examples aren't available right now" | `manifest.json` could not be read at all. Check the Actions page. |
-| Your example is missing from the picker, but Actions is green | Either you are still inside the five-minute wait, or your row has the wrong type somewhere — `order` must be a number with no quotes, and every `teaches` tag must be in quotes. Rows the app cannot read are skipped silently. |
+| Your example is missing from the picker, but Actions is green | Either you are still inside the five-minute wait, or the example has no `model.drawio` — a `model.json`-only example never appears in the drawio picker (see [Model documents written by an agent](#model-documents-written-by-an-agent)). |
 | Your example opens with the "convert this diagram" prompt | You published an unconverted diagram. Redo Part 2 Step 1, running **Convert Diagram to Model**, then Step 3. |
 | Changed something and nothing happened at all | Check you are on the right branch: run `git branch --show-current` — it should print `dev`. |
 

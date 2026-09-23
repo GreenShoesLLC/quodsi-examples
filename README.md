@@ -63,7 +63,8 @@ only examples with `model.drawio` appear in the picker.
 
 ## Rules
 
-`scripts/validate.mjs` enforces these on every push:
+CI enforces these on every push (`scripts/validate.mjs` and
+`scripts/build-manifest.mjs --check`):
 
 - **Folders are `<section>/<group>/<slug>`**, with the section and group
   declared in `groups.json` and the slug unique across the repo (lowercase

@@ -10,7 +10,7 @@ detour through the lab or imaging first.
 
 ## What it shows
 
-- **A realistic patient path** of six stations, each with its own staff
+- **A realistic patient path** of six stations, each with a staff
   resource and a triangular service time (fastest, most likely, slowest).
 - **Probability routing at a decision point.** After the exam, the
   "Lab / Imaging / Direct?" step sends 30% of patients to a lab draw, 15% to

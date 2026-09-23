@@ -14,7 +14,10 @@ const NON_SECTION_DIRS = new Set(['scripts'])
 const isNonEmptyString = (v) => typeof v === 'string' && v.trim() !== ''
 
 function readJson(path) {
-  return JSON.parse(readFileSync(path, 'utf8'))
+  // PowerShell 5's Set-Content writes a leading UTF-8 BOM (﻿), which
+  // JSON.parse treats as invalid input. Strip it before parsing.
+  const text = readFileSync(path, 'utf8').replace(/^﻿/, '')
+  return JSON.parse(text)
 }
 
 function entries(dir) {
