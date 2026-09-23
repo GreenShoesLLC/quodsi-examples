@@ -16,6 +16,14 @@
       "teaches": ["probabilistic routing", "resource requirements"],
       "order": 2,
       "url": "models/02-urgentcare-example/model.drawio"
+    },
+    {
+      "id": "connector-routing",
+      "title": "Connector routing: probability, entity type, state condition",
+      "summary": "Three small flows showing every way an activity can choose among its outgoing connectors: weighted chance, the entity's type, and a condition on a value the entity carries.",
+      "teaches": ["routing", "entity types", "states", "assign actions"],
+      "order": 3,
+      "url": "models/03-connector-routing/model.drawio"
     }
   ]
 }
