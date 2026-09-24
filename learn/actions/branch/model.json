@@ -105,17 +105,20 @@
     {
       "id": "edge-walkins-checkin",
       "sourceId": "walk-ins",
-      "targetId": "check-in"
+      "targetId": "check-in",
+      "weight": 1
     },
     {
       "id": "edge-urgent-checkin",
       "sourceId": "urgent",
-      "targetId": "check-in"
+      "targetId": "check-in",
+      "weight": 1
     },
     {
       "id": "edge-checkin-doctor",
       "sourceId": "check-in",
-      "targetId": "see-doctor"
+      "targetId": "see-doctor",
+      "weight": 1
     }
   ],
   "states": [

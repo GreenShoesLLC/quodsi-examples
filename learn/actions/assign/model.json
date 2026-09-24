@@ -119,18 +119,21 @@
     {
       "id": "edge-arrive-take",
       "sourceId": "orders",
-      "targetId": "take-order"
+      "targetId": "take-order",
+      "weight": 1
     },
     {
       "id": "edge-take-check",
       "sourceId": "take-order",
-      "targetId": "check-total"
+      "targetId": "check-total",
+      "weight": 1
     },
     {
       "id": "edge-check-approval",
       "name": "Big orders",
       "sourceId": "check-total",
       "targetId": "approval",
+      "weight": 1,
       "entityId": "order",
       "condition": {
         "stateId": "state-total",
@@ -143,6 +146,7 @@
       "name": "Small orders",
       "sourceId": "check-total",
       "targetId": "ship",
+      "weight": 1,
       "entityId": "order",
       "condition": {
         "stateId": "state-total",
@@ -153,7 +157,8 @@
     {
       "id": "edge-approval-ship",
       "sourceId": "approval",
-      "targetId": "ship"
+      "targetId": "ship",
+      "weight": 1
     }
   ],
   "states": [

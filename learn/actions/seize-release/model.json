@@ -138,6 +138,7 @@
       "id": "edge-arrive-register",
       "sourceId": "patients",
       "targetId": "register",
+      "weight": 1,
       "actions": [
         {
           "id": "edge-arrive-register-move",
@@ -154,6 +155,7 @@
       "id": "edge-register-admit",
       "sourceId": "register",
       "targetId": "admit",
+      "weight": 1,
       "actions": [
         {
           "id": "edge-register-admit-move",
@@ -170,6 +172,7 @@
       "id": "edge-admit-treat",
       "sourceId": "admit",
       "targetId": "treat",
+      "weight": 1,
       "actions": [
         {
           "id": "edge-admit-treat-move",
@@ -186,6 +189,7 @@
       "id": "edge-treat-discharge",
       "sourceId": "treat",
       "targetId": "discharge",
+      "weight": 1,
       "actions": [
         {
           "id": "edge-treat-discharge-move",

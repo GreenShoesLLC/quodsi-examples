@@ -104,12 +104,14 @@
     {
       "id": "edge-arrive-split",
       "sourceId": "order-arrives",
-      "targetId": "split-order"
+      "targetId": "split-order",
+      "weight": 1
     },
     {
       "id": "edge-dispatch-a",
       "sourceId": "dispatch",
       "targetId": "pack-a",
+      "weight": 1,
       "entityId": "order",
       "condition": {
         "stateId": "state-piece-index",
@@ -121,6 +123,7 @@
       "id": "edge-dispatch-b",
       "sourceId": "dispatch",
       "targetId": "pack-b",
+      "weight": 1,
       "entityId": "order",
       "condition": {
         "stateId": "state-piece-index",
@@ -132,6 +135,7 @@
       "id": "edge-dispatch-c",
       "sourceId": "dispatch",
       "targetId": "pack-c",
+      "weight": 1,
       "entityId": "order",
       "condition": {
         "stateId": "state-piece-index",

@@ -6,17 +6,17 @@
           <mxCell />
         </object>
         <mxCell id="1" parent="0" />
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-good-inspect&quot;,&quot;sourceId&quot;:&quot;good-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Good Parts → Inspect Part&quot;}" id="edge-good-inspect">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-good-inspect&quot;,&quot;sourceId&quot;:&quot;good-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Good Parts → Inspect Part&quot;}" id="edge-good-inspect">
           <mxCell edge="1" parent="1" source="good-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3375;entryDx=0;entryDy=0;" target="inspect">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-bad-inspect&quot;,&quot;sourceId&quot;:&quot;bad-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Bad Parts → Inspect Part&quot;}" id="edge-bad-inspect">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-bad-inspect&quot;,&quot;sourceId&quot;:&quot;bad-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Bad Parts → Inspect Part&quot;}" id="edge-bad-inspect">
           <mxCell edge="1" parent="1" source="bad-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.675;entryDx=0;entryDy=0;" target="inspect">
             <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="102" y="172" /><mxPoint x="102" y="79" /></Array></mxGeometry>
           </mxCell>
         </object>
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-inspect-pack&quot;,&quot;sourceId&quot;:&quot;inspect&quot;,&quot;targetId&quot;:&quot;pack&quot;,&quot;name&quot;:&quot;Inspect Part → Pack Part&quot;}" id="edge-inspect-pack">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-inspect-pack&quot;,&quot;sourceId&quot;:&quot;inspect&quot;,&quot;targetId&quot;:&quot;pack&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Inspect Part → Pack Part&quot;}" id="edge-inspect-pack">
           <mxCell edge="1" parent="1" source="inspect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pack">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>

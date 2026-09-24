@@ -6,22 +6,22 @@
           <mxCell />
         </object>
         <mxCell id="1" parent="0" />
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-register&quot;,&quot;sourceId&quot;:&quot;patients&quot;,&quot;targetId&quot;:&quot;register&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-arrive-register-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Register&quot;}" id="edge-arrive-register">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-register&quot;,&quot;sourceId&quot;:&quot;patients&quot;,&quot;targetId&quot;:&quot;register&quot;,&quot;weight&quot;:1,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-arrive-register-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Register&quot;}" id="edge-arrive-register">
           <mxCell edge="1" parent="1" source="patients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="register">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-register-admit&quot;,&quot;sourceId&quot;:&quot;register&quot;,&quot;targetId&quot;:&quot;admit&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-register-admit-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Admit&quot;}" id="edge-register-admit">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-register-admit&quot;,&quot;sourceId&quot;:&quot;register&quot;,&quot;targetId&quot;:&quot;admit&quot;,&quot;weight&quot;:1,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-register-admit-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Admit&quot;}" id="edge-register-admit">
           <mxCell edge="1" parent="1" source="register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="admit">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-admit-treat&quot;,&quot;sourceId&quot;:&quot;admit&quot;,&quot;targetId&quot;:&quot;treat&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-admit-treat-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Treatment&quot;}" id="edge-admit-treat">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-admit-treat&quot;,&quot;sourceId&quot;:&quot;admit&quot;,&quot;targetId&quot;:&quot;treat&quot;,&quot;weight&quot;:1,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-admit-treat-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Treatment&quot;}" id="edge-admit-treat">
           <mxCell edge="1" parent="1" source="admit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="treat">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
-        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-treat-discharge&quot;,&quot;sourceId&quot;:&quot;treat&quot;,&quot;targetId&quot;:&quot;discharge&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-treat-discharge-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Discharge&quot;}" id="edge-treat-discharge">
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-treat-discharge&quot;,&quot;sourceId&quot;:&quot;treat&quot;,&quot;targetId&quot;:&quot;discharge&quot;,&quot;weight&quot;:1,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-treat-discharge-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Discharge&quot;}" id="edge-treat-discharge">
           <mxCell edge="1" parent="1" source="treat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="discharge">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>

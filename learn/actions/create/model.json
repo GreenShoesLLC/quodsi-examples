@@ -137,12 +137,14 @@
     {
       "id": "edge-arrive-take",
       "sourceId": "order-arrives",
-      "targetId": "take-order"
+      "targetId": "take-order",
+      "weight": 1
     },
     {
       "id": "edge-take-pack",
       "sourceId": "take-order",
-      "targetId": "pack-order"
+      "targetId": "pack-order",
+      "weight": 1
     }
   ],
   "states": []
