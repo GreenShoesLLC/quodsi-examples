@@ -1,5 +1,10 @@
 # Branch: urgent patients get a quick check-in
 
+> **Not in the drawio picker yet.** The Quodsi action editor cannot show or
+> edit a Branch's two step lists, so this model is published as a model
+> document only (`model.json`, runnable with the `quodsi` CLI). It returns to
+> the picker when the editor supports Branch.
+
 Three walk-in patients and one urgent patient arrive at a clinic. At *Check
 In*, the urgent patient gets a one-minute triage; walk-ins get a five-minute
 registration. Then everyone goes on to see the doctor.
