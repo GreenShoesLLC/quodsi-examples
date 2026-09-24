@@ -7,28 +7,28 @@
         </object>
         <mxCell id="1" parent="0" />
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-good-inspect&quot;,&quot;sourceId&quot;:&quot;good-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Good Parts → Inspect Part&quot;}" id="edge-good-inspect">
-          <mxCell edge="1" parent="1" source="good-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="inspect">
+          <mxCell edge="1" parent="1" source="good-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3375;entryDx=0;entryDy=0;" target="inspect">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-bad-inspect&quot;,&quot;sourceId&quot;:&quot;bad-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Bad Parts → Inspect Part&quot;}" id="edge-bad-inspect">
-          <mxCell edge="1" parent="1" source="bad-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="inspect">
-            <mxGeometry relative="1" as="geometry" />
+          <mxCell edge="1" parent="1" source="bad-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.675;entryDx=0;entryDy=0;" target="inspect">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="102" y="172" /><mxPoint x="102" y="79" /></Array></mxGeometry>
           </mxCell>
         </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-inspect-pack&quot;,&quot;sourceId&quot;:&quot;inspect&quot;,&quot;targetId&quot;:&quot;pack&quot;,&quot;name&quot;:&quot;Inspect Part → Pack Part&quot;}" id="edge-inspect-pack">
-          <mxCell edge="1" parent="1" source="inspect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pack">
+          <mxCell edge="1" parent="1" source="inspect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pack">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
-        <object label="Good Parts" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;good-parts&quot;,&quot;name&quot;:&quot;Good Parts&quot;,&quot;entityId&quot;:&quot;part&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;maxEntities&quot;:3,&quot;x&quot;:12,&quot;y&quot;:132}" id="good-parts">
-          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="12" y="132" as="geometry" />
-          </mxCell>
-        </object>
-        <object label="Bad Parts" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;bad-parts&quot;,&quot;name&quot;:&quot;Bad Parts&quot;,&quot;entityId&quot;:&quot;part&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;startDelay&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:7},&quot;maxEntities&quot;:1,&quot;initialStates&quot;:[{&quot;stateId&quot;:&quot;state-defective&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;value&quot;:1}],&quot;x&quot;:12,&quot;y&quot;:12}" id="bad-parts">
+        <object label="Good Parts" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;good-parts&quot;,&quot;name&quot;:&quot;Good Parts&quot;,&quot;entityId&quot;:&quot;part&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;maxEntities&quot;:3,&quot;x&quot;:12,&quot;y&quot;:12}" id="good-parts">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
             <mxGeometry height="80" width="80" x="12" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Bad Parts" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;bad-parts&quot;,&quot;name&quot;:&quot;Bad Parts&quot;,&quot;entityId&quot;:&quot;part&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5},&quot;startDelay&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:7},&quot;maxEntities&quot;:1,&quot;initialStates&quot;:[{&quot;stateId&quot;:&quot;state-defective&quot;,&quot;operation&quot;:&quot;assign&quot;,&quot;value&quot;:1}],&quot;x&quot;:12,&quot;y&quot;:132}" id="bad-parts">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="132" as="geometry" />
           </mxCell>
         </object>
         <object label="Inspect Part" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Inspect Part&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;inspect-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;scrap-if-defective&quot;,&quot;type&quot;:&quot;dispose&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-defective&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:1}}],&quot;x&quot;:152,&quot;y&quot;:25}" id="inspect">
