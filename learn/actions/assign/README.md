@@ -43,11 +43,16 @@ each order gets its own number.
 
 ## Why there is a Check Total step
 
-An activity chooses which connector to leave by **when the order arrives
-there**, before its steps run. *Take Order* sets `total` in its own steps, so
-it cannot route on it. *Check Total* is a zero-time decision step: by the
-time an order arrives there, its `total` is known, and its connectors send
-orders of 60 or more to *Manager Approval* and the rest to *Ship Order*. The
+*Check Total* is a zero-time decision step: it keeps the approval rule in its
+own place in the diagram, where it is easy to see and change. Its connectors
+send orders of 60 or more to *Manager Approval* and the rest to *Ship Order*.
+
+It also matters for older engines. Quodsi engines released before the
+departure-time routing change decide an activity's routing when an order
+*arrives* there, before its steps run — on those, *Take Order* could not route
+on the `total` it has just set, and the separate step is what makes the rule
+work. Newer engines decide when the order *leaves*, so *Take Order* could
+route directly; the example keeps *Check Total* so it works on both. The
 [Split example](../split/) uses its *Dispatch* step the same way.
 
 ## What you'll see
