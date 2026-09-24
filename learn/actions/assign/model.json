@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Assign: price each order, then route the big ones for approval",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 60
+  },
+  "entities": [
+    {
+      "id": "order",
+      "name": "Order"
+    }
+  ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    {
+      "id": "take-order",
+      "name": "Take Order",
+      "actions": [
+        {
+          "id": "take-order-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        },
+        {
+          "id": "price-order",
+          "type": "assign",
+          "modifications": [
+            {
+              "stateId": "state-orders-taken",
+              "operation": "add",
+              "value": 1
+            },
+            {
+              "stateId": "state-order-no",
+              "operation": "assign",
+              "expression": "orders_taken"
+            },
+            {
+              "stateId": "state-items",
+              "operation": "assign",
+              "expression": "order_no * 2"
+            },
+            {
+              "stateId": "state-total",
+              "operation": "assign",
+              "expression": "items * 12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-total",
+      "name": "Check Total",
+      "routing": "state_condition",
+      "actions": []
+    },
+    {
+      "id": "approval",
+      "name": "Manager Approval",
+      "actions": [
+        {
+          "id": "approval-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 3.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "ship",
+      "name": "Ship Order",
+      "actions": [
+        {
+          "id": "ship-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        },
+        {
+          "id": "book-revenue",
+          "type": "assign",
+          "modifications": [
+            {
+              "stateId": "state-revenue",
+              "operation": "add",
+              "expression": "total"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "orders",
+      "name": "Orders Arrive",
+      "entityId": "order",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 5.0
+      },
+      "maxEntities": 4
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-arrive-take",
+      "sourceId": "orders",
+      "targetId": "take-order",
+      "weight": 1
+    },
+    {
+      "id": "edge-take-check",
+      "sourceId": "take-order",
+      "targetId": "check-total",
+      "weight": 1
+    },
+    {
+      "id": "edge-check-approval",
+      "name": "Big orders",
+      "sourceId": "check-total",
+      "targetId": "approval",
+      "weight": 1,
+      "entityId": "order",
+      "condition": {
+        "stateId": "state-total",
+        "comparison": "greater_equal",
+        "value": 60
+      }
+    },
+    {
+      "id": "edge-check-ship",
+      "name": "Small orders",
+      "sourceId": "check-total",
+      "targetId": "ship",
+      "weight": 1,
+      "entityId": "order",
+      "condition": {
+        "stateId": "state-total",
+        "comparison": "less_than",
+        "value": 60
+      }
+    },
+    {
+      "id": "edge-approval-ship",
+      "sourceId": "approval",
+      "targetId": "ship",
+      "weight": 1
+    }
+  ],
+  "states": [
+    {
+      "id": "state-orders-taken",
+      "name": "orders_taken",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-revenue",
+      "name": "revenue",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-order-no",
+      "name": "order_no",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-items",
+      "name": "items",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-total",
+      "name": "total",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    }
+  ]
+}

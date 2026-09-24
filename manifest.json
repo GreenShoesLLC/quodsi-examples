@@ -1,29 +1,184 @@
 {
   "version": 1,
+  "generated": "Do not edit. Run: node scripts/build-manifest.mjs",
+  "sections": [
+    {
+      "id": "learn",
+      "title": "Learn",
+      "groups": [
+        {
+          "id": "getting-started",
+          "title": "Getting Started",
+          "summary": "The smallest models that run."
+        },
+        {
+          "id": "routing",
+          "title": "Routing",
+          "summary": "How an entity chooses where to go next."
+        },
+        {
+          "id": "actions",
+          "title": "Actions",
+          "summary": "What an activity can do to the entity passing through it."
+        }
+      ]
+    },
+    {
+      "id": "industries",
+      "title": "Industries",
+      "groups": [
+        {
+          "id": "healthcare",
+          "title": "Healthcare",
+          "summary": "Clinics, hospitals and patient flow."
+        },
+        {
+          "id": "manufacturing",
+          "title": "Manufacturing",
+          "summary": "Lines, cells and work in progress."
+        },
+        {
+          "id": "supply-chain",
+          "title": "Supply Chain",
+          "summary": "Warehouses, orders and distribution."
+        },
+        {
+          "id": "food-service",
+          "title": "Food Service",
+          "summary": "Counters, kitchens and queues."
+        }
+      ]
+    }
+  ],
   "examples": [
     {
       "id": "generator-activity",
       "title": "Generator and activity",
       "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
-      "teaches": ["generators", "activities", "connectors"],
-      "order": 1,
-      "url": "models/01-generator-activity/model.drawio"
-    },
-    {
-      "id": "urgentcare-example",
-      "title": "Example: Urgent Care System",
-      "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
-      "teaches": ["probabilistic routing", "resource requirements"],
-      "order": 2,
-      "url": "models/02-urgentcare-example/model.drawio"
+      "teaches": [
+        "generators",
+        "activities",
+        "connectors"
+      ],
+      "order": 10,
+      "section": "learn",
+      "group": "getting-started",
+      "url": "learn/getting-started/generator-activity/model.drawio"
     },
     {
       "id": "connector-routing",
       "title": "Connector routing: probability, entity type, state condition",
       "summary": "Three small flows showing every way an activity can choose among its outgoing connectors: weighted chance, the entity's type, and a condition on a value the entity carries.",
-      "teaches": ["routing", "entity types", "states", "assign actions"],
-      "order": 3,
-      "url": "models/03-connector-routing/model.drawio"
+      "teaches": [
+        "routing",
+        "entity types",
+        "states",
+        "assign actions"
+      ],
+      "order": 20,
+      "section": "learn",
+      "group": "routing",
+      "url": "learn/routing/connector-routing/model.drawio"
+    },
+    {
+      "id": "split",
+      "title": "Split: one entity becomes three",
+      "summary": "One order splits into three pieces; a zero-time dispatch step sends each piece to its own activity.",
+      "teaches": [
+        "split",
+        "state-condition routing"
+      ],
+      "order": 30,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/split/model.drawio"
+    },
+    {
+      "id": "create",
+      "title": "Create: one order spawns three documents",
+      "summary": "One order creates an invoice, a shipping label and a packing slip, each sent straight to its own printer, while the order itself carries on to packing.",
+      "teaches": [
+        "create",
+        "entity types"
+      ],
+      "order": 40,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/create/model.drawio"
+    },
+    {
+      "id": "join",
+      "title": "Join: three pieces become one order again",
+      "summary": "An order splits into three pieces that are packed at different speeds; Join waits until all three pieces of the same order arrive, then sends one combined order on to shipping.",
+      "teaches": [
+        "join",
+        "split",
+        "model states",
+        "expressions"
+      ],
+      "order": 50,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/join/model.drawio"
+    },
+    {
+      "id": "dispose",
+      "title": "Dispose: scrap a bad part at inspection",
+      "summary": "Four parts are inspected; the one marked defective is counted and disposed right there, the good parts are packed and counted, so the results show 3 packed and 1 scrapped.",
+      "teaches": [
+        "dispose",
+        "action conditions",
+        "model states",
+        "generator initial states"
+      ],
+      "order": 60,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/dispose/model.drawio"
+    },
+    {
+      "id": "seize-release",
+      "title": "Seize and release: one nurse stays with each patient",
+      "summary": "A patient seizes a nurse at Admit and keeps the same nurse through Treatment and every walk in between, releasing them only at Discharge; the next patient waits until the nurse is free.",
+      "teaches": [
+        "seize",
+        "release",
+        "delay with resource",
+        "resources",
+        "move time"
+      ],
+      "order": 70,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/seize-release/model.drawio"
+    },
+    {
+      "id": "assign",
+      "title": "Assign: price each order, then route the big ones for approval",
+      "summary": "Take Order counts each order and works out its size and total with assign steps; big orders are routed to a manager for approval, and every shipped order adds its total to the run's revenue.",
+      "teaches": [
+        "assign",
+        "entity states",
+        "model states",
+        "expressions"
+      ],
+      "order": 80,
+      "section": "learn",
+      "group": "actions",
+      "url": "learn/actions/assign/model.drawio"
+    },
+    {
+      "id": "urgent-care",
+      "title": "Example: Urgent Care System",
+      "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
+      "teaches": [
+        "probabilistic routing",
+        "resource requirements"
+      ],
+      "order": 90,
+      "section": "industries",
+      "group": "healthcare",
+      "url": "industries/healthcare/urgent-care/model.drawio"
     }
   ]
 }

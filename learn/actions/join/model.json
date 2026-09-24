@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Join: three pieces become one order again",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 120
+  },
+  "entities": [
+    {
+      "id": "order",
+      "name": "Order"
+    }
+  ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    {
+      "id": "split-order",
+      "name": "Split Order",
+      "actions": [
+        {
+          "id": "number-order",
+          "type": "assign",
+          "modifications": [
+            {
+              "stateId": "state-orders-started",
+              "operation": "add",
+              "value": 1
+            },
+            {
+              "stateId": "state-order-no",
+              "operation": "assign",
+              "expression": "orders_started"
+            }
+          ]
+        },
+        {
+          "id": "split-order-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        },
+        {
+          "id": "split-order-split",
+          "type": "split",
+          "count": 3,
+          "destinationId": "dispatch",
+          "inheritStates": [
+            "order_no"
+          ],
+          "splitIndexState": "piece_index",
+          "modifications": []
+        }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "name": "Dispatch",
+      "routing": "state_condition",
+      "actions": []
+    },
+    {
+      "id": "pack-a",
+      "name": "Pack Item A",
+      "actions": [
+        {
+          "id": "pack-a-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 2.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "pack-b",
+      "name": "Pack Item B",
+      "actions": [
+        {
+          "id": "pack-b-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "pack-c",
+      "name": "Pack Item C",
+      "actions": [
+        {
+          "id": "pack-c-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 6.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "assemble",
+      "name": "Assemble Order",
+      "capacity": 100,
+      "actions": [
+        {
+          "id": "assemble-join",
+          "type": "join",
+          "matchState": "order_no",
+          "joinCount": 3,
+          "destinationId": "ship",
+          "inheritStates": [
+            "order_no"
+          ],
+          "modifications": []
+        }
+      ]
+    },
+    {
+      "id": "ship",
+      "name": "Ship Order",
+      "actions": [
+        {
+          "id": "ship-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "order-arrives",
+      "name": "Order Arrives",
+      "entityId": "order",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 1.0
+      },
+      "maxEntities": 1
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-arrive-split",
+      "sourceId": "order-arrives",
+      "targetId": "split-order",
+      "weight": 1
+    },
+    {
+      "id": "edge-dispatch-a",
+      "sourceId": "dispatch",
+      "targetId": "pack-a",
+      "weight": 1,
+      "entityId": "order",
+      "condition": {
+        "stateId": "state-piece-index",
+        "comparison": "equal",
+        "value": 0
+      }
+    },
+    {
+      "id": "edge-dispatch-b",
+      "sourceId": "dispatch",
+      "targetId": "pack-b",
+      "weight": 1,
+      "entityId": "order",
+      "condition": {
+        "stateId": "state-piece-index",
+        "comparison": "equal",
+        "value": 1
+      }
+    },
+    {
+      "id": "edge-dispatch-c",
+      "sourceId": "dispatch",
+      "targetId": "pack-c",
+      "weight": 1,
+      "entityId": "order",
+      "condition": {
+        "stateId": "state-piece-index",
+        "comparison": "equal",
+        "value": 2
+      }
+    },
+    {
+      "id": "edge-a-assemble",
+      "sourceId": "pack-a",
+      "targetId": "assemble",
+      "weight": 1
+    },
+    {
+      "id": "edge-b-assemble",
+      "sourceId": "pack-b",
+      "targetId": "assemble",
+      "weight": 1
+    },
+    {
+      "id": "edge-c-assemble",
+      "sourceId": "pack-c",
+      "targetId": "assemble",
+      "weight": 1
+    }
+  ],
+  "states": [
+    {
+      "id": "state-orders-started",
+      "name": "orders_started",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-order-no",
+      "name": "order_no",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-piece-index",
+      "name": "piece_index",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    }
+  ]
+}

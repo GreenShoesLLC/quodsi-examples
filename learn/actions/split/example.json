@@ -1,0 +1,6 @@
+{
+  "title": "Split: one entity becomes three",
+  "summary": "One order splits into three pieces; a zero-time dispatch step sends each piece to its own activity.",
+  "teaches": ["split", "state-condition routing"],
+  "order": 10
+}

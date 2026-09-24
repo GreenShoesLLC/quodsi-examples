@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Branch: urgent patients get a quick check-in",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 120
+  },
+  "entities": [
+    {
+      "id": "patient",
+      "name": "Patient"
+    }
+  ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    {
+      "id": "check-in",
+      "name": "Check In",
+      "capacity": 5,
+      "actions": [
+        {
+          "id": "check-in-branch",
+          "type": "branch",
+          "condition": {
+            "stateId": "state-urgent",
+            "comparison": "equal",
+            "value": 1
+          },
+          "ifTrue": [
+            {
+              "id": "quick-triage",
+              "type": "delay",
+              "duration": {
+                "unit": "minutes",
+                "value": 1.0
+              }
+            }
+          ],
+          "ifFalse": [
+            {
+              "id": "full-registration",
+              "type": "delay",
+              "duration": {
+                "unit": "minutes",
+                "value": 5.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "see-doctor",
+      "name": "See Doctor",
+      "actions": [
+        {
+          "id": "see-doctor-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 10.0
+          }
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "walk-ins",
+      "name": "Walk-in Patients",
+      "entityId": "patient",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 4.0
+      },
+      "maxEntities": 3
+    },
+    {
+      "id": "urgent",
+      "name": "Urgent Patients",
+      "entityId": "patient",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 10.0
+      },
+      "startDelay": {
+        "unit": "minutes",
+        "value": 14.0
+      },
+      "maxEntities": 1,
+      "initialStates": [
+        {
+          "stateId": "state-urgent",
+          "operation": "assign",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-walkins-checkin",
+      "sourceId": "walk-ins",
+      "targetId": "check-in",
+      "weight": 1
+    },
+    {
+      "id": "edge-urgent-checkin",
+      "sourceId": "urgent",
+      "targetId": "check-in",
+      "weight": 1
+    },
+    {
+      "id": "edge-checkin-doctor",
+      "sourceId": "check-in",
+      "targetId": "see-doctor",
+      "weight": 1
+    }
+  ],
+  "states": [
+    {
+      "id": "state-urgent",
+      "name": "urgent",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    }
+  ]
+}

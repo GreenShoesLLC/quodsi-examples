@@ -1,0 +1,6 @@
+{
+  "title": "Seize and release: one nurse stays with each patient",
+  "summary": "A patient seizes a nurse at Admit and keeps the same nurse through Treatment and every walk in between, releasing them only at Discharge; the next patient waits until the nurse is free.",
+  "teaches": ["seize", "release", "delay with resource", "resources", "move time"],
+  "order": 60
+}

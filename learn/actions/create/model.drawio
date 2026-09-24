@@ -1,0 +1,52 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Create: one order spawns three documents&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:60},&quot;entities&quot;:[{&quot;id&quot;:&quot;order&quot;,&quot;name&quot;:&quot;Order&quot;},{&quot;id&quot;:&quot;invoice&quot;,&quot;name&quot;:&quot;Invoice&quot;},{&quot;id&quot;:&quot;shipping-label&quot;,&quot;name&quot;:&quot;Shipping Label&quot;},{&quot;id&quot;:&quot;packing-slip&quot;,&quot;name&quot;:&quot;Packing Slip&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-take&quot;,&quot;sourceId&quot;:&quot;order-arrives&quot;,&quot;targetId&quot;:&quot;take-order&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Order Arrives → Take Order&quot;}" id="edge-arrive-take">
+          <mxCell edge="1" parent="1" source="order-arrives" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="take-order">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-take-pack&quot;,&quot;sourceId&quot;:&quot;take-order&quot;,&quot;targetId&quot;:&quot;pack-order&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Take Order → Pack Order&quot;}" id="edge-take-pack">
+          <mxCell edge="1" parent="1" source="take-order" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.2;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pack-order">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Order Arrives" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;order-arrives&quot;,&quot;name&quot;:&quot;Order Arrives&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1},&quot;maxEntities&quot;:1,&quot;x&quot;:12,&quot;y&quot;:36}" id="order-arrives">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="36" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Take Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;take-order&quot;,&quot;name&quot;:&quot;Take Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;take-order-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;create-invoice&quot;,&quot;type&quot;:&quot;create&quot;,&quot;entityTemplateId&quot;:&quot;invoice&quot;,&quot;destinationId&quot;:&quot;print-invoice&quot;,&quot;modifications&quot;:[]},{&quot;id&quot;:&quot;create-label&quot;,&quot;type&quot;:&quot;create&quot;,&quot;entityTemplateId&quot;:&quot;shipping-label&quot;,&quot;destinationId&quot;:&quot;print-label&quot;,&quot;modifications&quot;:[]},{&quot;id&quot;:&quot;create-slip&quot;,&quot;type&quot;:&quot;create&quot;,&quot;entityTemplateId&quot;:&quot;packing-slip&quot;,&quot;destinationId&quot;:&quot;print-slip&quot;,&quot;modifications&quot;:[]}],&quot;x&quot;:152,&quot;y&quot;:36}" id="take-order">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="36" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Pack Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-order&quot;,&quot;name&quot;:&quot;Pack Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-order-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:5}}],&quot;x&quot;:292,&quot;y&quot;:12}" id="pack-order">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Print Invoice" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;print-invoice&quot;,&quot;name&quot;:&quot;Print Invoice&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;print-invoice-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}}],&quot;x&quot;:292,&quot;y&quot;:132}" id="print-invoice">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="132" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Print Label" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;print-label&quot;,&quot;name&quot;:&quot;Print Label&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;print-label-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:3}}],&quot;x&quot;:292,&quot;y&quot;:252}" id="print-label">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="252" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Print Slip" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;print-slip&quot;,&quot;name&quot;:&quot;Print Slip&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;print-slip-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:4}}],&quot;x&quot;:292,&quot;y&quot;:372}" id="print-slip">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="372" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

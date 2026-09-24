@@ -1,0 +1,23 @@
+{
+  "sections": [
+    {
+      "id": "learn",
+      "title": "Learn",
+      "groups": [
+        { "id": "getting-started", "title": "Getting Started", "summary": "The smallest models that run." },
+        { "id": "routing", "title": "Routing", "summary": "How an entity chooses where to go next." },
+        { "id": "actions", "title": "Actions", "summary": "What an activity can do to the entity passing through it." }
+      ]
+    },
+    {
+      "id": "industries",
+      "title": "Industries",
+      "groups": [
+        { "id": "healthcare", "title": "Healthcare", "summary": "Clinics, hospitals and patient flow." },
+        { "id": "manufacturing", "title": "Manufacturing", "summary": "Lines, cells and work in progress." },
+        { "id": "supply-chain", "title": "Supply Chain", "summary": "Warehouses, orders and distribution." },
+        { "id": "food-service", "title": "Food Service", "summary": "Counters, kitchens and queues." }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 // Prepares an authored .drawio file for publication in this repo.
 //
-//   node scripts/publish.mjs <path-to-saved.drawio> <NN-slug>
+//   node scripts/publish.mjs <path-to-saved.drawio> <section>/<group>/<slug>
 //
 // Does the two transformations a file saved from the app needs before it can
 // be published (see "Rules for a published model" in the README):
@@ -11,25 +11,32 @@
 //   2. Strips the quodsiDocumentId attribute. A published file carrying one
 //      would collide every user who opens it onto the same Quodsi model record.
 //
-// Then writes the result to models/<NN-slug>/model.drawio. Run from the repo
-// root. The manifest entry and the folder README are still on you — run
-// scripts/validate.mjs afterwards to check everything agrees.
+// Then writes the result to `<section>/<group>/<slug>/model.drawio`. Run from
+// the repo root. The example.json summary and the folder README are still on
+// you — run scripts/validate.mjs afterwards to check everything agrees.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { inflateRawSync } from 'node:zlib'
 import { join } from 'node:path'
+import { loadGroups, parsePublishTarget } from './lib/catalog.mjs'
 
-const [src, folder] = process.argv.slice(2)
-if (!src || !folder) {
-  console.error('Usage: node scripts/publish.mjs <path-to-saved.drawio> <NN-slug>')
-  console.error('Example: node scripts/publish.mjs "C:\\Users\\me\\Downloads\\clinic.drawio" 02-shared-resource')
+const [src, target] = process.argv.slice(2)
+if (!src || !target) {
+  console.error('Usage: node scripts/publish.mjs <path-to-saved.drawio> <section>/<group>/<slug>')
+  console.error('Example: node scripts/publish.mjs "C:\\Users\\me\\Downloads\\clinic.drawio" industries/healthcare/clinic-triage')
   process.exit(1)
 }
-if (!/^\d{2}-[a-z0-9][a-z0-9-]*$/.test(folder)) {
-  console.error(`Folder must look like NN-slug (two digits, dash, lowercase slug), got "${folder}"`)
+if (!existsSync('groups.json')) {
+  console.error('Run this from the repository root (where groups.json lives).')
   process.exit(1)
 }
-if (!existsSync('manifest.json')) {
-  console.error('Run this from the repository root (where manifest.json lives).')
+const { groups, errors: groupErrors } = loadGroups(process.cwd())
+if (!groups) {
+  console.error(groupErrors.join('\n'))
+  process.exit(1)
+}
+const parsed = parsePublishTarget(target, groups)
+if (parsed.error) {
+  console.error(parsed.error)
   process.exit(1)
 }
 
@@ -70,7 +77,7 @@ if (!xml.includes('quodsiType')) {
 const hadDocumentId = /\squodsiDocumentId="[^"]*"/.test(xml)
 xml = xml.replace(/\squodsiDocumentId="[^"]*"/g, '')
 
-const dir = join('models', folder)
+const dir = parsed.dir
 const dest = join(dir, 'model.drawio')
 const updating = existsSync(dest)
 mkdirSync(dir, { recursive: true })
@@ -79,10 +86,18 @@ writeFileSync(dest, xml)
 console.log(`${updating ? 'Updated' : 'Wrote'} ${dest}`)
 console.log(`  decompressed: ${decompressed ? 'yes' : 'no (was already uncompressed)'}`)
 console.log(`  quodsiDocumentId stripped: ${hadDocumentId ? 'yes' : 'none present'}`)
+
+const metaPath = join(dir, 'example.json')
+const stubbed = !existsSync(metaPath)
+if (stubbed) {
+  writeFileSync(metaPath, JSON.stringify({ title: '', summary: '', teaches: [], order: 10 }, null, 2) + '\n')
+}
+
 console.log('')
 console.log('Still to do:')
+if (stubbed) console.log(`  - fill in ${metaPath} (title, summary, teaches, order within the group)`)
 if (!existsSync(join(dir, 'README.md'))) {
   console.log(`  - write ${join(dir, 'README.md')} (what it shows + things to try)`)
 }
-console.log(`  - add/confirm the manifest.json entry pointing at models/${folder}/model.drawio`)
+console.log('  - node scripts/build-manifest.mjs')
 console.log('  - node scripts/validate.mjs')

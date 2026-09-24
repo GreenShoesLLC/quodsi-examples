@@ -1,0 +1,6 @@
+{
+  "title": "Assign: price each order, then route the big ones for approval",
+  "summary": "Take Order counts each order and works out its size and total with assign steps; big orders are routed to a manager for approval, and every shipped order adds its total to the run's revenue.",
+  "teaches": ["assign", "entity states", "model states", "expressions"],
+  "order": 70
+}

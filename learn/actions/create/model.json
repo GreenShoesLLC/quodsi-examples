@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Create: one order spawns three documents",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 60
+  },
+  "entities": [
+    {
+      "id": "order",
+      "name": "Order"
+    },
+    {
+      "id": "invoice",
+      "name": "Invoice"
+    },
+    {
+      "id": "shipping-label",
+      "name": "Shipping Label"
+    },
+    {
+      "id": "packing-slip",
+      "name": "Packing Slip"
+    }
+  ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    {
+      "id": "take-order",
+      "name": "Take Order",
+      "actions": [
+        {
+          "id": "take-order-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        },
+        {
+          "id": "create-invoice",
+          "type": "create",
+          "entityTemplateId": "invoice",
+          "destinationId": "print-invoice",
+          "modifications": []
+        },
+        {
+          "id": "create-label",
+          "type": "create",
+          "entityTemplateId": "shipping-label",
+          "destinationId": "print-label",
+          "modifications": []
+        },
+        {
+          "id": "create-slip",
+          "type": "create",
+          "entityTemplateId": "packing-slip",
+          "destinationId": "print-slip",
+          "modifications": []
+        }
+      ]
+    },
+    {
+      "id": "pack-order",
+      "name": "Pack Order",
+      "actions": [
+        {
+          "id": "pack-order-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 5.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "print-invoice",
+      "name": "Print Invoice",
+      "actions": [
+        {
+          "id": "print-invoice-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 2.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "print-label",
+      "name": "Print Label",
+      "actions": [
+        {
+          "id": "print-label-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 3.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "print-slip",
+      "name": "Print Slip",
+      "actions": [
+        {
+          "id": "print-slip-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 4.0
+          }
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "order-arrives",
+      "name": "Order Arrives",
+      "entityId": "order",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 1.0
+      },
+      "maxEntities": 1
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-arrive-take",
+      "sourceId": "order-arrives",
+      "targetId": "take-order",
+      "weight": 1
+    },
+    {
+      "id": "edge-take-pack",
+      "sourceId": "take-order",
+      "targetId": "pack-order",
+      "weight": 1
+    }
+  ],
+  "states": []
+}

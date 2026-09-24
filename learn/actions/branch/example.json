@@ -1,0 +1,6 @@
+{
+  "title": "Branch: urgent patients get a quick check-in",
+  "summary": "Check In runs a one-minute triage for urgent patients and a five-minute registration for everyone else, then all patients go on to see the doctor.",
+  "teaches": ["branch", "action conditions", "generator initial states"],
+  "order": 50
+}

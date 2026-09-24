@@ -1,0 +1,6 @@
+{
+  "title": "Example: Urgent Care System",
+  "summary": "Patients arrive, get registered, visit Triage for vitals, go to an exam room for a Provider exam, and potentially get labs or imaging, before checking out.",
+  "teaches": ["probabilistic routing", "resource requirements"],
+  "order": 10
+}

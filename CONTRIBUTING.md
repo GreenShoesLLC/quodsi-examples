@@ -29,7 +29,7 @@ default options in each installer.
 | Program | Where to get it | What it is for |
 |---|---|---|
 | **Git** | https://git-scm.com/downloads | Copies this repo to your computer and sends your changes back |
-| **Node.js** (LTS version) | https://nodejs.org | Runs the two helper scripts in Part 2 |
+| **Node.js** (LTS version) | https://nodejs.org | Runs the helper scripts used in Part 1 and Part 2 (build-manifest, publish, validate) |
 | **VS Code** | https://code.visualstudio.com | The editor you will change files in |
 
 ## Check they are working
@@ -102,24 +102,22 @@ git pull
 goes live there. (There are two other branches — see
 [Which app reads which branch](#which-app-reads-which-branch) at the end.)
 
-## Step 4 — Edit `manifest.json`
+## Step 4 — Edit an example's summary
 
-`manifest.json` is the list of examples the app shows. In VS Code, press
-`Ctrl+P`, type `manifest`, and press Enter. You will see this:
+Each example's text lives in its own `example.json`, not in `manifest.json` —
+`manifest.json` is generated from those files, so you never edit it by hand.
+
+In VS Code, press `Ctrl+P`, type `generator-activity/example`, and press
+Enter. That opens
+`learn/getting-started/generator-activity/example.json`, which looks like
+this:
 
 ```json
 {
-  "version": 1,
-  "examples": [
-    {
-      "id": "generator-activity",
-      "title": "Generator and activity",
-      "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
-      "teaches": ["generators", "activities", "connectors"],
-      "order": 1,
-      "url": "models/01-generator-activity/model.drawio"
-    }
-  ]
+  "title": "Generator and activity",
+  "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
+  "teaches": ["generators", "activities", "connectors"],
+  "order": 10
 }
 ```
 
@@ -127,7 +125,7 @@ Find the `"summary"` line and add your name to the end of the sentence, inside
 the quotes, so you will recognise it when it shows up. For example:
 
 ```json
-      "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs. Edited by YOUR NAME.",
+  "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs. Edited by YOUR NAME.",
 ```
 
 Two things to be careful about, because they are the only ways this goes wrong:
@@ -137,13 +135,23 @@ Two things to be careful about, because they are the only ways this goes wrong:
 
 Save with `Ctrl+S`.
 
+Now go back to your PowerShell window and run:
+
+```
+node scripts/build-manifest.mjs
+```
+
+This reads every example's folder and regenerates `manifest.json` and the
+examples table in `README.md` to match. You will see both files change —
+that is expected, and both need to be pushed along with your edit.
+
 ## Step 5 — Send your change to GitHub
 
 Go back to your PowerShell window. Copy all three lines below, paste them in,
 and press Enter:
 
 ```
-git add manifest.json
+git add learn/getting-started/generator-activity/example.json manifest.json README.md
 git commit -m "Tweak the summary"
 git push
 ```
@@ -182,18 +190,25 @@ dialog is what fetches the fresh list — reloading the page does nothing extra.
 
 ## Step 8 — Put it back
 
-In VS Code, replace your whole `"summary"` line with this original one — paste
+In VS Code, open `learn/getting-started/generator-activity/example.json`
+again and replace your whole `"summary"` line with this original one — paste
 it rather than retyping, so it goes back exactly as it was:
 
 ```json
-      "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
+  "summary": "Entities arrive on an exponential schedule and pass through one activity, one at a time. The smallest model that runs.",
 ```
 
-Save with `Ctrl+S`. Then go back to PowerShell, copy all three lines below,
-paste them in, and press Enter:
+Save with `Ctrl+S`. Then go back to PowerShell and run `build-manifest.mjs`
+again, since the folders changed back:
 
 ```
-git add manifest.json
+node scripts/build-manifest.mjs
+```
+
+Then copy all three lines below, paste them in, and press Enter:
+
+```
+git add learn/getting-started/generator-activity/example.json manifest.json README.md
 git commit -m "Put the summary back"
 git push
 ```
@@ -228,60 +243,61 @@ git pull
 3. Set parameters that make the model worth reading. An example where every
    value is still the default teaches nothing — the numbers should tell the
    story. See how
-   [the first example](models/01-generator-activity/README.md) sets a 5-minute
-   arrival rate against a 1-minute activity.
+   [the first example](learn/getting-started/generator-activity/README.md)
+   sets a 5-minute arrival rate against a 1-minute activity.
 4. **Run it.** Open Studies and run the model once. Never publish a model you
    have not watched simulate.
 5. Save it to your computer: **File → Save As**, choose **Device**, any name
-   you like, e.g. `shared-resource.drawio`. Save normally — the script in
+   you like, e.g. `clinic-triage.drawio`. Save normally — the script in
    Step 3 handles drawio's compression and the embedded id for you.
 
 Note where it saved. If you did not change anything, it is in your Downloads
-folder: `C:\Users\<your-name>\Downloads\shared-resource.drawio`.
+folder: `C:\Users\<your-name>\Downloads\clinic-triage.drawio`.
 
-## Step 2 — Pick a folder name
+## Step 2 — Pick a section, group and slug
 
-Published models live in numbered folders inside
-**`C:\quodsi-examples\models\`** — one folder per example, named
-`NN-short-slug`. Look in that folder now (it is the `models` folder in the VS
-Code file list on the left) and see what is already there. For example:
+Published models live at **`<section>/<group>/<slug>/`** — one folder per
+example. The sections and groups are declared in `groups.json` (it is in the
+VS Code file list on the left); open it and see what already exists, for
+example:
 
 ```
-C:\quodsi-examples\models\01-generator-activity\
-C:\quodsi-examples\models\03-connector-routing\
+"sections": [
+  { "id": "learn", "groups": [ ... "getting-started", "routing", "actions" ] },
+  { "id": "industries", "groups": [ ... "healthcare", "manufacturing", "supply-chain", "food-service" ] }
+]
 ```
 
-Take **the next unused number**. There are gaps — in the list above, `02` is
-free and the next new one after `03` would be `04` — so do not assume the next
-number is one more than the count of folders.
+Pick the section and group your model belongs in — **Learn** for a model that
+teaches one Quodsi feature at a time, **Industries** for a complete model from
+a field. If neither existing group fits, propose a new one by adding it to
+`groups.json` in the same commit as your example; ask Daniel first if
+you are not sure it belongs.
 
-The slug is short, lowercase, with dashes instead of spaces. Put together, your
-new folder will be something like
-**`C:\quodsi-examples\models\02-shared-resource\`**. You do not create it
-yourself — the script in Step 3 creates it for you.
-
-The examples form a teaching ladder, each building on the one before it, so the
-number is also a difficulty order. Pick a number that puts your model where it
-belongs in that sequence.
+Then pick a slug: short, lowercase, with dashes instead of spaces. Put
+together, a healthcare model about triage in the Industries section would
+live at **`industries/healthcare/clinic-triage`**. You do not create the
+folder yourself — the script in Step 3 creates it for you.
 
 ## Step 3 — Run the publish script
 
 This one you cannot paste unchanged — you have to substitute two things first.
 Copy the line below into a blank VS Code tab or Notepad, replace
-`C:\Users\your-name\Downloads\shared-resource.drawio` with the real path to the
-file you saved in Step 1, replace `02-shared-resource` with the folder name you
-chose in Step 2, then paste the finished line into PowerShell and press Enter:
+`C:\Users\your-name\Downloads\clinic-triage.drawio` with the real path to the
+file you saved in Step 1, replace `industries/healthcare/clinic-triage` with
+the section/group/slug you chose in Step 2, then paste the finished line into
+PowerShell and press Enter:
 
 ```
-node scripts/publish.mjs "C:\Users\your-name\Downloads\shared-resource.drawio" 02-shared-resource
+node scripts/publish.mjs "C:\Users\your-name\Downloads\clinic-triage.drawio" industries/healthcare/clinic-triage
 ```
 
 Keep the `"` quote marks around the file path — without them the command breaks
 on any space in the path. PowerShell must be in `C:\quodsi-examples` for this to
 work; if you are not sure, run `cd C:\quodsi-examples` first.
 
-This creates `models/02-shared-resource/model.drawio`, doing two things a raw
-save from the app needs:
+This creates `industries/healthcare/clinic-triage/model.drawio`, doing two
+things a raw save from the app needs:
 
 - **Decompresses the XML.** drawio saves compressed by default; published files
   must be plain text so changes can be read and checked.
@@ -290,16 +306,19 @@ save from the app needs:
   land on the same record and overwrite each other's work. Removed, each person
   gets their own copy the first time they open it.
 
+It also creates a starter `example.json` in the same folder, with empty text
+you will fill in in Step 5.
+
 The script prints what it did and what is left to do. If it says the diagram was
 never Converted, go back to Step 1 and run **Convert Diagram to Model**.
 
 ## Step 4 — Write the folder README
 
 In VS Code, create a file called `README.md` inside the folder the script just
-made — **`C:\quodsi-examples\models\02-shared-resource\README.md`**. Copy the
-structure of the one in the first example
-([`models/01-generator-activity/README.md`](models/01-generator-activity/README.md),
-i.e. `C:\quodsi-examples\models\01-generator-activity\README.md`):
+made — **`C:\quodsi-examples\industries\healthcare\clinic-triage\README.md`**.
+Copy the structure of the one in the first example
+([`learn/getting-started/generator-activity/README.md`](learn/getting-started/generator-activity/README.md),
+i.e. `C:\quodsi-examples\learn\getting-started\generator-activity\README.md`):
 
 - a one-line summary and a small sketch of the flow,
 - **What it shows** — each shape, the parameter values, and *why* those numbers,
@@ -308,25 +327,35 @@ i.e. `C:\quodsi-examples\models\01-generator-activity\README.md`):
 
 "Things to try" is the actual teaching. Spend your effort there.
 
-## Step 5 — Add your row to the manifest
+## Step 5 — Fill in example.json
 
-Open `C:\quodsi-examples\manifest.json` in VS Code (press `Ctrl+P`, type
-`manifest`, press Enter) and add an object to the `examples` list. Do not touch
-the top-level `version`. Copy this and change every value:
+Open the `example.json` the script created — `Ctrl+P`, type
+`clinic-triage/example`, press Enter — and fill in its four fields:
 
 ```json
-    {
-      "id": "shared-resource",
-      "title": "Sharing a resource",
-      "summary": "Two activities compete for one operator. Utilisation looks fine; waiting says otherwise.",
-      "teaches": ["resources", "resource requirements", "contention"],
-      "order": 2,
-      "url": "models/02-shared-resource/model.drawio"
-    }
+{
+  "title": "Clinic triage",
+  "summary": "Patients are triaged before seeing a provider. Triage priority changes who waits.",
+  "teaches": ["priority", "resource requirements"],
+  "order": 10
+}
 ```
 
-Put a `,` after the `}` of the entry above yours. What each field means is in
-[The manifest fields](#the-manifest-fields) at the end.
+- `title` — shown in the picker list. Short.
+- `summary` — one sentence shown under the title. Sell what the model teaches.
+- `teaches` — 2–4 short concept tags, shown as chips in the picker.
+- `order` — position within the group, ascending. Use 10, 20, 30 so you can
+  insert between later without renumbering everything.
+
+Then go back to PowerShell and run:
+
+```
+node scripts/build-manifest.mjs
+```
+
+This regenerates `manifest.json` and the README table from every folder,
+including yours. **Do not edit `manifest.json` by hand.** CI rejects a
+manifest that doesn't match the folders.
 
 ## Step 6 — Check your work
 
@@ -336,27 +365,35 @@ Copy the line below, paste it into PowerShell, and press Enter:
 node scripts/validate.mjs
 ```
 
-You want a line like `OK: 2 example(s), 2 folder(s)`. It checks everything
-above: the model file is uncompressed and Converted, carries no
-`quodsiDocumentId`, your `url` points at a file that really exists, and no
-folder is missing its manifest row.
+You want a line starting `OK:` that counts the examples, something like
+`OK: 3 example(s), 3 in the drawio picker`. It checks
+everything above: the model file is uncompressed and Converted, carries no
+`quodsiDocumentId`, every folder sits under a declared section and group, and
+every `example.json` has the fields it needs.
 
 Then one check the script cannot do. In Quodsi drawio, use
 **File → Open From → Device** and open the *processed* file —
-`C:\quodsi-examples\models\02-shared-resource\model.drawio`, not the one you
-saved in Step 1. The Quodsi panel should show your model, not the
+`C:\quodsi-examples\industries\healthcare\clinic-triage\model.drawio`, not the
+one you saved in Step 1. The Quodsi panel should show your model, not the
 "convert this diagram" prompt.
 
 ## Step 7 — Push it
 
-Copy all three lines below into a blank VS Code tab or Notepad, replace
-`02-shared-resource` with your folder name and the commit message with something
-describing your example, then paste the finished lines into PowerShell and press
-Enter:
+**If you added a new group in Step 2**, first run this on its own, so the new
+group goes up with your example (the lines further down do not include it):
 
 ```
-git add models/02-shared-resource manifest.json
-git commit -m "Add shared-resource example"
+git add groups.json
+```
+
+Then copy all three lines below into a blank VS Code tab or Notepad, replace
+`industries/healthcare/clinic-triage` with your folder and the commit message
+with something describing your example, then paste the finished lines into
+PowerShell and press Enter:
+
+```
+git add industries/healthcare/clinic-triage manifest.json README.md
+git commit -m "Add clinic-triage example"
 git push
 ```
 
@@ -374,16 +411,21 @@ model — not just that the title appears in the list.
 
 # Reference
 
-## The manifest fields
+## The example.json fields
 
 | Field | What to put there |
 |---|---|
-| `id` | A stable identifier. Never reuse an old one, and never change it after publishing. |
 | `title` | Shown in the picker list. Short. |
 | `summary` | One sentence shown under the title. Sell what the model teaches. |
 | `teaches` | 2–4 short concept tags, shown as chips in the picker. Must be text in quotes. |
-| `order` | Position in the ladder, ascending. A plain number, no quotes. Usually matches the folder number. |
-| `url` | Exactly `models/<your-folder>/model.drawio` — relative, no web address, no branch name. An absolute URL is rejected. |
+| `order` | Position within the group; use 10, 20, 30 so you can insert between. A plain number, no quotes. |
+
+### Sections and groups
+
+`groups.json` lists the sections and groups in the order they display —
+**Learn** and **Industries** today, each with its own list of groups. To
+propose a new group, add it to `groups.json` in the same commit as the
+example that needs it.
 
 ## Which app reads which branch
 
@@ -430,28 +472,29 @@ branches exist.
 - **Never rename or delete a published folder.** Its address is public; people
   may have shared links to it, and anyone with an older copy of the list will
   still ask for the old path. Fix models in place.
-- **Never reuse an `id`**, even after removing an entry.
-- **The model file is always named `model.drawio`.** The app enforces it.
+- **Never reuse a slug**, even after removing an example.
+- **The model file is always named `model.drawio`** (or `model.json` for a
+  model authored through the Quodsi CLI). The app enforces it.
 - **Updating an existing example** is the same flow: re-run the publish script
-  with the same folder name (it overwrites), update the README if the behaviour
-  changed, push. No manifest change needed unless the title or summary should
-  change too.
+  with the same section/group/slug (it overwrites), update the README if the
+  behaviour changed, push. No `example.json` change needed unless the title or
+  summary should change too.
 
 ## If something goes wrong
 
 | What you see | What it means |
 |---|---|
 | `git` / `node` / `code` "is not recognized" | Either that program is not installed, or you are in a PowerShell window that was open before you installed it. Close the window, open a new one, and try again. |
-| Red X on the Actions page | Usually a typo in `manifest.json` — a missing comma or quote. Compare your row against the example in Part 2 Step 5. |
-| Push rejected / asks for a password repeatedly | You do not have push access yet. Ask Daniel. |
+| Red X on the Actions page | Usually a typo in `example.json`, or `manifest.json` not regenerated. Run `node scripts/build-manifest.mjs` and `node scripts/validate.mjs` locally. |
+| Push asks for a password repeatedly, or is rejected outright | You do not have push access yet. Ask Daniel. |
+| Push rejected, or a conflict in `manifest.json` / `README.md` after `git pull` | Someone else published an example first. Run `git pull`, then `node scripts/build-manifest.mjs` (this regenerates both files from the folders — never hand-merge them), then `git add manifest.json README.md`, `git commit`, `git push`. |
 | Picker says "Examples aren't available right now" | `manifest.json` could not be read at all. Check the Actions page. |
-| Your example is missing from the picker, but Actions is green | Either you are still inside the five-minute wait, or your row has the wrong type somewhere — `order` must be a number with no quotes, and every `teaches` tag must be in quotes. Rows the app cannot read are skipped silently. |
+| Your example is missing from the picker, but Actions is green | Either you are still inside the five-minute wait, or the example has no `model.drawio` — a `model.json`-only example never appears in the drawio picker (see [Model documents written by an agent](#model-documents-written-by-an-agent)). |
 | Your example opens with the "convert this diagram" prompt | You published an unconverted diagram. Redo Part 2 Step 1, running **Convert Diagram to Model**, then Step 3. |
 | Changed something and nothing happened at all | Check you are on the right branch: run `git branch --show-current` — it should print `dev`. |
 
 ## Model documents written by an agent
 
-`agent-models/` holds Quodsi model documents (`model.json`) authored through the
-CLI rather than drawn in drawio. They are not part of `manifest.json` and never
-appear in the picker, so nothing in this document applies to them. See the
-README inside each folder for how to run one.
+An example may carry a `model.json` (a Quodsi model document authored through
+the `quodsi` CLI) instead of, or alongside, `model.drawio`. Only examples with
+a `model.drawio` appear in the drawio picker.

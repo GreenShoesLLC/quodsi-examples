@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Dispose: scrap a bad part at inspection, and count both outcomes",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": {
+    "unit": "minutes",
+    "value": 60
+  },
+  "entities": [
+    {
+      "id": "part",
+      "name": "Part"
+    }
+  ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    {
+      "id": "inspect",
+      "name": "Inspect Part",
+      "actions": [
+        {
+          "id": "inspect-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 1.0
+          }
+        },
+        {
+          "id": "count-scrapped",
+          "type": "assign",
+          "condition": {
+            "stateId": "state-defective",
+            "comparison": "equal",
+            "value": 1
+          },
+          "modifications": [
+            {
+              "stateId": "state-parts-scrapped",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "scrap-if-defective",
+          "type": "dispose",
+          "condition": {
+            "stateId": "state-defective",
+            "comparison": "equal",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "pack",
+      "name": "Pack Part",
+      "actions": [
+        {
+          "id": "pack-delay",
+          "type": "delay",
+          "duration": {
+            "unit": "minutes",
+            "value": 2.0
+          }
+        },
+        {
+          "id": "count-packed",
+          "type": "assign",
+          "modifications": [
+            {
+              "stateId": "state-parts-packed",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "id": "good-parts",
+      "name": "Good Parts",
+      "entityId": "part",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 5.0
+      },
+      "maxEntities": 3
+    },
+    {
+      "id": "bad-parts",
+      "name": "Bad Parts",
+      "entityId": "part",
+      "interarrivalTime": {
+        "unit": "minutes",
+        "value": 5.0
+      },
+      "startDelay": {
+        "unit": "minutes",
+        "value": 7.0
+      },
+      "maxEntities": 1,
+      "initialStates": [
+        {
+          "stateId": "state-defective",
+          "operation": "assign",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "connectors": [
+    {
+      "id": "edge-good-inspect",
+      "sourceId": "good-parts",
+      "targetId": "inspect",
+      "weight": 1
+    },
+    {
+      "id": "edge-bad-inspect",
+      "sourceId": "bad-parts",
+      "targetId": "inspect",
+      "weight": 1
+    },
+    {
+      "id": "edge-inspect-pack",
+      "sourceId": "inspect",
+      "targetId": "pack",
+      "weight": 1
+    }
+  ],
+  "states": [
+    {
+      "id": "state-defective",
+      "name": "defective",
+      "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-parts-packed",
+      "name": "parts_packed",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-parts-scrapped",
+      "name": "parts_scrapped",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    }
+  ]
+}
