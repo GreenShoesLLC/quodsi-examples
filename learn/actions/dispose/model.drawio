@@ -7,12 +7,12 @@
         </object>
         <mxCell id="1" parent="0" />
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-good-inspect&quot;,&quot;sourceId&quot;:&quot;good-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Good Parts → Inspect Part&quot;}" id="edge-good-inspect">
-          <mxCell edge="1" parent="1" source="good-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3375;entryDx=0;entryDy=0;" target="inspect">
+          <mxCell edge="1" parent="1" source="good-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.3375;entryDx=0;entryDy=0;" target="inspect">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-bad-inspect&quot;,&quot;sourceId&quot;:&quot;bad-parts&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Bad Parts → Inspect Part&quot;}" id="edge-bad-inspect">
-          <mxCell edge="1" parent="1" source="bad-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.675;entryDx=0;entryDy=0;" target="inspect">
+          <mxCell edge="1" parent="1" source="bad-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.675;entryDx=0;entryDy=0;" target="inspect">
             <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="102" y="172" /><mxPoint x="102" y="79" /></Array></mxGeometry>
           </mxCell>
         </object>

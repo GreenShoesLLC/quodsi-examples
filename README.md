@@ -33,6 +33,7 @@ by hand.
 | Actions | [Split: one entity becomes three](learn/actions/split/) | split, state-condition routing | yes |
 | Actions | [Create: one order spawns three documents](learn/actions/create/) | create, entity types | yes |
 | Actions | [Join: three pieces become one order again](learn/actions/join/) | join, split, model states, expressions | yes |
+| Actions | [Loop: three coats of paint](learn/actions/loop/) | loop, entity states, model states | yes |
 | Actions | [Dispose: scrap a bad part at inspection](learn/actions/dispose/) | dispose, action conditions, model states, generator initial states | yes |
 | Actions | [Branch: urgent patients get a quick check-in](learn/actions/branch/) | branch, action conditions, generator initial states | no — model.json |
 | Actions | [Seize and release: one nurse stays with each patient](learn/actions/seize-release/) | seize, release, delay with resource, resources, move time | yes |

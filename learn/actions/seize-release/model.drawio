@@ -7,7 +7,7 @@
         </object>
         <mxCell id="1" parent="0" />
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-register&quot;,&quot;sourceId&quot;:&quot;patients&quot;,&quot;targetId&quot;:&quot;register&quot;,&quot;weight&quot;:1,&quot;actions&quot;:[{&quot;id&quot;:&quot;edge-arrive-register-move&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:0.5}}],&quot;name&quot;:&quot;Walk to Register&quot;}" id="edge-arrive-register">
-          <mxCell edge="1" parent="1" source="patients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="register">
+          <mxCell edge="1" parent="1" source="patients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="register">
             <mxGeometry relative="1" as="geometry" />
           </mxCell>
         </object>

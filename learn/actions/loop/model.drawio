@@ -1,0 +1,37 @@
+<mxfile host="quodsi">
+  <diagram name="Page-1" id="quodsi-rendered">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Loop: three coats of paint&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:60},&quot;entities&quot;:[{&quot;id&quot;:&quot;part&quot;,&quot;name&quot;:&quot;Part&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[{&quot;id&quot;:&quot;state-coats-applied&quot;,&quot;name&quot;:&quot;coats_applied&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0},{&quot;id&quot;:&quot;state-total-coats&quot;,&quot;name&quot;:&quot;total_coats&quot;,&quot;componentType&quot;:&quot;model&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0}],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-paint&quot;,&quot;name&quot;:&quot;To Paint&quot;,&quot;sourceId&quot;:&quot;parts&quot;,&quot;targetId&quot;:&quot;paint&quot;,&quot;weight&quot;:1}" id="edge-arrive-paint">
+          <mxCell edge="1" parent="1" source="parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="paint">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-paint-inspect&quot;,&quot;name&quot;:&quot;To Inspect&quot;,&quot;sourceId&quot;:&quot;paint&quot;,&quot;targetId&quot;:&quot;inspect&quot;,&quot;weight&quot;:1}" id="edge-paint-inspect">
+          <mxCell edge="1" parent="1" source="paint" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="inspect">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Parts Arrive" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;parts&quot;,&quot;name&quot;:&quot;Parts Arrive&quot;,&quot;entityId&quot;:&quot;part&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:10},&quot;maxEntities&quot;:3,&quot;x&quot;:12,&quot;y&quot;:12}" id="parts">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="12" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Paint Part" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;paint&quot;,&quot;name&quot;:&quot;Paint Part&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;three-coats&quot;,&quot;type&quot;:&quot;loop&quot;,&quot;count&quot;:3,&quot;actions&quot;:[{&quot;id&quot;:&quot;apply-coat&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}},{&quot;id&quot;:&quot;count-coat&quot;,&quot;type&quot;:&quot;assign&quot;,&quot;modifications&quot;:[{&quot;stateId&quot;:&quot;state-coats-applied&quot;,&quot;operation&quot;:&quot;add&quot;,&quot;value&quot;:1},{&quot;stateId&quot;:&quot;state-total-coats&quot;,&quot;operation&quot;:&quot;add&quot;,&quot;value&quot;:1}]}]}],&quot;x&quot;:152,&quot;y&quot;:12}" id="paint">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="152" y="12" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Inspect Finish" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;inspect&quot;,&quot;name&quot;:&quot;Inspect Finish&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;inspect-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}}],&quot;x&quot;:292,&quot;y&quot;:12}" id="inspect">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
+            <mxGeometry height="80" width="80" x="292" y="12" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "2026.12.01",
+  "name": "Loop: three coats of paint",
+  "replications": 1,
+  "seed": 1,
+  "timeUnit": "minutes",
+  "runTime": { "unit": "minutes", "value": 60 },
+  "entities": [ { "id": "part", "name": "Part" } ],
+  "resources": [],
+  "resourceRequirements": [],
+  "activities": [
+    { "id": "paint", "name": "Paint Part",
+      "actions": [
+        { "id": "three-coats", "type": "loop", "count": 3, "actions": [
+          { "id": "apply-coat", "type": "delay", "duration": { "unit": "minutes", "value": 2.0 } },
+          { "id": "count-coat", "type": "assign", "modifications": [
+            { "stateId": "state-coats-applied", "operation": "add", "value": 1 },
+            { "stateId": "state-total-coats", "operation": "add", "value": 1 }
+          ] }
+        ] }
+      ] },
+    { "id": "inspect", "name": "Inspect Finish",
+      "actions": [ { "id": "inspect-delay", "type": "delay", "duration": { "unit": "minutes", "value": 1.0 } } ] }
+  ],
+  "generators": [
+    { "id": "parts", "name": "Parts Arrive", "entityId": "part",
+      "interarrivalTime": { "unit": "minutes", "value": 10.0 }, "maxEntities": 3 }
+  ],
+  "connectors": [
+    { "id": "edge-arrive-paint", "name": "To Paint", "sourceId": "parts", "targetId": "paint", "weight": 1 },
+    { "id": "edge-paint-inspect", "name": "To Inspect", "sourceId": "paint", "targetId": "inspect", "weight": 1 }
+  ],
+  "states": [
+    { "id": "state-coats-applied", "name": "coats_applied", "componentType": "entity", "dataType": "number", "initialValue": 0 },
+    { "id": "state-total-coats", "name": "total_coats", "componentType": "model", "dataType": "number", "initialValue": 0 }
+  ]
+}

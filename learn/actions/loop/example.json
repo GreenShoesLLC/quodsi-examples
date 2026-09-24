@@ -1,0 +1,6 @@
+{
+  "title": "Loop: three coats of paint",
+  "summary": "Each part gets three coats: a Loop repeats the same two steps three times, and two counters prove it.",
+  "teaches": ["loop", "entity states", "model states"],
+  "order": 35
+}
