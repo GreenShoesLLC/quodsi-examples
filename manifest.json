@@ -124,10 +124,11 @@
     {
       "id": "dispose",
       "title": "Dispose: scrap a bad part at inspection",
-      "summary": "Four parts are inspected; the one marked defective is disposed right there and never reaches packing, while the good parts carry on.",
+      "summary": "Four parts are inspected; the one marked defective is counted and disposed right there, the good parts are packed and counted, so the results show 3 packed and 1 scrapped.",
       "teaches": [
         "dispose",
         "action conditions",
+        "model states",
         "generator initial states"
       ],
       "order": 60,

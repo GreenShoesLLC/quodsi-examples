@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2026.12.01",
-  "name": "Dispose: scrap a bad part at inspection",
+  "name": "Dispose: scrap a bad part at inspection, and count both outcomes",
   "replications": 1,
   "seed": 1,
   "timeUnit": "minutes",
@@ -30,6 +30,22 @@
           }
         },
         {
+          "id": "count-scrapped",
+          "type": "assign",
+          "condition": {
+            "stateId": "state-defective",
+            "comparison": "equal",
+            "value": 1
+          },
+          "modifications": [
+            {
+              "stateId": "state-parts-scrapped",
+              "operation": "add",
+              "value": 1
+            }
+          ]
+        },
+        {
           "id": "scrap-if-defective",
           "type": "dispose",
           "condition": {
@@ -51,6 +67,17 @@
             "unit": "minutes",
             "value": 2.0
           }
+        },
+        {
+          "id": "count-packed",
+          "type": "assign",
+          "modifications": [
+            {
+              "stateId": "state-parts-packed",
+              "operation": "add",
+              "value": 1
+            }
+          ]
         }
       ]
     }
@@ -113,6 +140,20 @@
       "id": "state-defective",
       "name": "defective",
       "componentType": "entity",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-parts-packed",
+      "name": "parts_packed",
+      "componentType": "model",
+      "dataType": "number",
+      "initialValue": 0
+    },
+    {
+      "id": "state-parts-scrapped",
+      "name": "parts_scrapped",
+      "componentType": "model",
       "dataType": "number",
       "initialValue": 0
     }
