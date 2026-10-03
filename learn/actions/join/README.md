@@ -1,64 +1,82 @@
 # Join: three pieces become one order again
 
-One order arrives, is numbered, and splits into three pieces. Each piece is
-packed at its own station, at its own speed. *Assemble Order* holds the
-pieces until all three pieces of that order have arrived, then sends one
-combined order on to shipping.
+## What this model shows
 
-```
-Order Arrives ─► Split Order ─(split 3)─► Dispatch ─┬─► Pack Item A (2 min) ─┐
- (numbers the order)                                ├─► Pack Item B (4 min) ─┼─► Assemble Order ─(join 3)─► Ship Order
-                                                    └─► Pack Item C (6 min) ─┘
-```
+A packing operation that puts orders back together. One order arrives, is
+given an order number, and is split into three items. Each item is packed
+at its own station, at its own speed. *Assemble Order* then waits until all
+three items from that order have arrived, and sends one complete order on
+to shipping.
 
-The first half is the [Split example](../split/); this model adds the way
-back.
+The first half of this model is the [Split example](../split/). This model
+adds the way back: the **Join** step, which combines several entities into
+one.
+
+## How the model works
+
+1. *Order Arrives* sends in one order.
+2. *Split Order* gives the order a number, then splits it into 3 pieces.
+3. *Dispatch* sends each piece to its own station.
+4. *Pack Item A*, *B* and *C* pack the pieces, taking 2, 4 and 6 minutes.
+5. *Assemble Order* holds the pieces until all three from the same order
+   are there, then combines them into one order.
+6. The combined order goes to *Ship Order* and leaves the model.
 
 ## How Join works
 
-The **Join** action on *Assemble Order* collects arriving entities into
-groups that share the same value of one state — the **match state**, here
-`order_no`. When a group reaches the **join count** (3), Join removes those
-entities and creates **one** combined entity, which it sends to the
-**destination** (*Ship Order*). Pieces that arrive early wait at Assemble
+The Join step at *Assemble Order* collects arriving entities into groups.
+Entities belong to the same group when they carry the same value for one
+chosen state (a **state** is a value an entity carries). That chosen state
+is called the **match state**; here it's `order_no`.
+
+When a group reaches the **join count** (here, 3), Join removes those
+entities and creates **one** combined entity, which it sends on to the
+**destination**, *Ship Order*. Pieces that arrive early wait at Assemble
 Order until the rest of their group turns up.
 
-## Why each order needs a unique number
+## Why each order needs its own number
 
-Join groups pieces by their match-state value. If every piece carried the
-same value, Join would fuse *any* three pieces that happen to arrive — pieces
-from two different orders could be shipped together.
+Join groups pieces by their order number. If every piece carried the same
+number, Join would combine *any* three pieces that happened to arrive, and
+pieces from two different orders could be shipped together.
 
 So *Split Order* numbers each order before splitting it:
 
-1. A **model-level** state, `orders_started`, counts orders: the assign step
-   adds 1 to it.
-2. The order's own `order_no` is set from that counter with the expression
-   `orders_started`.
-3. The Split lists `order_no` under its **inherited states**, so all three
-   pieces carry their order's number to Assemble Order.
+1. A counter for the whole model, `orders_started`, goes up by 1 for each
+   order. Because it belongs to the whole model rather than to one order,
+   Quodsi calls it a **model state**.
+2. The order's own `order_no` is then set to the current value of that
+   counter.
+3. The Split step lists `order_no` under its **inherited states**, so all
+   three pieces carry their order's number with them to Assemble Order.
 
-## Why Assemble Order has a large capacity
+## Why Assemble Order has room for 100
 
-Pieces waiting for the rest of their order take up room at Assemble Order.
-Its capacity is 100 so that waiting pieces never fill it. Set it too small
-and the model can freeze: pieces from several orders fill every slot, and
-the piece each order still needs can never get in.
+Pieces waiting for the rest of their order take up space at Assemble Order.
+Its capacity is set to 100, so waiting pieces never fill it up.
 
-## What you'll see
+If the capacity is too small, the model can get stuck. Pieces from several
+different orders fill every space while they wait, and the one piece each
+order still needs can never get in. Nothing moves again. This is called a
+**deadlock**, and it happens in real operations too, for example when a
+staging area fills with partial orders.
 
-Run it once: 1 order is split into 3 pieces, and 1 combined order is
-shipped. Pack Item A, B and C take 2, 4 and 6 minutes, so Assemble Order
-waits for the slowest piece — the first two pieces wait 4 and 2 minutes, an
-average of 2 minutes each.
+## What to expect when you run it
+
+- 1 order is split into 3 pieces, and 1 complete order is shipped.
+- *Pack Item A*, *B* and *C* take 2, 4 and 6 minutes, so Assemble Order has
+  to wait for the slowest piece.
+- The first two pieces wait 4 and 2 minutes for the third, an average of
+  2 minutes each.
 
 ## Things to try
 
-1. **More orders.** Raise the generator's maximum entities to 5: 15 pieces
-   are packed and exactly 5 orders ship, each with its own three pieces.
-2. **Watch it freeze.** With 5 orders, set Assemble Order's capacity to 3.
-   Nothing ships: pieces from different orders fill the three slots and wait
-   for partners that can no longer get in.
+1. **More orders.** Raise the generator's maximum number of entities to 5.
+   15 pieces are packed, and exactly 5 orders ship, each with its own three
+   pieces.
+2. **Watch it get stuck.** With 5 orders, set Assemble Order's capacity to
+   3. Nothing ships: pieces from different orders fill the three spaces and
+   wait for partners that can no longer get in.
 3. **Record the group size.** Add an entity state such as `pieces_joined`
-   and name it as the Join's join-count state; each shipped order then
+   and choose it as the Join's **join-count state**. Each shipped order then
    carries how many pieces went into it.

@@ -1,11 +1,21 @@
 <mxfile host="quodsi">
   <diagram name="Page-1" id="quodsi-rendered">
-    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="960" pageHeight="1280" math="0" shadow="0">
       <root>
         <object quodsiVersion="2026.12.01" quodsiModel="{&quot;schemaVersion&quot;:&quot;2026.12.01&quot;,&quot;name&quot;:&quot;Split: one entity becomes three&quot;,&quot;replications&quot;:1,&quot;seed&quot;:1,&quot;timeUnit&quot;:&quot;minutes&quot;,&quot;runTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:60},&quot;entities&quot;:[{&quot;id&quot;:&quot;order&quot;,&quot;name&quot;:&quot;Order&quot;}],&quot;resources&quot;:[],&quot;resourceRequirements&quot;:[],&quot;states&quot;:[{&quot;id&quot;:&quot;state-piece-index&quot;,&quot;name&quot;:&quot;piece_index&quot;,&quot;componentType&quot;:&quot;entity&quot;,&quot;dataType&quot;:&quot;number&quot;,&quot;initialValue&quot;:0}],&quot;arrivalPatterns&quot;:[],&quot;arrivalSchedules&quot;:[],&quot;workSchedules&quot;:[]}" id="0">
           <mxCell />
         </object>
         <mxCell id="1" parent="0" />
+        <object label="Split: one entity becomes three" id="example-title">
+          <mxCell parent="1" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;" vertex="1">
+            <mxGeometry x="12" y="12" width="900" height="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;What this model shows&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;A packing operation. One order arrives and is split into three separate items. Each item goes to its own packing station and leaves the model when it's packed.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;The point of this model is the &lt;b&gt;Split&lt;/b&gt; step: a way to turn one entity into several, for example one order into the individual items in it.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;How the model works&lt;/div&gt;&lt;ol style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;&lt;i&gt;Order Arrives&lt;/i&gt; sends in one order.&lt;/li&gt;&lt;li&gt;At &lt;i&gt;Split Order&lt;/i&gt;, a Split step replaces the order with &lt;b&gt;3 pieces&lt;/b&gt;.&lt;/li&gt;&lt;li&gt;All three pieces go to &lt;i&gt;Dispatch&lt;/i&gt;, which sends each one to a different packing station.&lt;/li&gt;&lt;li&gt;&lt;i&gt;Pack Item A&lt;/i&gt;, &lt;i&gt;Pack Item B&lt;/i&gt; and &lt;i&gt;Pack Item C&lt;/i&gt; each pack one piece, taking 2, 4 and 6 minutes. Then the pieces leave the model.&lt;/li&gt;&lt;/ol&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;How Split works&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;The Split step removes the order that arrives and creates new entities in its place. Three settings matter:&lt;/p&gt;&lt;ul style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;&lt;b&gt;Count&lt;/b&gt;: how many pieces to make. Here, 3.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Destination&lt;/b&gt;: where the pieces go next. &lt;b&gt;Every piece goes to the same place&lt;/b&gt;, and it has to be a different activity from the one doing the splitting.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Split index state&lt;/b&gt;: a value Quodsi writes onto each piece to number it. Numbering starts at &lt;b&gt;0&lt;/b&gt;, so the pieces carry &lt;code&gt;piece_index&lt;/code&gt; 0, 1 and 2. (A value an entity carries is called a &lt;b&gt;state&lt;/b&gt;.)&lt;/li&gt;&lt;/ul&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Why there is a Dispatch step&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Split sends all of its pieces to one place. To get each piece to a &lt;i&gt;different&lt;/i&gt; station, the model needs one more stop, and that's &lt;i&gt;Dispatch&lt;/i&gt;. It takes no time; it only decides where each piece goes next.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Each arrow out of Dispatch has a condition on the piece's number: &lt;code&gt;piece_index == 0&lt;/code&gt; goes to Pack Item A, &lt;code&gt;== 1&lt;/code&gt; to Pack Item B, and &lt;code&gt;== 2&lt;/code&gt; to Pack Item C. Each piece takes the one arrow that matches it. Quodsi calls this &lt;b&gt;state-condition routing&lt;/b&gt;.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;&lt;b&gt;A tip that's easy to miss:&lt;/b&gt; each arrow out of Dispatch also names the entity type it applies to (here, Order). State-condition routing only looks at arrows for the arriving entity's type, and quietly ignores an arrow that doesn't name one.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;What to expect when you run it&lt;/div&gt;&lt;ul style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;1 order arrives, and &lt;i&gt;Split Order&lt;/i&gt; runs once.&lt;/li&gt;&lt;li&gt;&lt;i&gt;Dispatch&lt;/i&gt; handles 3 pieces.&lt;/li&gt;&lt;li&gt;&lt;i&gt;Pack Item A&lt;/i&gt;, &lt;i&gt;B&lt;/i&gt; and &lt;i&gt;C&lt;/i&gt; each pack one piece, taking 2, 4 and 6 minutes.&lt;/li&gt;&lt;/ul&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Things to try&lt;/div&gt;&lt;ol style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;&lt;b&gt;More orders.&lt;/b&gt; Raise the generator's maximum number of entities to 5. Now 5 orders come in, 15 pieces come out, and each station packs 5.&lt;/li&gt;&lt;li&gt;&lt;b&gt;A fourth piece.&lt;/b&gt; Set the split count to 4, add a &lt;i&gt;Pack Item D&lt;/i&gt; activity, and add an arrow from Dispatch to it with the condition &lt;code&gt;piece_index == 3&lt;/code&gt;. If you leave that arrow out, the run stops with a routing error, because the fourth piece has nowhere to go.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Pass information on to the pieces.&lt;/b&gt; Add a state such as &lt;code&gt;order_number&lt;/code&gt;, set it before the split, and list it under the split's &lt;b&gt;inherited states&lt;/b&gt;. Every piece then carries its parent order's number.&lt;/li&gt;&lt;/ol&gt;" id="example-notes">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontSize=12;fillColor=#F8F9FA;strokeColor=#D0D7DE;rounded=1;arcSize=2;" vertex="1">
+            <mxGeometry x="12" y="422" width="900" height="810" as="geometry" />
+          </mxCell>
+        </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-arrive-split&quot;,&quot;sourceId&quot;:&quot;order-arrives&quot;,&quot;targetId&quot;:&quot;split-order&quot;,&quot;weight&quot;:1,&quot;name&quot;:&quot;Order Arrives → Split Order&quot;}" id="edge-arrive-split">
           <mxCell edge="1" parent="1" source="order-arrives" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="split-order">
             <mxGeometry relative="1" as="geometry" />
@@ -18,42 +28,42 @@
         </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-dispatch-b&quot;,&quot;sourceId&quot;:&quot;dispatch&quot;,&quot;targetId&quot;:&quot;pack-b&quot;,&quot;weight&quot;:1,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-piece-index&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:1},&quot;name&quot;:&quot;Dispatch → Pack Item B&quot;}" id="edge-dispatch-b">
           <mxCell edge="1" parent="1" source="dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pack-b">
-            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="392" y="72" /><mxPoint x="392" y="172" /></Array></mxGeometry>
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="392" y="122" /><mxPoint x="392" y="222" /></Array></mxGeometry>
           </mxCell>
         </object>
         <object label="" quodsiType="Connector" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;edge-dispatch-c&quot;,&quot;sourceId&quot;:&quot;dispatch&quot;,&quot;targetId&quot;:&quot;pack-c&quot;,&quot;weight&quot;:1,&quot;entityId&quot;:&quot;order&quot;,&quot;condition&quot;:{&quot;stateId&quot;:&quot;state-piece-index&quot;,&quot;comparison&quot;:&quot;equal&quot;,&quot;value&quot;:2},&quot;name&quot;:&quot;Dispatch → Pack Item C&quot;}" id="edge-dispatch-c">
           <mxCell edge="1" parent="1" source="dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pack-c">
-            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="382" y="92" /><mxPoint x="382" y="292" /></Array></mxGeometry>
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="382" y="142" /><mxPoint x="382" y="342" /></Array></mxGeometry>
           </mxCell>
         </object>
         <object label="Order Arrives" quodsiType="Generator" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;order-arrives&quot;,&quot;name&quot;:&quot;Order Arrives&quot;,&quot;entityId&quot;:&quot;order&quot;,&quot;interarrivalTime&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1},&quot;maxEntities&quot;:1,&quot;x&quot;:12,&quot;y&quot;:32}" id="order-arrives">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="12" y="32" as="geometry" />
+            <mxGeometry height="80" width="80" x="12" y="82" as="geometry" />
           </mxCell>
         </object>
         <object label="Split Order" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;split-order&quot;,&quot;name&quot;:&quot;Split Order&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;split-order-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:1}},{&quot;id&quot;:&quot;split-order-split&quot;,&quot;type&quot;:&quot;split&quot;,&quot;count&quot;:3,&quot;destinationId&quot;:&quot;dispatch&quot;,&quot;splitIndexState&quot;:&quot;piece_index&quot;,&quot;modifications&quot;:[]}],&quot;x&quot;:152,&quot;y&quot;:32}" id="split-order">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="152" y="32" as="geometry" />
+            <mxGeometry height="80" width="80" x="152" y="82" as="geometry" />
           </mxCell>
         </object>
         <object label="Dispatch" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;dispatch&quot;,&quot;name&quot;:&quot;Dispatch&quot;,&quot;routing&quot;:&quot;state_condition&quot;,&quot;actions&quot;:[],&quot;x&quot;:292,&quot;y&quot;:32}" id="dispatch">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="292" y="32" as="geometry" />
+            <mxGeometry height="80" width="80" x="292" y="82" as="geometry" />
           </mxCell>
         </object>
         <object label="Pack Item A" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-a&quot;,&quot;name&quot;:&quot;Pack Item A&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-a-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:2}}],&quot;x&quot;:432,&quot;y&quot;:12}" id="pack-a">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="432" y="12" as="geometry" />
+            <mxGeometry height="80" width="80" x="432" y="62" as="geometry" />
           </mxCell>
         </object>
         <object label="Pack Item B" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-b&quot;,&quot;name&quot;:&quot;Pack Item B&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-b-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:4}}],&quot;x&quot;:432,&quot;y&quot;:132}" id="pack-b">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="432" y="132" as="geometry" />
+            <mxGeometry height="80" width="80" x="432" y="182" as="geometry" />
           </mxCell>
         </object>
         <object label="Pack Item C" quodsiType="Activity" quodsiTracked="true" quodsiData="{&quot;id&quot;:&quot;pack-c&quot;,&quot;name&quot;:&quot;Pack Item C&quot;,&quot;actions&quot;:[{&quot;id&quot;:&quot;pack-c-delay&quot;,&quot;type&quot;:&quot;delay&quot;,&quot;duration&quot;:{&quot;unit&quot;:&quot;minutes&quot;,&quot;value&quot;:6}}],&quot;x&quot;:432,&quot;y&quot;:252}" id="pack-c">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="432" y="252" as="geometry" />
+            <mxGeometry height="80" width="80" x="432" y="302" as="geometry" />
           </mxCell>
         </object>
       </root>

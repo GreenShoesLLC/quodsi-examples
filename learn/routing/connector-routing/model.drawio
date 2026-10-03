@@ -1,11 +1,21 @@
 <mxfile host="localhost">
   <diagram name="Page-1" id="ConnectorRoutingExample01">
-    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1313" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="1790" math="0" shadow="0">
       <root>
         <object quodsiVersion="2026.07.27" quodsiModel='{"name":"Connector routing","entities":[{"id":"00000000-0000-0000-0000-000000000000","name":"Default Entity"},{"id":"ent-widget","name":"Widget"},{"id":"ent-gadget","name":"Gadget"},{"id":"ent-order","name":"Order"}],"states":[{"id":"st-rush","name":"rush","componentType":"ENTITY","dataType":"NUMBER","initialValue":0}]}' id="0">
           <mxCell />
         </object>
         <mxCell id="1" parent="0" />
+        <object label="Connector routing: probability, entity type, state condition" id="example-title">
+          <mxCell parent="1" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;" vertex="1">
+            <mxGeometry x="40" y="30" width="900" height="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;What this model shows&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;When an activity has more than one arrow leaving it, something has to decide which arrow each entity takes. In Quodsi, that's the activity's &lt;b&gt;routing type&lt;/b&gt;.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;This model shows the three routing types side by side, as three small, separate flows on one page. Each row teaches one of them.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Row 1: probability (random split)&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;&lt;i&gt;Gen Parts&lt;/i&gt; sends parts to &lt;i&gt;Inspect&lt;/i&gt;. From there, &lt;b&gt;70%&lt;/b&gt; of parts go to &lt;i&gt;Pass&lt;/i&gt; and &lt;b&gt;30%&lt;/b&gt; go to &lt;i&gt;Rework&lt;/i&gt;.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Each part's path is chosen at random, like rolling dice, using the weights on the two arrows (0.7 and 0.3). Over many parts, the split comes out close to 70/30.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;The weights only matter relative to each other: 70 and 30, 7 and 3, or 0.7 and 0.3 all behave the same way.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Use probability routing whenever the path is a matter of chance: defect rates, the share of customers who choose one option, and so on.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Row 2: entity type (sort by what it is)&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Two generators feed the same flow: &lt;i&gt;Gen Widgets&lt;/i&gt; makes widgets and &lt;i&gt;Gen Gadgets&lt;/i&gt; makes gadgets. Both go to &lt;i&gt;Sort by type&lt;/i&gt;. Every widget then goes to the &lt;i&gt;Widget line&lt;/i&gt;, and every gadget to the &lt;i&gt;Gadget line&lt;/i&gt;.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Nothing here is random. Each arrow out of &lt;i&gt;Sort by type&lt;/i&gt; names the kind of entity it accepts (Quodsi calls this the &lt;b&gt;entity type&lt;/b&gt;), and each entity takes the arrow that matches.&lt;/p&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Use entity-type routing when different kinds of work share some steps and then go their separate ways.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Row 3: state condition (route on a value the entity carries)&lt;/div&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;This row routes on information an entity picked up earlier in its journey.&lt;/p&gt;&lt;ol style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;&lt;i&gt;Gen Orders&lt;/i&gt; sends orders to &lt;i&gt;Receive&lt;/i&gt;.&lt;/li&gt;&lt;li&gt;&lt;i&gt;Receive&lt;/i&gt; sends 30% of orders to &lt;i&gt;Tag rush&lt;/i&gt; and 70% to &lt;i&gt;Tag standard&lt;/i&gt;, at random.&lt;/li&gt;&lt;li&gt;Every order carries a value called &lt;b&gt;rush&lt;/b&gt;, which starts at 0. Quodsi calls a value like this a &lt;b&gt;state&lt;/b&gt;; because it belongs to each order, it's an &lt;b&gt;entity state&lt;/b&gt;. &lt;i&gt;Tag rush&lt;/i&gt; sets rush to 1, and &lt;i&gt;Tag standard&lt;/i&gt; sets it to 0. Each does this with an &lt;b&gt;Assign&lt;/b&gt; step, which changes a state's value.&lt;/li&gt;&lt;li&gt;Both tagging steps lead to &lt;i&gt;Dispatch gate&lt;/i&gt;. Each arrow out of the gate has a condition: &lt;code&gt;rush == 1&lt;/code&gt; goes to &lt;i&gt;Expedite&lt;/i&gt;, and &lt;code&gt;rush == 0&lt;/code&gt; goes to &lt;i&gt;Standard ship&lt;/i&gt;.&lt;/li&gt;&lt;/ol&gt;&lt;p style=&quot;margin:0 0 8px 0&quot;&gt;Use state-condition routing when an earlier step learns something about an entity (it's urgent, it's high value, it failed a check) and a later step needs to act on it.&lt;/p&gt;&lt;div style=&quot;font-size:13px;font-weight:bold;margin:6px 0 6px 0&quot;&gt;Things to try&lt;/div&gt;&lt;ol style=&quot;margin:0 0 8px 0;padding-left:20px&quot;&gt;&lt;li&gt;&lt;b&gt;Shift the mix.&lt;/b&gt; Change the Inspect weights to 0.5 and 0.5, or send 90% of orders to &lt;i&gt;Tag rush&lt;/i&gt;. Watch how busy the stations further along become as the mix changes.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Break the sort on purpose.&lt;/b&gt; Add a third entity type in the &lt;b&gt;Entities&lt;/b&gt; tab and send it into &lt;i&gt;Sort by type&lt;/i&gt;, without adding an arrow for it. When you run the model, Quodsi stops with a routing error naming the entity and the activity. Entity-type routing has no &quot;everything else&quot; option, and that's deliberate: a silent default would hide modelling mistakes.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Route on a threshold.&lt;/b&gt; Change the gate's condition to &lt;code&gt;rush &amp;gt; 0&lt;/code&gt; and make &lt;i&gt;Tag rush&lt;/i&gt; set rush to 2 instead of 1. Conditions compare numbers, so you can use any of &lt;code&gt;==&lt;/code&gt; (equals), &lt;code&gt;!=&lt;/code&gt; (doesn't equal), &lt;code&gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;gt;=&lt;/code&gt;, &lt;code&gt;&amp;lt;&lt;/code&gt; and &lt;code&gt;&amp;lt;=&lt;/code&gt;.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Combine the ideas.&lt;/b&gt; Give widgets and gadgets their own rush flags and send each type through its own gate. State-condition routing is set up separately for each entity type, so each arrow out of a gate names both the entity type it applies to and its condition.&lt;/li&gt;&lt;/ol&gt;" id="example-notes">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;spacing=12;fontSize=12;fillColor=#F8F9FA;strokeColor=#D0D7DE;rounded=1;arcSize=2;" vertex="1">
+            <mxGeometry x="40" y="870" width="900" height="878" as="geometry" />
+          </mxCell>
+        </object>
         <object label="Gen Parts → Inspect" quodsiType="Connector" quodsiTracked="true" quodsiData='{"id":"con-parts","name":"Gen Parts → Inspect","sourceId":"gen-parts","targetId":"act-inspect","weight":1}' id="con-parts">
           <mxCell edge="1" parent="1" source="gen-parts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="act-inspect">
             <mxGeometry relative="1" as="geometry" />
@@ -78,82 +88,82 @@
         </object>
         <object label="Gen Parts" quodsiType="Generator" quodsiTracked="true" quodsiData='{"id":"gen-parts","name":"Gen Parts","generationConfig":{"entityId":"00000000-0000-0000-0000-000000000000","generatorType":"FREQUENCY","periodIntervalDuration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"exponential","parameters":{"scale":5},"description":""}},"entitiesPerCreation":1}}' id="gen-parts">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="40" y="80" as="geometry" />
+            <mxGeometry height="80" width="80" x="40" y="130" as="geometry" />
           </mxCell>
         </object>
         <object label="Gen Widgets" quodsiType="Generator" quodsiTracked="true" quodsiData='{"id":"gen-widgets","name":"Gen Widgets","generationConfig":{"entityId":"ent-widget","generatorType":"FREQUENCY","periodIntervalDuration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"exponential","parameters":{"scale":6},"description":""}},"entitiesPerCreation":1}}' id="gen-widgets">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="40" y="300" as="geometry" />
+            <mxGeometry height="80" width="80" x="40" y="350" as="geometry" />
           </mxCell>
         </object>
         <object label="Gen Gadgets" quodsiType="Generator" quodsiTracked="true" quodsiData='{"id":"gen-gadgets","name":"Gen Gadgets","generationConfig":{"entityId":"ent-gadget","generatorType":"FREQUENCY","periodIntervalDuration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"exponential","parameters":{"scale":6},"description":""}},"entitiesPerCreation":1}}' id="gen-gadgets">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="40" y="420" as="geometry" />
+            <mxGeometry height="80" width="80" x="40" y="470" as="geometry" />
           </mxCell>
         </object>
         <object label="Gen Orders" quodsiType="Generator" quodsiTracked="true" quodsiData='{"id":"gen-orders","name":"Gen Orders","generationConfig":{"entityId":"ent-order","generatorType":"FREQUENCY","periodIntervalDuration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"exponential","parameters":{"scale":4},"description":""}},"entitiesPerCreation":1}}' id="gen-orders">
           <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="40" y="640" as="geometry" />
+            <mxGeometry height="80" width="80" x="40" y="690" as="geometry" />
           </mxCell>
         </object>
         <object label="Inspect" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-inspect","name":"Inspect","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-inspect-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-inspect">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="220" y="80" as="geometry" />
+            <mxGeometry height="80" width="80" x="220" y="130" as="geometry" />
           </mxCell>
         </object>
         <object label="Pass" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-pass","name":"Pass","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-pass-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-pass">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="420" y="30" as="geometry" />
+            <mxGeometry height="80" width="80" x="420" y="80" as="geometry" />
           </mxCell>
         </object>
         <object label="Rework" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-rework","name":"Rework","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-rework-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-rework">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="420" y="140" as="geometry" />
+            <mxGeometry height="80" width="80" x="420" y="190" as="geometry" />
           </mxCell>
         </object>
         <object label="Sort by type" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-sort","name":"Sort by type","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-sort-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"EntityTemplate","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-sort">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="220" y="360" as="geometry" />
+            <mxGeometry height="80" width="80" x="220" y="410" as="geometry" />
           </mxCell>
         </object>
         <object label="Widget line" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-wline","name":"Widget line","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-wline-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-wline">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="420" y="300" as="geometry" />
+            <mxGeometry height="80" width="80" x="420" y="350" as="geometry" />
           </mxCell>
         </object>
         <object label="Gadget line" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-gline","name":"Gadget line","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-gline-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-gline">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="420" y="420" as="geometry" />
+            <mxGeometry height="80" width="80" x="420" y="470" as="geometry" />
           </mxCell>
         </object>
         <object label="Receive" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-receive","name":"Receive","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-receive-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-receive">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="200" y="640" as="geometry" />
+            <mxGeometry height="80" width="80" x="200" y="690" as="geometry" />
           </mxCell>
         </object>
         <object label="Tag rush" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-tagrush","name":"Tag rush","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-tagrush-assign","actionType":"ASSIGN","stateModifications":[{"stateUniqueId":"st-rush","stateName":"rush","operation":"=","value":1}]},{"id":"act-tagrush-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-tagrush">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="370" y="580" as="geometry" />
+            <mxGeometry height="80" width="80" x="370" y="630" as="geometry" />
           </mxCell>
         </object>
         <object label="Tag standard" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-tagstd","name":"Tag standard","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-tagstd-assign","actionType":"ASSIGN","stateModifications":[{"stateUniqueId":"st-rush","stateName":"rush","operation":"=","value":0}]},{"id":"act-tagstd-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-tagstd">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="370" y="700" as="geometry" />
+            <mxGeometry height="80" width="80" x="370" y="750" as="geometry" />
           </mxCell>
         </object>
         <object label="Dispatch gate" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-gate","name":"Dispatch gate","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-gate-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"StateCondition","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-gate">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="540" y="640" as="geometry" />
+            <mxGeometry height="80" width="80" x="540" y="690" as="geometry" />
           </mxCell>
         </object>
         <object label="Expedite" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-exped","name":"Expedite","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-exped-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-exped">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="720" y="580" as="geometry" />
+            <mxGeometry height="80" width="80" x="720" y="630" as="geometry" />
           </mxCell>
         </object>
         <object label="Standard ship" quodsiType="Activity" quodsiTracked="true" quodsiData='{"id":"act-stdship","name":"Standard ship","capacity":1,"inboundQueueCapacity":999999,"outboundQueueCapacity":999999,"actions":[{"id":"act-stdship-delay","actionType":"DELAY_WITH_RESOURCE","duration":{"durationPeriodUnit":"MINUTES","distribution":{"distributionType":"constant","parameters":{"value":1},"description":""}},"resourceRequirementId":null,"keepResource":false,"stateModifications":[],"stateCondition":null}],"connectType":"Probability","financialProperties":{"enabled":false,"fixedCost":0,"costPerEntityProcessed":0,"costPerHourActive":0,"costPerHourIdle":0,"resourceCostMultiplier":1},"failureProperties":{"enabled":false,"mtbfDuration":null,"mttrDuration":null,"failureClockMode":"WALL_CLOCK","repairResourceRequirementId":""}}' id="act-stdship">
           <mxCell parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1">
-            <mxGeometry height="80" width="80" x="720" y="700" as="geometry" />
+            <mxGeometry height="80" width="80" x="720" y="750" as="geometry" />
           </mxCell>
         </object>
       </root>

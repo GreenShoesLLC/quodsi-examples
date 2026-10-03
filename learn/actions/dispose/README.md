@@ -1,79 +1,99 @@
 # Dispose: scrap a bad part at inspection
 
-Three good parts and one bad part are inspected. The bad part is scrapped at
-inspection — its life ends there — while the good parts carry on to
+## What this model shows
+
+A quality check. Four parts are inspected: three good ones and one bad one.
+The bad part is scrapped at inspection, while the good parts carry on to
 packing. Two counters record how many parts went each way.
 
-```
-Good Parts (3) ─┐
-                ├─► Inspect Part ─────────────────────────► Pack Part
-Bad Parts (1) ──┘     1. inspect (1 min)                      1. pack (2 min)
- (defective = 1)      2. parts_scrapped + 1  — if defective    2. parts_packed + 1
-                      3. dispose             — if defective
-```
+The point of this model is the **Dispose** step: a way to remove an entity
+from the model at a chosen point, partway through its journey.
+
+## How the model works
+
+1. Two generators send in parts: *Good Parts* makes 3, and *Bad Parts* makes
+   1. Every part made by *Bad Parts* is marked as defective.
+2. Every part goes to *Inspect Part*, where inspection takes 1 minute.
+3. If the part is defective, *Inspect Part* adds 1 to the *parts_scrapped*
+   counter and then disposes of the part. Its journey ends there.
+4. Good parts go on to *Pack Part*, where packing takes 2 minutes and adds 1
+   to the *parts_packed* counter. Then they leave the model.
 
 ## How Dispose works
 
-The **Dispose** action ends the entity's life at that exact point. The
-entity skips the rest of the activity's steps **and** its outgoing
-connectors, and anything it still holds (such as a seized resource) is
-released.
+The Dispose step ends an entity's journey at that exact point. The entity
+skips any remaining steps in the activity **and** the arrows leading out of
+it. Anything it was still holding, such as a worker or machine it had
+claimed, is let go.
 
-That is what makes *Inspect Part* two things at once: an exit for bad parts,
-and a pass-through for good ones.
+That's what lets *Inspect Part* do two jobs at once: it's the exit for bad
+parts, and a pass-through for good ones.
 
-## Dispose records nothing — count first
+## Dispose doesn't record anything, so count first
 
-A disposed part simply disappears; nothing in the results says *why* it left.
-If you want to know how many parts were scrapped, count them yourself,
-**before** the Dispose step. Here two **model states** keep the tally:
+A disposed part simply disappears, and nothing in the results says *why* it
+left. If you want to know how many parts were scrapped, count them yourself,
+**before** the Dispose step.
 
-- `parts_scrapped` goes up by 1 in the step just before the Dispose, under
-  the same condition, so only bad parts are counted.
-- `parts_packed` goes up by 1 at the end of *Pack Part*, so only parts that
-  were actually packed are counted.
+Here, two counters keep the tally. Both belong to the whole model rather
+than to one part, so Quodsi calls them **model states**.
 
-## "Only if defective": conditions on actions
+- *parts_scrapped* goes up by 1 in the step just before the Dispose, and only
+  for defective parts, so it counts only scrapped parts.
+- *parts_packed* goes up by 1 at the end of *Pack Part*, so it counts only
+  parts that were actually packed.
 
-Any action can carry a **condition**. Here the scrap counter and the Dispose
-step both run only when the part's `defective` state equals 1; for a good
-part the conditions are false, both steps are skipped, and the part follows
-the connector to *Pack Part*.
+## "Only if defective": conditions on steps
 
-Which part is bad is decided when it is created: the *Bad Parts* generator
-sets `defective = 1` as an **initial state** on every part it makes. Good
-parts keep the state's starting value, 0.
+Any step can have a **condition**, which means it only runs when the
+condition is true. Here, both the scrap counter and the Dispose step only
+run when the part's *defective* value equals 1. For a good part, the
+condition is false, so both steps are skipped and the part follows the
+arrow to *Pack Part*.
 
-## Dispose, or just no outgoing connector?
+Whether a part is bad is decided when it's created. The *Bad Parts*
+generator sets `defective = 1` on every part it makes, as an **initial
+state** (a starting value). Good parts keep the default starting value, 0.
 
-An activity with no outgoing connector is already an exit — every entity
-that finishes there leaves the model. Use that when **every** entity ends
-there. Use Dispose when only **some** entities should end there, or when
-they should end part-way through an activity.
+## Dispose, or just no arrow out?
 
-## What you'll see
+An activity with no arrow leading out of it is already an exit: every
+entity that finishes there leaves the model.
 
-Run it once: **`parts_packed` = 3** and **`parts_scrapped` = 1**. Four parts
-go through Inspect Part (1 minute each) and three through Pack Part (2
-minutes each). The defective part arrives at minute 7, is inspected, counted
-and disposed at minute 8, and never reaches Pack Part.
+- Use **no arrow out** when **every** entity ends at that activity.
+- Use **Dispose** when only **some** entities should end there, or when they
+  should end partway through an activity.
 
-In the entity results all four parts show as *completed* — a disposed part
-did leave the model. The counters are what tell the two outcomes apart.
+## What to expect when you run it
+
+- *parts_packed* finishes at **3** and *parts_scrapped* finishes at **1**.
+- Four parts go through *Inspect Part* (1 minute each), and three go through
+  *Pack Part* (2 minutes each).
+- The defective part arrives at minute 7. It's inspected, counted and
+  disposed of at minute 8, and never reaches *Pack Part*.
+
+In the entity results, all four parts show as *completed*, because a
+disposed part did leave the model. The counters are what tell the two
+outcomes apart.
 
 ## Things to try
 
 1. **Scrap before inspecting.** Move the scrap counter and the Dispose step
-   above the inspect delay. The bad part now leaves instantly: Inspect
-   Part's average time per part drops from 1 minute to 0.75, and the counts
-   stay 3 and 1.
-2. **More bad parts.** Make the Bad Parts generator produce 3: six parts are
-   inspected, `parts_packed` is still 3 and `parts_scrapped` becomes 3.
-3. **Random defects.** Delete the Bad Parts generator, set Good Parts to
-   produce 20, and add an assign step at the top of Inspect Part with two
-   lines: sample a new entity state `defect_roll` from a uniform
-   distribution between 0 and 1, then set `defective` with the expression
-   `1 if defect_roll < 0.2 else 0`. About one part in five is now scrapped —
-   the exact split depends on the random draws — and `parts_packed` plus
-   `parts_scrapped` always adds up to 20. Lengthen the run to 240 minutes
-   so all 20 parts finish.
+   above the inspection step. The bad part now leaves instantly, so the
+   average time per part at *Inspect Part* drops from 1 minute to 0.75. The
+   counts stay at 3 and 1.
+2. **More bad parts.** Make the *Bad Parts* generator produce 3. Now six
+   parts are inspected; *parts_packed* is still 3, and *parts_scrapped*
+   becomes 3.
+3. **Random defects.** This one is more advanced:
+   - Delete the *Bad Parts* generator and set *Good Parts* to produce 20.
+   - Add an Assign step at the top of *Inspect Part* with two lines. The
+     first gives each part a random number between 0 and 1, stored in a new
+     entity state called `defect_roll` (use **sample** with a uniform
+     distribution). The second sets *defective* with the expression
+     `1 if defect_roll < 0.2 else 0`.
+   - Lengthen the run to 240 minutes so all 20 parts can finish.
+
+   About one part in five is now scrapped. The exact split depends on the
+   random numbers drawn, but *parts_packed* plus *parts_scrapped* always
+   adds up to 20.
